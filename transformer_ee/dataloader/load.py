@@ -75,6 +75,18 @@ def get_sample_sizes(sample_size: int, config) -> tuple:
     return sample_size - test_size - valid_size, valid_size, test_size
 
 
+def save_indices(indices, filename):
+    """
+    Save the indices to a text file.
+    
+    indices: The indices to save.
+    filename: The file to save the indices in.
+    """
+    with open(filename, 'w') as f:
+        for idx in indices:
+            f.write(f"{idx}\n")
+
+
 def get_train_valid_test_dataloader(config: dict):  # pylint: disable=R0914
     """
     A function to get the train, validation and test datasets
