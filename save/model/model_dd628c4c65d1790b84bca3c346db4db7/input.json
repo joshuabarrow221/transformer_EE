@@ -1,0 +1,66 @@
+{
+    "data_path": "/exp/dune/app/users/rrichi/FinalCodes/AnyNu_Inclusive_Thresh_0to1p2_VectorLeptw0NC_eventnum_All_NpNpi.csv",
+    "num_workers": 10,
+    "dataframe_type": "polars",
+    "vector": [
+        "Final_State_Particles_PDG",
+        "Final_State_Particles_Mass",
+        "Final_State_Particles_Energy",
+        "Final_State_Particles_Momentum_X",
+        "Final_State_Particles_Momentum_Y",
+        "Final_State_Particles_Momentum_Z",
+        "Final_State_Particles_CosTheta",
+        "Final_State_Particles_Theta"
+    ],
+    "scalar": [
+        "tot_fKE",
+        "p_tot",
+        "P_miss"
+    ],
+    "target": [
+        "Nu_Energy",
+        "Nu_Mom_X",
+        "Nu_Mom_Y",
+        "Nu_Mom_Z"
+    ],
+    "max_num_prongs": 21,
+    "batch_size_train": 1024,
+    "batch_size_valid": 256,
+    "batch_size_test": 3000,
+    "test_size": 0.2,
+    "valid_size": 0.05,
+    "seed": 0,
+    "loss": {
+        "kwargs": {
+            "coefficients": [
+                0.5,
+                0.5,
+                0.5,
+                0.5
+            ],
+            "base_loss_names": [
+                "mean absolute error",
+                "mean absolute error",
+                "mean absolute error",
+                "mean absolute error"
+            ]
+        }
+    },
+    "optimizer": {
+        "name": "sgd",
+        "kwargs": {
+            "lr": 0.01,
+            "momentum": 0.9
+        }
+    },
+    "model": {
+        "name": "Transformer_EE_MV",
+        "kwargs": {
+            "nhead": 2,
+            "num_layers": 5
+        },
+        "epochs": 100
+    },
+    "save_path": "/home/cborden/git/richi_transformer_EE/save/model/test",
+    "model_phys_name": "GENIEv3-4-0-flat-beam-spectra-Truth-Ar23_Numu_Inclusive_Thresh_p1to10_eventnum_100000_NpNpi_MAE-TEST"
+}
