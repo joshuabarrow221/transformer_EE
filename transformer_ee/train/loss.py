@@ -24,8 +24,8 @@ def MCE_loss(output, target, weight=None):
     """
     # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
     if weight is None:
-        return torch.mean((output - target) ** 3)
-    return torch.mean(weight * (output - target) ** 3)
+        return torch.mean(torch.abs(output - target) ** 3)
+    return torch.mean(weight * torch.abs(output - target) ** 3)
 
 
 def MAE_loss(output, target, weight=None):
