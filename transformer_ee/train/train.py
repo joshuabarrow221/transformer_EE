@@ -58,6 +58,8 @@ class MVtrainer:
         self.epochs = input_d["model"].get("epochs", 100)
         print("epochs: ", self.epochs)
         self.bestscore = 1e9
+        self.epochs_wo_improvement = 0
+        self.stop_loss = input_d["model"].get("stop_loss", 5) # Epochs without improvement before stop loss triggers.
         self.print_interval = input_d.get("print_interval", 1)
 
         self.save_path = os.path.join(
@@ -202,6 +204,7 @@ class MVtrainer:
             )
 
             if self.valid_loss_list_per_epoch[-1] < self.bestscore:
+                epochs_wo_improvement = 0
                 self.bestscore = self.valid_loss_list_per_epoch[-1]
                 torch.save(
                     self.net.state_dict(),
@@ -209,11 +212,18 @@ class MVtrainer:
                 )
                 print("model saved with best score: {:0.4f}".format(self.bestscore))
 
+            else:
+                epochs_wo_improvement += 1
+
             plot_loss(
                 self.train_loss_list_per_epoch,
                 self.valid_loss_list_per_epoch,
                 self.save_path,
             )
+            
+            if epochs_wo_improvement >= self.stop_loss:
+                print("Validation loss has not improved in" + str(self.stop_loss) + "epochs. Breaking training early.")
+                break
         if self.logger is not None:
             self.logger.close()
 
