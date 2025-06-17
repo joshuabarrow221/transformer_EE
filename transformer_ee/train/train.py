@@ -222,7 +222,7 @@ class MVtrainer:
             )
             
             if self.epochs_wo_improvement >= self.stop_loss:
-                print("Validation loss has not improved in" + str(self.stop_loss) + "epochs. Breaking training early.")
+                print("Validation loss has not improved in " + str(self.stop_loss) + " epochs. Breaking training early.")
                 break
         if self.logger is not None:
             self.logger.close()
