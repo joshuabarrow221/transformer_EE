@@ -204,7 +204,7 @@ class MVtrainer:
             )
 
             if self.valid_loss_list_per_epoch[-1] < self.bestscore:
-                epochs_wo_improvement = 0
+                self.epochs_wo_improvement = 0
                 self.bestscore = self.valid_loss_list_per_epoch[-1]
                 torch.save(
                     self.net.state_dict(),
@@ -213,7 +213,7 @@ class MVtrainer:
                 print("model saved with best score: {:0.4f}".format(self.bestscore))
 
             else:
-                epochs_wo_improvement += 1
+                self.epochs_wo_improvement += 1
 
             plot_loss(
                 self.train_loss_list_per_epoch,
@@ -221,7 +221,7 @@ class MVtrainer:
                 self.save_path,
             )
             
-            if epochs_wo_improvement >= self.stop_loss:
+            if self.epochs_wo_improvement >= self.stop_loss:
                 print("Validation loss has not improved in" + str(self.stop_loss) + "epochs. Breaking training early.")
                 break
         if self.logger is not None:
