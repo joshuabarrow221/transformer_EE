@@ -1,10 +1,11 @@
-"""
-A module for training a model.
-"""
+# ========================= train.py =========================
+
+"""A module for training a model – revised with richer bookkeeping."""
 
 import json
 import os
 import math
+from typing import Dict, List
 
 import numpy as np
 import torch
@@ -14,52 +15,47 @@ from transformer_ee.logger.train_logger import BaseLogger
 from transformer_ee.model import create_model
 from transformer_ee.utils import get_gpu, hash_dict
 
-from .loss import linear_combination_loss
-from .loss import abs_invariant_mass_squared_prediction_loss
+from .loss import (
+    linear_combination_loss,
+    abs_invariant_mass_squared_prediction_loss,
+    loss_function,  # expose base losses for per‑component tracking
+)
 from .loss_track import plot_loss
 from .optimizer import create_optimizer
 
+# -----------------------------------------------------------------------------
+# Alpha / Beta schedules (unchanged)
+# -----------------------------------------------------------------------------
 
-"""
-Decreasing S-curve from a_start -> a_end over epoch in [0,100].
-Example: alpha(i, a_start=1, a_end=0.5) falls from 1 down toward 0.5.
-"""
-def alpha(epoch: float,
-    a_start: float = 1.0,
-    a_end:   float = 0.1,
-    k:       float = 1.00,
-    x0:      float = 6.0) -> float:
+def alpha(epoch: float, a_start: float = 1.0, a_end: float = 1.0, k: float = 1.0, x0: float = 6.0) -> float:
+    """Decreasing S‑curve from a_start→a_end over ~10 epochs by default."""
     return a_end + (a_start - a_end) / (1 + math.exp(k * (epoch - x0)))
-"""
-Increasing S-curve from b_start -> b_end over epoch in [0,100].
-Example: beta(i, b_start=0, b_end=0.8) rises from 0 up toward 0.8.
-"""
-def beta(epoch: float,
-    b_start: float = 0.0,
-    b_end:   float = 0.9,
-    k:       float = 1.00,
-    x0:      float = 6.0) -> float:
+
+
+def beta(epoch: float, b_start: float = 0.01, b_end: float = 1.0, k: float = 1.0, x0: float = 6.0) -> float:
+    """Increasing S‑curve from b_start→b_end over ~10 epochs by default."""
     return b_start + (b_end - b_start) / (1 + math.exp(-k * (epoch - x0)))
+
+# -----------------------------------------------------------------------------
+# Trainer class
+# -----------------------------------------------------------------------------
 
 class MVtrainer:
     r"""
-    A class to train a model.
-
-    You may want to load config from a json file. For example:
-    ```
-
-    with open("transformer_ee/config/input.json", encoding="UTF-8", mode="r") as f:
-        input_d = json.load(f)
-
-    ```
+    Multivariate trainer with detailed loss breakdown.
     """
 
+    # ------------------------------------------------------------------
+    # construction & bookkeeping containers
+    # ------------------------------------------------------------------
+
     def __init__(self, input_d: dict, logger: BaseLogger | None = None):
-        self.gpu_device = get_gpu()  # get gpu device
+        self.gpu_device = get_gpu()
         self.input_d = input_d
         self.logger = logger
         print(json.dumps(self.input_d, indent=4))
 
+        # dataloaders & model
         (
             self.trainloader,
             self.validloader,
@@ -71,25 +67,36 @@ class MVtrainer:
         self.bestscore = 1e9
         self.print_interval = self.input_d.get("print_interval", 1)
 
-        self.train_loss_list_per_epoch = (
-            []
-        )  # list to store training losses after each epoch
-        self.valid_loss_list_per_epoch = (
-            []
-        )  # list to store validation losses after each epoch
+        # epoch‑wise aggregates (legacy)
+        self.train_loss_list_per_epoch: List[float] = []
+        self.valid_loss_list_per_epoch: List[float] = []
 
+        # NEW – component‑wise LCL contributions (shape = [epochs, n_vars])
+        self.train_comp_loss_per_epoch: List[torch.Tensor] = []
+        self.valid_comp_loss_per_epoch: List[torch.Tensor] = []
+
+        # NEW – specialised trackers for PredInvMass scheme
+        self.alpha_list: List[float] = []
+        self.beta_list: List[float] = []
+        self.train_pred_mass_per_epoch: List[float] = []
+        self.valid_pred_mass_per_epoch: List[float] = []
+        self.train_alpha_LCL_per_epoch: List[float] = []
+        self.train_beta_PM_per_epoch: List[float] = []
+        self.valid_alpha_LCL_per_epoch: List[float] = []
+        self.valid_beta_PM_per_epoch: List[float] = []
+
+        # misc
         self.epochs = input_d["model"].get("epochs", 100)
         print("epochs: ", self.epochs)
-        self.bestscore = 1e9
-        self.print_interval = input_d.get("print_interval", 1)
+        self.save_path = os.path.join(input_d.get("save_path", "."), "model_" + hash_dict(self.input_d))
+        os.makedirs(self.save_path, exist_ok=True)
+        self._dump_static_json()
 
-        self.save_path = os.path.join(
-            input_d.get("save_path", "."), "model_" + hash_dict(self.input_d)
-        )
-        os.makedirs(
-            self.save_path,
-            exist_ok=True,
-        )
+    # ------------------------------------------------------------------
+    # helper
+    # ------------------------------------------------------------------
+
+    def _dump_static_json(self):
         input_json = os.path.join(self.save_path, "input.json")
         if not os.path.exists(input_json):
             with open(input_json, "w") as f:
@@ -100,172 +107,248 @@ class MVtrainer:
             with open(stat_json, "w") as f:
                 json.dump(self.train_set_stat, f, indent=4)
 
-    def train(self):
-        r"""
-        Train the model.
-        """
-        
-        for i in range(self.epochs):
-            self.net.train()  # begin training
+    # ------------------------------------------------------------------
+    # core training loops – LCL only
+    # ------------------------------------------------------------------
 
-            batch_train_loss = []
+    def train_LCL(self):
+        """Standard LCL training with per‑component loss tracking."""
+        loss_kwargs = self.input_d["loss"]["kwargs"]
+        base_loss_names = loss_kwargs["base_loss_names"]
+        coeffs = loss_kwargs["coefficients"]
+        n_vars = len(base_loss_names)
+
+        for epoch in range(self.epochs):
+            # ------------------- training -------------------
+            self.net.train()
+            epoch_total_loss = []
+            comp_sum = torch.zeros(n_vars, device=self.gpu_device)
 
             for batch_idx, batch in enumerate(self.trainloader):
+                vec, sca, msk, tgt, wgt = [x.to(self.gpu_device) for x in batch]
 
-                vector_train_batch = batch[0].to(
-                    self.gpu_device
-                )  # shape: (batch_size, max_seq_len, vector_dim)
-                scalar_train_batch = batch[1].to(
-                    self.gpu_device
-                )  # shape: (batch_size, scalar_dim)
-                mask_train_batch = batch[2].to(
-                    self.gpu_device
-                )  # shape: (batch_size, max_seq_len)
-                target_train_batch = batch[3].to(
-                    self.gpu_device
-                )  # shape: (batch_size, target_dim)
-                weight_train_batch = batch[4].to(
-                    self.gpu_device
-                )  # shape: (batch_size, 1)
-                Netout = self.net.forward(
-                    vector_train_batch, scalar_train_batch, mask_train_batch
-                )
-                # This will call the forward function, usually it returns tensors.
+                out = self.net.forward(vec, sca, msk)
 
-                #loss = linear_combination_loss( Netout,target_train_batch,weight=weight_train_batch,**self.input_d["loss"]["kwargs"], )  # regression loss
-                loss = alpha(i)*linear_combination_loss( Netout,target_train_batch,weight=weight_train_batch,**self.input_d["loss"]["kwargs"], ) + beta(i)*abs_invariant_mass_squared_prediction_loss( Netout,weight=weight_train_batch, )
-                # Zero the gradients before running the backward pass.
+                # total loss (legacy)
+                lcl_loss = linear_combination_loss(out, tgt, weight=wgt, **loss_kwargs)
+
+                # component‑wise contributions (un‑weighted by alpha/beta)
+                for j, (name, coef) in enumerate(zip(base_loss_names, coeffs)):
+                    comp_sum[j] += (
+                        coef
+                        * loss_function[name](out[:, j], tgt[:, j], torch.squeeze(wgt))
+                        .detach()
+                    )
+
+                # step
                 self.optimizer.zero_grad()
-
-                # Backward pass: compute gradient of the loss with respect to all the learnable
-                # parameters of the model. Internally, the parameters of each Module are stored
-                # in Tensors with requires_grad=True, so this call will compute gradients for
-                # all learnable parameters in the model.
-                loss.backward()
-                # Calling the step function on an Optimizer makes an update to its
-                # parameters
+                lcl_loss.backward()
                 self.optimizer.step()
 
-                batch_train_loss.append(loss)
+                epoch_total_loss.append(lcl_loss.detach())
+
                 if batch_idx % self.print_interval == 0:
-                    print(
-                        "Epoch: {}, batch: {} Loss: {:0.4f}".format(i, batch_idx, loss)
-                    )
-                if self.logger is not None:
-                    self.logger.log_scalar(
-                        scalars={
-                            "train/loss": loss.item(),
-                            "train/step": i * len(self.trainloader) + batch_idx,
-                        },
-                        step=i * len(self.trainloader) + batch_idx,
-                        epoch=i,
-                    )
-            self.train_loss_list_per_epoch.append(
-                torch.mean(torch.Tensor(batch_train_loss))
-            )
+                    print(f"Epoch: {epoch}, batch: {batch_idx} Loss: {lcl_loss:0.4f}")
 
-            self.net.eval()  # begin validation
+            # epoch aggregates
+            self.train_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_total_loss)))
+            self.train_comp_loss_per_epoch.append(comp_sum / len(self.trainloader))
 
-            # self.net.to("cpu")
-
-            batch_valid_loss = []
+            # ------------------- validation -------------------
+            self.net.eval()
+            epoch_val_loss = []
+            comp_val_sum = torch.zeros(n_vars, device=self.gpu_device)
 
             with torch.no_grad():
                 for batch_idx, batch in enumerate(self.validloader):
-                    vector_valid_batch = batch[0].to(self.gpu_device)
-                    scalar_valid_batch = batch[1].to(self.gpu_device)
-                    mask_valid_batch = batch[2].to(self.gpu_device)
-                    target_valid_batch = batch[3].to(self.gpu_device)
-                    weight_valid_batch = batch[4].to(self.gpu_device)
+                    vec, sca, msk, tgt, wgt = [x.to(self.gpu_device) for x in batch]
+                    out = self.net.forward(vec, sca, msk)
 
-                    Netout = self.net.forward(
-                        vector_valid_batch, scalar_valid_batch, mask_valid_batch
-                    )
-                    # This will call the forward function, usually it returns tensors.
+                    lcl_loss = linear_combination_loss(out, tgt, weight=wgt, **loss_kwargs)
 
-                    #loss = linear_combination_loss( Netout,target_valid_batch,weight=weight_valid_batch,**self.input_d["loss"]["kwargs"], )
-                    #print(weight_valid_batch)
-                    loss = alpha(i)*linear_combination_loss( Netout,target_valid_batch,weight=weight_valid_batch,**self.input_d["loss"]["kwargs"], ) + beta(i)*abs_invariant_mass_squared_prediction_loss( Netout,weight=None, )
-                
-
-                    batch_valid_loss.append(loss)
-                    if batch_idx % self.print_interval == 0:
-                        print(
-                            "Epoch: {}, batch: {} Loss: {:0.4f}".format(
-                                i, batch_idx, loss
-                            )
+                    for j, (name, coef) in enumerate(zip(base_loss_names, coeffs)):
+                        comp_val_sum[j] += (
+                            coef
+                            * loss_function[name](out[:, j], tgt[:, j], torch.squeeze(wgt))
+                            .detach()
                         )
-                    if self.logger is not None:
-                        self.logger.log_scalar(
-                            scalars={
-                                "val/loss": loss.item(),
-                                "val/step": i * len(self.trainloader) + batch_idx,
-                            },
-                            step=i * len(self.trainloader) + batch_idx,
-                            epoch=i,
-                        )
-                self.valid_loss_list_per_epoch.append(
-                    torch.mean(torch.Tensor(batch_valid_loss))
-                )
 
-            # self.net.to(self.gpu_device)
+                    epoch_val_loss.append(lcl_loss.detach())
 
-            print(
-                "Epoch: {}, train_loss: {:0.4f}, valid_loss: {:0.4f}".format(
-                    i,
-                    self.train_loss_list_per_epoch[-1],
-                    self.valid_loss_list_per_epoch[-1],
-                )
-            )
+            self.valid_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_val_loss)))
+            self.valid_comp_loss_per_epoch.append(comp_val_sum / len(self.validloader))
 
-            if self.valid_loss_list_per_epoch[-1] < self.bestscore:
-                self.bestscore = self.valid_loss_list_per_epoch[-1]
-                torch.save(
-                    self.net.state_dict(),
-                    os.path.join(self.save_path, "best_model.zip"),
-                )
-                print("model saved with best score: {:0.4f}".format(self.bestscore))
+            # ------------------- bookkeeping & plots -------------------
+            self._checkpoint_and_plot(epoch, scheme="LCL", n_vars=n_vars)
 
-            plot_loss(
-                self.train_loss_list_per_epoch,
-                self.valid_loss_list_per_epoch,
-                self.save_path,
-            )
-        if self.logger is not None:
+        if self.logger:
             self.logger.close()
 
-    def eval(self):
-        r"""
-        Evaluate the model.
-        """
-        self.net.load_state_dict(
-            torch.load(
-                os.path.join(self.save_path, "best_model.zip"),
-                map_location=torch.device("cpu"),
+    # ------------------------------------------------------------------
+    # core training loops – LCL + PredInvMass
+    # ------------------------------------------------------------------
+
+    def train_LCL_wPredInvMass(self):
+        """Hybrid loss training with richer analytics."""
+        loss_kwargs = self.input_d["loss"]["kwargs"]
+        base_loss_names = loss_kwargs["base_loss_names"]
+        coeffs = loss_kwargs["coefficients"]
+        n_vars = len(base_loss_names)
+
+        for epoch in range(self.epochs):
+            a_val = alpha(epoch)
+            b_val = beta(epoch)
+            self.alpha_list.append(a_val)
+            self.beta_list.append(b_val)
+
+            # ------------------- training -------------------
+            self.net.train()
+            epoch_total_loss = []
+            comp_sum = torch.zeros(n_vars, device=self.gpu_device)
+            pm_sum = 0.0
+            aLCL_sum = 0.0
+            bPM_sum = 0.0
+
+            for batch_idx, batch in enumerate(self.trainloader):
+                vec, sca, msk, tgt, wgt = [x.to(self.gpu_device) for x in batch]
+                out = self.net.forward(vec, sca, msk)
+
+                lcl_loss = linear_combination_loss(out, tgt, weight=wgt, **loss_kwargs)
+                pm_loss = abs_invariant_mass_squared_prediction_loss(out, weight=wgt)
+                total_loss = a_val * lcl_loss + b_val * pm_loss
+
+                # per component contribution of LCL (for diagnostics)
+                for j, (name, coef) in enumerate(zip(base_loss_names, coeffs)):
+                    comp_sum[j] += (
+                        coef
+                        * loss_function[name](out[:, j], tgt[:, j], torch.squeeze(wgt))
+                        .detach()
+                    )
+
+                # step
+                self.optimizer.zero_grad()
+                total_loss.backward()
+                self.optimizer.step()
+
+                epoch_total_loss.append(total_loss.detach())
+                pm_sum += pm_loss.detach()
+                aLCL_sum += (a_val * lcl_loss).detach()
+                bPM_sum += (b_val * pm_loss).detach()
+
+                if batch_idx % self.print_interval == 0:
+                    print(f"Epoch: {epoch}, batch: {batch_idx} Loss: {total_loss:0.4f}")
+
+            # epoch aggregates (train)
+            n_train_batches = len(self.trainloader)
+            self.train_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_total_loss)))
+            self.train_comp_loss_per_epoch.append(comp_sum / n_train_batches)
+            self.train_pred_mass_per_epoch.append(pm_sum / n_train_batches)
+            self.train_alpha_LCL_per_epoch.append(aLCL_sum / n_train_batches)
+            self.train_beta_PM_per_epoch.append(bPM_sum / n_train_batches)
+
+            # ------------------- validation -------------------
+            self.net.eval()
+            epoch_val_loss = []
+            comp_val_sum = torch.zeros(n_vars, device=self.gpu_device)
+            pm_val_sum = 0.0
+            aLCL_val_sum = 0.0
+            bPM_val_sum = 0.0
+
+            with torch.no_grad():
+                for batch_idx, batch in enumerate(self.validloader):
+                    vec, sca, msk, tgt, wgt = [x.to(self.gpu_device) for x in batch]
+                    out = self.net.forward(vec, sca, msk)
+
+                    lcl_loss = linear_combination_loss(out, tgt, weight=wgt, **loss_kwargs)
+                    pm_loss = abs_invariant_mass_squared_prediction_loss(out, weight=wgt)
+                    total_loss = a_val * lcl_loss + b_val * pm_loss
+
+                    for j, (name, coef) in enumerate(zip(base_loss_names, coeffs)):
+                        comp_val_sum[j] += (
+                            coef
+                            * loss_function[name](out[:, j], tgt[:, j], torch.squeeze(wgt))
+                            .detach()
+                        )
+
+                    epoch_val_loss.append(total_loss.detach())
+                    pm_val_sum += pm_loss.detach()
+                    aLCL_val_sum += (a_val * lcl_loss).detach()
+                    bPM_val_sum += (b_val * pm_loss).detach()
+
+            n_val_batches = len(self.validloader)
+            self.valid_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_val_loss)))
+            self.valid_comp_loss_per_epoch.append(comp_val_sum / n_val_batches)
+            self.valid_pred_mass_per_epoch.append(pm_val_sum / n_val_batches)
+            self.valid_alpha_LCL_per_epoch.append(aLCL_val_sum / n_val_batches)
+            self.valid_beta_PM_per_epoch.append(bPM_val_sum / n_val_batches)
+
+            # ------------------- checkpoint & plots -------------------
+            self._checkpoint_and_plot(epoch, scheme="Hybrid", n_vars=n_vars)
+
+        if self.logger:
+            self.logger.close()
+
+    # ------------------------------------------------------------------
+    # helper – model checkpoint + plotting
+    # ------------------------------------------------------------------
+
+    def _checkpoint_and_plot(self, epoch: int, scheme: str, n_vars: int):
+        # stdout
+        print(
+            f"Epoch: {epoch}, train_loss: {self.train_loss_list_per_epoch[-1]:0.4f}, "
+            f"valid_loss: {self.valid_loss_list_per_epoch[-1]:0.4f}"
+        )
+
+        # best model tracking
+        if self.valid_loss_list_per_epoch[-1] < self.bestscore:
+            self.bestscore = self.valid_loss_list_per_epoch[-1]
+            torch.save(self.net.state_dict(), os.path.join(self.save_path, "best_model.zip"))
+            print(f"model saved with best score: {self.bestscore:0.4f}")
+
+        # prepare metrics dict for plotting
+        metrics: Dict[str, List] = {
+            "Training Loss Total": self.train_loss_list_per_epoch,
+            "Validation Loss Total": self.valid_loss_list_per_epoch,
+        }
+
+        # component curves
+        for j in range(n_vars):
+            metrics[f"Train: Var. {j}"] = [x[j].item() for x in self.train_comp_loss_per_epoch]
+            #metrics[f"valid_var_{j}"] = [x[j].item() for x in self.valid_comp_loss_per_epoch]
+
+        if scheme == "Hybrid":
+            metrics.update(
+                {
+                    "$\\alpha$": self.alpha_list,
+                    "$\\beta$": self.beta_list,
+                    "Train: Pred. $m_{\\nu}^{2}$": self.train_pred_mass_per_epoch,
+                    #"valid_predInvMass": self.valid_pred_mass_per_epoch,
+                    "Train: $\\alpha \\cdot $LCL($p_{\\mu}$)": self.train_alpha_LCL_per_epoch,
+                    #"valid_alpha*LCL": self.valid_alpha_LCL_per_epoch,
+                    "Train: $\\beta \\cdot m_{\\nu}^{2}$": self.train_beta_PM_per_epoch,
+                    #"valid_beta*PM": self.valid_beta_PM_per_epoch,
+                }
             )
+
+        # one canvas – many lines
+        plot_loss(metrics, self.save_path)
+
+    # ------------------------------------------------------------------
+    # eval (unchanged)
+    # ------------------------------------------------------------------
+
+    def eval(self):
+        self.net.load_state_dict(
+            torch.load(os.path.join(self.save_path, "best_model.zip"), map_location=torch.device("cpu"))
         )
         self.net.eval()
         self.net.to(self.gpu_device)
 
-        trueval = []
-        prediction = []
+        trueval, prediction = [], []
+        for batch in self.testloader:
+            vec, sca, msk, tgt = [x.to(self.gpu_device) for x in batch[:4]]
+            out = self.net.forward(vec, sca, msk)
+            trueval.append(tgt.detach().cpu().numpy())
+            prediction.append(out.detach().cpu().numpy())
 
-        for _batch_idx, batch in enumerate(self.testloader):
-            vector_valid_batch = batch[0].to(self.gpu_device)
-            scalar_valid_batch = batch[1].to(self.gpu_device)
-            mask_valid_batch = batch[2].to(self.gpu_device)
-            target_valid_batch = batch[3].to(self.gpu_device)
-
-            Netout = self.net.forward(
-                vector_valid_batch, scalar_valid_batch, mask_valid_batch
-            )
-            trueval.append(target_valid_batch.detach().cpu().numpy())
-            prediction.append((Netout.detach().cpu().numpy()))
-
-        trueval = np.concatenate(trueval)  # [:,0]
-        prediction = np.concatenate(prediction)
-        np.savez(
-            os.path.join(self.save_path, "result.npz"),
-            trueval=trueval,
-            prediction=prediction,
-        )
+        np.savez(os.path.join(self.save_path, "result.npz"), trueval=np.concatenate(trueval), prediction=np.concatenate(prediction))
