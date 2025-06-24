@@ -44,8 +44,8 @@ def MAPE_loss(output, target, weight=None):
     mean absolute percentage error loss, similar to L1 loss
     """
     if weight is None:
-        return torch.mean(torch.abs(output - target) / target)
-    return torch.mean(weight * torch.abs(output - target) / target)
+        return torch.mean(torch.abs(output - target) / (0.01 + torch.abs(target)))
+    return torch.mean(weight * torch.abs(output - target) / (0.01 + torch.abs(target)))
 
 # shifted loss functions
 def MSE_loss_shifted(output, target, weight=None):
@@ -81,8 +81,8 @@ def MAPE_loss_shifted(output, target, weight=None):
     mean absolute percentage error loss, similar to L1 loss
     """
     if weight is None:
-        return torch.mean(torch.abs(( output + constant ) - ( target + constant )) / ( target + constant ))
-    return torch.mean(weight * torch.abs(( output + constant ) - ( target + constant )) / ( target + constant ))
+        return torch.mean(torch.abs( ( output + constant) - ( target + constant )) / (0.01 + torch.abs( target + constant )))
+    return torch.mean(weight * torch.abs( ( output + constant) - ( target + constant )) / (0.01 + torch.abs( target + constant )))
 
 
 # add base loss functions to loss_function dictionary
