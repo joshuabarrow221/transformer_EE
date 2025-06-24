@@ -7,6 +7,7 @@ import torch
 # shape of output and target: (batch_size, output_dim)
 # shape of weight: (batch_size, 1)
 
+constant = 100.0
 
 # base loss functions
 def MSE_loss(output, target, weight=None):
@@ -24,8 +25,8 @@ def MCE_loss(output, target, weight=None):
     """
     # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
     if weight is None:
-        return torch.mean((output - target) ** 3)
-    return torch.mean(weight * (output - target) ** 3)
+        return torch.mean(torch.abs(output - target) ** 3)
+    return torch.mean(weight * torch.abs(output - target) ** 3)
 
 
 def MAE_loss(output, target, weight=None):
@@ -45,13 +46,54 @@ def MAPE_loss(output, target, weight=None):
         return torch.mean(torch.abs(output - target) / target)
     return torch.mean(weight * torch.abs(output - target) / target)
 
+# shifted loss functions
+def MSE_loss_shifted(output, target, weight=None):
+    """
+    mean squared error loss
+    """
+    # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
+    if weight is None:
+        return torch.mean((( output + constant ) - ( target + constant )) ** 2)
+    return torch.mean(weight * (( output + constant ) - ( target + constant )) ** 2)
+
+def MCE_loss_shifted(output, target, weight=None):
+    """
+    mean cubic error loss
+    """
+    # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
+    if weight is None:
+        return torch.mean(torch.abs(( output + constant ) - ( target + constant )) ** 3)
+    return torch.mean(weight * torch.abs(( output + constant ) - ( target + constant )) ** 3)
+
+
+def MAE_loss_shifted(output, target, weight=None):
+    """
+    mean absolute error loss
+    """
+    if weight is None:
+        return torch.mean(torch.abs(( output + constant ) - ( target + constant )))
+    return torch.mean(weight * torch.abs(( output + constant ) - ( target + constant )))
+
+
+def MAPE_loss_shifted(output, target, weight=None):
+    """
+    mean absolute percentage error loss, similar to L1 loss
+    """
+    if weight is None:
+        return torch.mean(torch.abs(( output + constant ) - ( target + constant )) / ( target + constant ))
+    return torch.mean(weight * torch.abs(( output + constant ) - ( target + constant )) / ( target + constant ))
+
 
 # add base loss functions to loss_function dictionary
 loss_function = {
     "mean squared error": MSE_loss,
     "mean absolute error": MAE_loss,
     "mean absolute percentage error": MAPE_loss,
-    "mean cubic error": MCE_loss
+    "mean cubic error": MCE_loss,
+    "shifted mean squared error": MSE_loss_shifted,
+    "shifted mean absolute error": MAE_loss_shifted,
+    "shifted mean absolute percentage error": MAPE_loss_shifted,
+    "shifted mean cubic error": MCE_loss_shifted
 }
 
 
@@ -105,10 +147,25 @@ def abs_invariant_mass_squared_prediction_loss(output, weight=None):
     #Assumes an ordering to the output, which is: energy, px, py, pz
     #pred_energy = output[:, 0].item()
     
-    if weight is None:
-        return torch.mean((output[:, 0]**2 - output[:, 1]**2 - output[:, 2]**2 - output[:, 3]**2))**2
-    return torch.mean(weight * (output[:, 0]**2 - output[:, 1]**2 - output[:, 2]**2 - output[:, 3]**2))**2
-
     # if weight is None:
-    #     return torch.mean(torch.abs(output - target))
-    # return torch.mean(weight * torch.abs(output - target))
+    #     return torch.mean((output[:, 0]**2 - output[:, 1]**2 - output[:, 2]**2 - output[:, 3]**2))**2
+    # return torch.mean(weight * (output[:, 0]**2 - output[:, 1]**2 - output[:, 2]**2 - output[:, 3]**2))**2
+    if weight is None:
+        return 125.0*torch.mean((output[:, 0]**2 - output[:, 1]**2 - output[:, 2]**2 - output[:, 3]**2))**2
+    return 125.0*torch.mean(weight * (output[:, 0]**2 - output[:, 1]**2 - output[:, 2]**2 - output[:, 3]**2))**2
+
+def abs_invariant_mass_squared_prediction_loss_shifted(output, weight=None):
+    """
+    A function to calculate the invariant mass prediction of the neutrino from the output.
+    The function should be used in concert with the linear_combination_loss function
+    as a source of "continuous pretraining" to seed the model outputs with a good starting point.
+    Assumes the output is a 4-vector with the first element being the energy and the last three elements being the momentum
+    """
+    
+    #abs_inv_mass_sq = 0 #initialize the loss to a nonphysical value--necessary?
+    #Assumes an ordering to the output, which is: energy, px, py, pz
+    #pred_energy = output[:, 0].item()
+    
+    if weight is None:
+        return torch.mean(((output[:, 0] + constant)**2 - (output[:, 1] + constant)**2 - (output[:, 2] + constant)**2 - (output[:, 3] + constant)**2))**2
+    return torch.mean(weight * ((output[:, 0] + constant)**2 - (output[:, 1] + constant)**2 - (output[:, 2] + constant)**2 - (output[:, 3] + constant)**2))**2
