@@ -7,6 +7,7 @@ import torch
 # shape of output and target: (batch_size, output_dim)
 # shape of weight: (batch_size, 1)
 
+# for shifting
 constant = 100.0
 
 # base loss functions
@@ -19,9 +20,9 @@ def MSE_loss(output, target, weight=None):
         return torch.mean((output - target) ** 2)
     return torch.mean(weight * (output - target) ** 2)
 
-def MCE_loss(output, target, weight=None):
+def MACE_loss(output, target, weight=None):
     """
-    mean cubic error loss
+    mean absolute cubic error loss
     """
     # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
     if weight is None:
@@ -56,9 +57,9 @@ def MSE_loss_shifted(output, target, weight=None):
         return torch.mean((( output + constant ) - ( target + constant )) ** 2)
     return torch.mean(weight * (( output + constant ) - ( target + constant )) ** 2)
 
-def MCE_loss_shifted(output, target, weight=None):
+def MACE_loss_shifted(output, target, weight=None):
     """
-    mean cubic error loss
+    mean absolute cubic error loss
     """
     # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
     if weight is None:
@@ -89,11 +90,11 @@ loss_function = {
     "mean squared error": MSE_loss,
     "mean absolute error": MAE_loss,
     "mean absolute percentage error": MAPE_loss,
-    "mean cubic error": MCE_loss,
+    "mean absolute cubic error": MACE_loss,
     "shifted mean squared error": MSE_loss_shifted,
     "shifted mean absolute error": MAE_loss_shifted,
     "shifted mean absolute percentage error": MAPE_loss_shifted,
-    "shifted mean cubic error": MCE_loss_shifted
+    "shifted mean absolute cubic error": MACE_loss_shifted
 }
 
 
