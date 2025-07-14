@@ -16,7 +16,7 @@ Muon_KE:0.005
 Electron_KE:0.005
 num_proton:N
 num_pion:N
-INPUT_ROOT_FILE:NNBarAtm_hA_BR.100000000.gtrac.root
+INPUT_ROOT_FILE:/exp/dune/data/users/jbarrow/natural_spectra/GENIE_AR23_HondaSolMaxAtmo3F_NF4p1Osc_0p1-20GeV/nuALL_12M_AR23_0p1-20GeV_HondaSolMaxAtmo3F_NF4p1Osc_combined.gtrac.root
 OUTPUT_ROOT_FILE:Numu_CC_Thresh_p1to10_eventnum_
 OUTPUT_DIR:Numu_CC_Thresh_p1to10_eventnum_
 OUTPUT_NAME:Numu_CC_Thresh_p1to10_eventnum_
