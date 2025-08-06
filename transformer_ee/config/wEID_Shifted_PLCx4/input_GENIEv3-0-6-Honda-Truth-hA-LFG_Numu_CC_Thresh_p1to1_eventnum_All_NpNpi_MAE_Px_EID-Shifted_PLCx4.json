@@ -1,0 +1,60 @@
+{
+    "data_path": "/exp/dune/app/users/rrichi/FinalCodes/Numu_CC_Thresh_p1to1_VectorLeptWithoutNC_eventnum_All_NpNpi.csv",
+    "num_workers": 10,
+    "dataframe_type": "polars",
+    "vector": [
+        "Final_State_Particles_PDG",
+        "Final_State_Particles_Mass",
+        "Final_State_Particles_Energy",
+        "Final_State_Particles_Momentum_X",
+        "Final_State_Particles_Momentum_Y",
+        "Final_State_Particles_Momentum_Z",
+        "Final_State_Particles_CosTheta",
+        "Final_State_Particles_Theta"
+
+    ],
+    "scalar": [
+        "tot_fKE",
+        "p_tot",
+        "P_miss"
+
+    ],
+    "target": [
+        "Nu_Mom_X",
+        "Event_Index"
+    ],
+    "max_num_prongs": 35,
+    "batch_size_train": 1024,
+    "batch_size_valid": 256,
+    "batch_size_test": 3000,
+    "test_size": 0.2,
+    "valid_size": 0.05,
+    "seed": 0,
+    "loss": {
+        "kwargs": {
+            "coefficients": [
+                2.0,
+                0.0
+            ],
+            "base_loss_names": [
+                "shifted mean absolute error",
+                "shifted mean absolute error"
+            ]
+        }
+    },
+    "optimizer": {
+        "name": "AdamW",
+        "kwargs": {
+            "lr": 0.001
+        }
+    },
+    "model": {
+        "name": "Transformer_EE_MV",
+        "kwargs": {
+            "nhead": 2,
+            "num_layers": 5
+        }
+    },
+    "save_path": "/exp/dune/data/users/jbarrow/save_genie-TEST/model/test/GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MAE_Px_EID-Shifted2_PLCx4",
+    "model_phys_name": "GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MAE_Px_EID-Shifted2_PLCx4"
+}
