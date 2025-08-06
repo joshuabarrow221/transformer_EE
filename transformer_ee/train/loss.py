@@ -174,3 +174,5 @@ def abs_invariant_mass_squared_prediction_loss_shifted(output, weight=None):
     if weight is None:
         return torch.mean(((output[:, 0] + constant)**2 - (output[:, 1] + constant)**2 - (output[:, 2] + constant)**2 - (output[:, 3] + constant)**2))**2
     return torch.mean(weight * ((output[:, 0] + constant)**2 - (output[:, 1] + constant)**2 - (output[:, 2] + constant)**2 - (output[:, 3] + constant)**2))**2
+    #     return torch.mean(torch.abs(output - target))
+    # return torch.mean(weight * torch.abs(output - target))
