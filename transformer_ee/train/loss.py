@@ -8,7 +8,7 @@ import torch
 # shape of weight: (batch_size, 1)
 
 # for shifting
-constant = 100.0
+constant = 2.0
 
 # base loss functions
 def MSE_loss(output, target, weight=None):
@@ -47,42 +47,46 @@ def MAPE_loss(output, target, weight=None):
         return torch.mean(torch.abs(output - target) / (0.01 + torch.abs(target)))
     return torch.mean(weight * torch.abs(output - target) / (0.01 + torch.abs(target)))
 
+
+##################################
 # shifted loss functions
+#################################
+
 def MSE_loss_shifted(output, target, weight=None):
     """
-    mean squared error loss
+    shifted mean squared error loss
     """
     # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
     if weight is None:
-        return torch.mean((( output + constant ) - ( target + constant )) ** 2)
-    return torch.mean(weight * (( output + constant ) - ( target + constant )) ** 2)
+        return torch.mean((( output + constant ) - ( target )) ** 2)
+    return torch.mean(weight * (( output + constant ) - ( target )) ** 2)
 
 def MACE_loss_shifted(output, target, weight=None):
     """
-    mean absolute cubic error loss
+    shifted mean absolute cubic error loss
     """
     # Note: torch.mean() returns the mean value of all elements in the input tensor, which is a scalar value.
     if weight is None:
-        return torch.mean(torch.abs(( output + constant ) - ( target + constant )) ** 3)
-    return torch.mean(weight * torch.abs(( output + constant ) - ( target + constant )) ** 3)
+        return torch.mean(torch.abs(( output + constant ) - ( target )) ** 3)
+    return torch.mean(weight * torch.abs(( output + constant ) - ( target )) ** 3)
 
 
 def MAE_loss_shifted(output, target, weight=None):
     """
-    mean absolute error loss
+    shifted mean absolute error loss
     """
     if weight is None:
-        return torch.mean(torch.abs(( output + constant ) - ( target + constant )))
-    return torch.mean(weight * torch.abs(( output + constant ) - ( target + constant )))
+        return torch.mean(torch.abs(( output - constant ) - ( target )))
+    return torch.mean(weight * torch.abs(( output - constant ) - ( target )))
 
 
 def MAPE_loss_shifted(output, target, weight=None):
     """
-    mean absolute percentage error loss, similar to L1 loss
+    shifted mean absolute percentage error loss, similar to L1 loss
     """
     if weight is None:
-        return torch.mean(torch.abs( ( output + constant) - ( target + constant )) / (0.01 + torch.abs( target + constant )))
-    return torch.mean(weight * torch.abs( ( output + constant) - ( target + constant )) / (0.01 + torch.abs( target + constant )))
+        return torch.mean(torch.abs( ( output + constant) - ( target )) / (0.01 + torch.abs( target )))
+    return torch.mean(weight * torch.abs( ( output + constant) - ( target )) / (0.01 + torch.abs( target )))
 
 
 # add base loss functions to loss_function dictionary
