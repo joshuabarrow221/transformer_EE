@@ -835,7 +835,26 @@ void VectorLept_wNC(const std::string &input_file)
                 }
             }
         }
-
+        int lep_code = 0;
+        if (lepton_pdg_instore == 12)
+            lep_code = 1; // nue
+        else if (lepton_pdg_instore == -12)
+            lep_code = 2; // nuebar
+        else if (lepton_pdg_instore == 14)
+            lep_code = 3; // numu
+        else if (lepton_pdg_instore == -14)
+            lep_code = 4; // numubar
+        else if (lepton_pdg_instore == 16)
+            lep_code = 5; // nutau
+        else if (lepton_pdg_instore == -16)
+            lep_code = 6; // nutaubar
+        std::ostringstream topo_ss;
+        topo_ss << lep_code
+                << std::setw(2) << std::setfill('0') << n_prot << "00"
+                << std::setw(2) << std::setfill('0') << n_piplus << "00"
+                << std::setw(2) << std::setfill('0') << n_piminus << "00"
+                << std::setw(2) << std::setfill('0') << n_pizero;
+        std::string topology = topo_ss.str();
         if (visible_count == 0 || skip_event)
         {
             // //std::cout << "I am skipping for i: " << i << endl;
@@ -979,7 +998,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
         // NumuInclusiveNpNpi/NueInclusiveNpNpi
@@ -1101,7 +1120,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
         // NumuCCNpNpi/NueCCNpNpi
@@ -1218,7 +1237,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
         // NumuNCNpNpi/NueNCNpNpi
@@ -1328,7 +1347,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuCCNpNpi
@@ -1444,7 +1463,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuNCNpNpi
@@ -1556,7 +1575,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuInclusiveNpNpi(Basically All)
@@ -1674,7 +1693,7 @@ void VectorLept_wNC(const std::string &input_file)
 
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\"\n";
+            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << topology << "\"\n";
         }
 
     } // End of event loop
