@@ -537,8 +537,8 @@ void ScalarLept_wNC(const std::string &input_file)
     ofstream outfile(outfile_name);
 
     // define the header for the CSV file
-    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\"\n";
-    // outfile << "\"Event_Index\",\"Initial_State_Neutrino_PDG\",\"Initial_State_Neutrino_Energy\",\"Initial_State_Neutrino_Momentum_X\",\"Initial_State_Neutrino_Momentum_Y\",\"Initial_State_Neutrino_Momentum_Z\",\"Initial_Neutrino_CosTheta\",\"Initial_Neutrino_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\"\n";
+    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\",\"Topology\"\n";
+    // outfile << "\"Event_Index\",\"Initial_State_Neutrino_PDG\",\"Initial_State_Neutrino_Energy\",\"Initial_State_Neutrino_Momentum_X\",\"Initial_State_Neutrino_Momentum_Y\",\"Initial_State_Neutrino_Momentum_Z\",\"Initial_Neutrino_CosTheta\",\"Initial_Neutrino_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\",\"Topology\"\n";
 
     // //print the output file
     // //std::cout << "Output_Root_file: " << Output_Root_file << std::endl;
@@ -858,21 +858,21 @@ void ScalarLept_wNC(const std::string &input_file)
                 }
             }
         }
-        int lep_code = 0;
-        if (lepton_pdg_instore == 12)
-            lep_code = 1; // nue
-        else if (lepton_pdg_instore == -12)
-            lep_code = 2; // nuebar
-        else if (lepton_pdg_instore == 14)
-            lep_code = 3; // numu
-        else if (lepton_pdg_instore == -14)
-            lep_code = 4; // numubar
-        else if (lepton_pdg_instore == 16)
-            lep_code = 5; // nutau
-        else if (lepton_pdg_instore == -16)
-            lep_code = 6; // nutaubar
+        int init_lep_code = 0;
+        if (tStdHepPdg_nu/*lepton_pdg_instore*/ == 12)
+            init_lep_code = 1; // nue
+        else if (tStdHepPdg_nu/*lepton_pdg_instore*/ == -12)
+            init_lep_code = 2; // nuebar
+        else if (tStdHepPdg_nu/*lepton_pdg_instore*/ == 14)
+            init_lep_code = 3; // numu
+        else if (tStdHepPdg_nu/*lepton_pdg_instore*/ == -14)
+            init_lep_code = 4; // numubar
+        else if (tStdHepPdg_nu/*lepton_pdg_instore*/ == 16)
+            init_lep_code = 5; // nutau
+        else if (tStdHepPdg_nu/*lepton_pdg_instore*/ == -16)
+            init_lep_code = 6; // nutaubar
         std::ostringstream topo_ss;
-        topo_ss << lep_code
+        topo_ss << init_lep_code
                 << std::setw(2) << std::setfill('0') << n_prot << "00"
                 << std::setw(2) << std::setfill('0') << n_piplus << "00"
                 << std::setw(2) << std::setfill('0') << n_piminus << "00"
