@@ -237,7 +237,7 @@ double phi_nu(const double tStdHepP4[], double fAbsoluteParticleMomentum, int j)
 
 void lepton_kinematics(const double tStdHepP4[], int j, const int tStdHepPdg[], std::vector<int> &pdgs, std::vector<double> &masses,
                        std::vector<double> &energies, std::vector<double> &pxs,
-                       std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_fpx, double &tot_fpy, double &tot_fpz,
+                       std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_hadronic_energy, double &tot_fpx, double &tot_fpy, double &tot_fpz,
                        const std::map<std::string, std::variant<int, float, std::string>> &dictionary,
                        double &E_lep, double &P_x_lep, double &P_y_lep, double &P_z_lep)
 {
@@ -281,7 +281,7 @@ void lepton_kinematics(const double tStdHepP4[], int j, const int tStdHepPdg[], 
         Fin_CC_Lept_Theta->Fill(acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum));
     }
 
-    if (tStdHepPdg[j] == 22 && fKE_gamma >= 2 * electron_ke)
+if (tStdHepPdg[j] == 22 && fKE_gamma >= 2 * electron_ke)
     {
         pdgs.push_back(tStdHepPdg[j]);
         masses.push_back(fInvMass_gamma);
@@ -293,6 +293,7 @@ void lepton_kinematics(const double tStdHepP4[], int j, const int tStdHepPdg[], 
         theta_arr.push_back((180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum_gamma));
 
         tot_fKE += fKE_gamma;
+        // NO tot_hadronic_energy here - photons in lepton_kinematics are from leptons, not hadrons
         tot_fpx += tStdHepP4[4 * j];
         tot_fpy += tStdHepP4[4 * j + 1];
         tot_fpz += tStdHepP4[4 * j + 2];
@@ -302,7 +303,7 @@ void lepton_kinematics(const double tStdHepP4[], int j, const int tStdHepPdg[], 
 
 void NC_lepton_kinematics(const double tStdHepP4[], int j, const int tStdHepPdg[], std::vector<int> &pdgs, std::vector<double> &masses,
                           std::vector<double> &energies, std::vector<double> &pxs,
-                          std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_fpx, double &tot_fpy, double &tot_fpz,
+                          std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_hadronic_energy, double &tot_fpx, double &tot_fpy, double &tot_fpz,
                           const std::map<std::string, std::variant<int, float, std::string>> &dictionary,
                           double &E_lep, double &P_x_lep, double &P_y_lep, double &P_z_lep)
 {
@@ -336,7 +337,7 @@ void NC_lepton_kinematics(const double tStdHepP4[], int j, const int tStdHepPdg[
 
 void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[], std::vector<int> &pdgs, std::vector<double> &masses,
                          std::vector<double> &energies, std::vector<double> &pxs,
-                         std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_fpx, double &tot_fpy, double &tot_fpz,
+                         std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_hadronic_energy, double &tot_fpx, double &tot_fpy, double &tot_fpz,
                          const std::map<std::string, std::variant<int, float, std::string>> &dictionary)
 {
 
@@ -369,6 +370,7 @@ void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[]
         theta_arr.push_back((180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum));
 
         tot_fKE += fKE;
+        tot_hadronic_energy += fKE;
         tot_fpx += tStdHepP4[4 * j];
         tot_fpy += tStdHepP4[4 * j + 1];
         tot_fpz += tStdHepP4[4 * j + 2];
@@ -404,6 +406,7 @@ void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[]
         theta_arr.push_back((180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum_gamma));
 
         tot_fKE += fKE_gamma;
+        tot_hadronic_energy += fKE_gamma;
         tot_fpx += tStdHepP4[4 * j];
         tot_fpy += tStdHepP4[4 * j + 1];
         tot_fpz += tStdHepP4[4 * j + 2];
@@ -535,7 +538,7 @@ void VectorLept_wNC(const std::string &input_file)
     ofstream outfile(outfile_name);
 
     // define the header for the CSV file
-    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
+    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"tot_hadronic_energy\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
 
     // directory here
 
@@ -735,6 +738,7 @@ void VectorLept_wNC(const std::string &input_file)
 
         double tot_fpx = 0, tot_fpy = 0, tot_fpz = 0;
         double tot_fKE = 0;
+        double tot_hadronic_energy = 0;
 
         // Store neutrino and lepton 4-momentum
         double E_nu = 0, P_x_nu = 0, P_y_nu = 0, P_z_nu = 0;
@@ -951,18 +955,18 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == 15 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == -13 || tStdHepPdg[j] == -15)
                     {
                         lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                          energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                  energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
                     else if (tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16)
                     {
                         NC_lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                             energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                     energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1033,7 +1037,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // NumuInclusiveNpNpi/NueInclusiveNpNpi
@@ -1091,18 +1095,18 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == 15 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == -13 || tStdHepPdg[j] == -15)
                     {
                         lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                          energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                  energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
                     if (tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16)
                     {
                         NC_lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                             energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                     energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1173,7 +1177,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // NumuCCNpNpi/NueCCNpNpi
@@ -1230,13 +1234,13 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == 15 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == -13 || tStdHepPdg[j] == -15)
                     {
                         lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                          energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                  energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1307,7 +1311,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // NumuNCNpNpi/NueNCNpNpi
@@ -1358,13 +1362,13 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16)
                     {
                         NC_lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                             energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                     energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1435,7 +1439,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuCCNpNpi
@@ -1487,13 +1491,13 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == 15 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == -13 || tStdHepPdg[j] == -15)
                     {
                         lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                          energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                  energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1564,7 +1568,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuNCNpNpi
@@ -1616,13 +1620,13 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16)
                     {
                         NC_lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                             energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                     energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1693,7 +1697,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuInclusiveNpNpi(Basically All)
@@ -1743,19 +1747,19 @@ void VectorLept_wNC(const std::string &input_file)
                     if (tStdHepPdg[j] == 11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == 15 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == -13 || tStdHepPdg[j] == -15)
                     {
                         lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                          energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                  energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     if (tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16)
                     {
                         NC_lepton_kinematics(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                             energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
+                     energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary, E_lep, P_x_lep, P_y_lep, P_z_lep);
                     }
 
                     if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1826,7 +1830,7 @@ void VectorLept_wNC(const std::string &input_file)
             double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
             double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
 
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
     } // End of event loop
