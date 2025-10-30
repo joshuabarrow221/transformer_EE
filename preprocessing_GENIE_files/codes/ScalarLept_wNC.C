@@ -41,6 +41,13 @@ TH1D *Fin_PiPlus_Mult;
 TH1D *Fin_PiMinus_Mult;
 TH1D *Fin_PiZero_Mult;
 TH1D *Fin_Gamma_Mom;
+TH1D *Miss_Energy;
+TH1D *Miss_Momentum_X;
+TH1D *Miss_Momentum_Y;
+TH1D *Miss_Momentum_Z;
+TH1D *Miss_Momentum_Magnitude;
+TH1D *Nu_Theta_Z;
+TH1D *Nu_Phi_Z;
 
 std::vector<std::string> split(const std::string &str, char delimiter)
 {
@@ -209,14 +216,13 @@ double getDoubleValue(const std::variant<int, float, std::string> &value)
     }
     throw std::runtime_error("Unsupported type for conversion to double");
 }
-std::tuple<double, double> kinematics_massless(const double tStdHepP4[], int j)
+std::tuple<double, double, double> kinematics_massless(const double tStdHepP4[], int j)
 {
-    // double fAbsoluteParticleMomentum = sqrt(pow(tStdHepP4[4 * j], 2) + pow(tStdHepP4[4 * j + 1], 2) + pow(tStdHepP4[4 * j + 2], 2));
-    double fAbsoluteParticleMomentum = tStdHepP4[4 * j + 3];
-    // std::cout << "Massless energy: " << tStdHepP4[4 * j + 3] << std::endl;
+    double fAbsoluteParticleMomentum = sqrt(pow(tStdHepP4[4 * j], 2) + pow(tStdHepP4[4 * j + 1], 2) + pow(tStdHepP4[4 * j + 2], 2));
     double fKE = fAbsoluteParticleMomentum;
+    double fInvMass = 0;
 
-    return std::make_tuple(fAbsoluteParticleMomentum, fKE);
+    return std::make_tuple(fAbsoluteParticleMomentum, fInvMass, fKE);
 }
 
 double calc_baseline(const double tStdHepP4[], double fAbsoluteParticleMomentum, int j)
@@ -294,7 +300,7 @@ double phi_nu(const double tStdHepP4[], double fAbsoluteParticleMomentum, int j)
 
 void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[], std::vector<int> &pdgs, std::vector<double> &masses,
                          std::vector<double> &energies, std::vector<double> &pxs,
-                         std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_fpx, double &tot_fpy, double &tot_fpz,
+                         std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_hadronic_energy, double &tot_fpx, double &tot_fpy, double &tot_fpz,
                          const std::map<std::string, std::variant<int, float, std::string>> &dictionary)
 {
     double muon_ke = getDoubleValue(dictionary.at("Muon_KE"));
@@ -303,7 +309,7 @@ void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[]
     double kaon_ke = getDoubleValue(dictionary.at("K+-_KE"));
     double pion_ke = getDoubleValue(dictionary.at("Pi+-_KE"));
     auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics(tStdHepP4, j);
-    auto [fAbsoluteParticleMomentum_gamma, fKE_gamma] = kinematics_massless(tStdHepP4, j);
+    auto [fAbsoluteParticleMomentum_gamma, fInvMass_gamma, fKE_gamma] = kinematics_massless(tStdHepP4, j);
     // define costheta and theta array
 
     if ((tStdHepPdg[j] == 2212 && fKE >= prot_ke) ||
@@ -409,6 +415,15 @@ void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[]
             if (tStdHepPdg[j] == 111)
                 Fin_PiZero_Mom->Fill(1000. * fAbsoluteParticleMomentum);
         }
+    }
+    // Calculate hadronic energy separately
+    if ((tStdHepPdg[j] == 2212 && fKE >= prot_ke) ||
+        (tStdHepPdg[j] == 211 && fKE >= pion_ke) ||
+        (tStdHepPdg[j] == -211 && fKE >= pion_ke) ||
+        (tStdHepPdg[j] == 111) ||
+        ((tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310) && fKE >= kaon_ke))
+    {
+        tot_hadronic_energy += fKE;
     }
 }
 
@@ -537,7 +552,7 @@ void ScalarLept_wNC(const std::string &input_file)
     ofstream outfile(outfile_name);
 
     // define the header for the CSV file
-    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Lept_Theta_z\",\"Lept_Phi_z\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
+    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"tot_hadronic_energy\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
     // outfile << "\"Event_Index\",\"Initial_State_Neutrino_PDG\",\"Initial_State_Neutrino_Energy\",\"Initial_State_Neutrino_Momentum_X\",\"Initial_State_Neutrino_Momentum_Y\",\"Initial_State_Neutrino_Momentum_Z\",\"Initial_Neutrino_CosTheta\",\"Initial_Neutrino_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\",\"Topology\"\n";
 
     // //print the output file
@@ -698,6 +713,48 @@ void ScalarLept_wNC(const std::string &input_file)
     Fin_Gamma_Mom->SetLineColor(kBlue + 1);
     Fin_Gamma_Mom->SetLineWidth(3);
 
+    Miss_Energy = new TH1D((last_name + "Miss_Energy").c_str(), (last_name + "Missing Energy, AR23").c_str(), 1000, -500., 1500.);
+    Miss_Energy->GetXaxis()->SetTitle("Missing Energy [GeV]");
+    Miss_Energy->GetYaxis()->SetTitle("Counts");
+    Miss_Energy->SetLineColor(kMagenta);
+    Miss_Energy->SetLineWidth(3);
+
+    Miss_Momentum_X = new TH1D((last_name + "Miss_Momentum_X").c_str(), (last_name + "Missing Momentum X, AR23").c_str(), 1000, -1000., 1000.);
+    Miss_Momentum_X->GetXaxis()->SetTitle("Missing Momentum X [GeV]");
+    Miss_Momentum_X->GetYaxis()->SetTitle("Counts");
+    Miss_Momentum_X->SetLineColor(kCyan);
+    Miss_Momentum_X->SetLineWidth(3);
+
+    Miss_Momentum_Y = new TH1D((last_name + "Miss_Momentum_Y").c_str(), (last_name + "Missing Momentum Y, AR23").c_str(), 1000, -1000., 1000.);
+    Miss_Momentum_Y->GetXaxis()->SetTitle("Missing Momentum Y [GeV]");
+    Miss_Momentum_Y->GetYaxis()->SetTitle("Counts");
+    Miss_Momentum_Y->SetLineColor(kOrange);
+    Miss_Momentum_Y->SetLineWidth(3);
+
+    Miss_Momentum_Z = new TH1D((last_name + "Miss_Momentum_Z").c_str(), (last_name + "Missing Momentum Z, AR23").c_str(), 1000, -1000., 1000.);
+    Miss_Momentum_Z->GetXaxis()->SetTitle("Missing Momentum Z [GeV]");
+    Miss_Momentum_Z->GetYaxis()->SetTitle("Counts");
+    Miss_Momentum_Z->SetLineColor(kSpring);
+    Miss_Momentum_Z->SetLineWidth(3);
+
+    Miss_Momentum_Magnitude = new TH1D((last_name + "Miss_Momentum_Magnitude").c_str(), (last_name + "Missing Momentum Magnitude, AR23").c_str(), 1000, 0., 1500.);
+    Miss_Momentum_Magnitude->GetXaxis()->SetTitle("Missing Momentum Magnitude [GeV]");
+    Miss_Momentum_Magnitude->GetYaxis()->SetTitle("Counts");
+    Miss_Momentum_Magnitude->SetLineColor(kTeal);
+    Miss_Momentum_Magnitude->SetLineWidth(3);
+
+    Nu_Theta_Z = new TH1D((last_name + "Nu_Theta_Z").c_str(), (last_name + "Neutrino Zenith Angle #theta_{z}, AR23").c_str(), 1000, 0., 3.15);
+    Nu_Theta_Z->GetXaxis()->SetTitle("Zenith Angle #theta_{z} [rad]");
+    Nu_Theta_Z->GetYaxis()->SetTitle("Counts");
+    Nu_Theta_Z->SetLineColor(kViolet + 2);
+    Nu_Theta_Z->SetLineWidth(3);
+
+    Nu_Phi_Z = new TH1D((last_name + "Nu_Phi_Z").c_str(), (last_name + "Neutrino Azimuthal Angle #phi_{z}, AR23").c_str(), 1000, -180., 180.);
+    Nu_Phi_Z->GetXaxis()->SetTitle("Azimuthal Angle #phi_{z} [deg]");
+    Nu_Phi_Z->GetYaxis()->SetTitle("Counts");
+    Nu_Phi_Z->SetLineColor(kAzure + 2);
+    Nu_Phi_Z->SetLineWidth(3);
+
     int tStdHepN = 0;                               // the num of particles in an event
     int tStdHepStatus[NMaxParticlesPerEvent] = {0}; // an array with the all the number of elements in the tStdHepStatus set to 0
     int tStdHepPdg[NMaxParticlesPerEvent] = {0};
@@ -742,6 +799,7 @@ void ScalarLept_wNC(const std::string &input_file)
 
         double tot_fpx = 0, tot_fpy = 0, tot_fpz = 0;
         double tot_fKE = 0;
+        double tot_hadronic_energy = 0;
 
         // Store neutrino and lepton 4-momentum
         double E_nu = 0, P_x_nu = 0, P_y_nu = 0, P_z_nu = 0;
@@ -767,7 +825,7 @@ void ScalarLept_wNC(const std::string &input_file)
             if (tStdHepStatus[j] == 0 && (tStdHepPdg[j] == -16 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16))
             {
                 tStdHepPdg_nu = tStdHepPdg[j];
-                auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+                auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
                 fAbsoluteParticleMomentum_nu = fAbsoluteParticleMomentum;
                 fKE_nu = fKE;
             }
@@ -997,7 +1055,7 @@ void ScalarLept_wNC(const std::string &input_file)
 
                 else if ((tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16) && j <= 5)
                 {
-                    auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+                    auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
                     // Store "lepton" (outgoing neutrino) 4-momentum for NC
                     E_lep = fKE;
@@ -1020,7 +1078,7 @@ void ScalarLept_wNC(const std::string &input_file)
                 else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                 {
                     finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                        energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                        energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                 }
             }
         }
@@ -1084,14 +1142,20 @@ void ScalarLept_wNC(const std::string &input_file)
 
         double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
         double p_miss = tot_fKE - p_tot;
+        double MissE = E_nu - tot_fKE;
+        double P_miss_x = P_x_nu - tot_fpx;
+        double P_miss_y = P_y_nu - tot_fpy;
+        double P_miss_z = P_z_nu - tot_fpz;
+        double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
 
-        // Calculate missing 4-momentum components
-        double MissE = E_nu - E_lep - tot_fKE;
-        double P_miss_x = P_x_nu - P_x_lep - tot_fpx;
-        double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
-        double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
+        // Fill missing momentum histograms
+        Miss_Energy->Fill(MissE);
+        Miss_Momentum_X->Fill(P_miss_x);
+        Miss_Momentum_Y->Fill(P_miss_y);
+        Miss_Momentum_Z->Fill(P_miss_z);
+        Miss_Momentum_Magnitude->Fill(P_miss_magnitude);
 
-        outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+        outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
     }
 
     // NumuInclusiveNpNpi/NueInclusiveNpNpi
@@ -1112,7 +1176,7 @@ void ScalarLept_wNC(const std::string &input_file)
             if (tStdHepStatus[j] == 0 && (tStdHepPdg[j] == -16 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16))
             {
 
-                auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+                auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
                 // Store neutrino 4-momentum
                 E_nu = fAbsoluteParticleMomentum;
@@ -1132,7 +1196,8 @@ void ScalarLept_wNC(const std::string &input_file)
                 Init_Nu_Theta->Fill(acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum));
                 Init_Nu_Phi->Fill(phi);
                 Oscillogram->Fill(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum, fAbsoluteParticleMomentum);
-
+                Nu_Theta_Z->Fill(theta_z_nu);
+                Nu_Phi_Z->Fill(phi_z_nu);
                 // outfile << "\"" << i << "\",";
                 outfile << "\"" << i << "\"," << std::setprecision(6) << "\"" << tStdHepPdg[j] << "\",\"" << fAbsoluteParticleMomentum << "\",\"" << tStdHepP4[4 * j] << "\",\"" << tStdHepP4[4 * j + 1] << "\",\"" << tStdHepP4[4 * j + 2] << "\",\"" << tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum << "\",\"" << (180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum) << "\",\"" << phi << "\",\"" << theta_z_nu << "\",\"" << phi_z_nu << "\",\"" << baseline << "\",\"";
                 // Output the results
@@ -1178,7 +1243,7 @@ void ScalarLept_wNC(const std::string &input_file)
 
                 else if ((tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16) && j <= 5)
                 {
-                    auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+                    auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
                     // Store "lepton" (outgoing neutrino) 4-momentum for NC
                     E_lep = fKE;
@@ -1201,7 +1266,7 @@ void ScalarLept_wNC(const std::string &input_file)
                 else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                 {
                     finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                        energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                        energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                 }
             }
         }
@@ -1266,13 +1331,22 @@ void ScalarLept_wNC(const std::string &input_file)
         double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
         double p_miss = tot_fKE - p_tot;
 
-        // Calculate missing 4-momentum components
-        double MissE = E_nu - E_lep - tot_fKE;
-        double P_miss_x = P_x_nu - P_x_lep - tot_fpx;
-        double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
-        double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
+        double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
+        double p_miss = tot_fKE - p_tot;
+        double MissE = E_nu - tot_fKE;
+        double P_miss_x = P_x_nu - tot_fpx;
+        double P_miss_y = P_y_nu - tot_fpy;
+        double P_miss_z = P_z_nu - tot_fpz;
+        double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
 
-        outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+        // Fill missing momentum histograms
+        Miss_Energy->Fill(MissE);
+        Miss_Momentum_X->Fill(P_miss_x);
+        Miss_Momentum_Y->Fill(P_miss_y);
+        Miss_Momentum_Z->Fill(P_miss_z);
+        Miss_Momentum_Magnitude->Fill(P_miss_magnitude);
+
+        outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
     }
 
     // NumuCCNpNpi/NueCCNpNpi
@@ -1357,7 +1431,7 @@ void ScalarLept_wNC(const std::string &input_file)
             else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
             {
                 finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
             }
         }
     }
@@ -1413,13 +1487,22 @@ void ScalarLept_wNC(const std::string &input_file)
     double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
     double p_miss = tot_fKE - p_tot;
 
-    // Calculate missing 4-momentum components
-    double MissE = E_nu - E_lep - tot_fKE;
-    double P_miss_x = P_x_nu - P_x_lep - tot_fpx;
-    double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
-    double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
+    double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
+    double p_miss = tot_fKE - p_tot;
+    double MissE = E_nu - tot_fKE;
+    double P_miss_x = P_x_nu - tot_fpx;
+    double P_miss_y = P_y_nu - tot_fpy;
+    double P_miss_z = P_z_nu - tot_fpz;
+    double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
 
-    outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+    // Fill missing momentum histograms
+    Miss_Energy->Fill(MissE);
+    Miss_Momentum_X->Fill(P_miss_x);
+    Miss_Momentum_Y->Fill(P_miss_y);
+    Miss_Momentum_Z->Fill(P_miss_z);
+    Miss_Momentum_Magnitude->Fill(P_miss_magnitude);
+
+    outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
 }
 
 // NumuNCNpNpi/NueNCNpNpi
@@ -1439,7 +1522,7 @@ if (found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") && (lept
         if (tStdHepStatus[j] == 0 && (tStdHepPdg[j] == -16 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16))
         {
 
-            auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+            auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
             // Store neutrino 4-momentum
             E_nu = fAbsoluteParticleMomentum;
@@ -1459,6 +1542,8 @@ if (found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") && (lept
             Init_Nu_Theta->Fill(acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum));
             Init_Nu_Phi->Fill(phi);
             Oscillogram->Fill(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum, fAbsoluteParticleMomentum);
+            Nu_Theta_Z->Fill(theta_z_nu);
+            Nu_Phi_Z->Fill(phi_z_nu);
 
             // outfile << "\"" << i << "\",";
             outfile << "\"" << i << "\"," << std::setprecision(6) << "\"" << tStdHepPdg[j] << "\",\"" << fAbsoluteParticleMomentum << "\",\"" << tStdHepP4[4 * j] << "\",\"" << tStdHepP4[4 * j + 1] << "\",\"" << tStdHepP4[4 * j + 2] << "\",\"" << tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum << "\",\"" << (180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum) << "\",\"" << phi << "\",\"" << theta_z_nu << "\",\"" << phi_z_nu << "\",\"" << baseline << "\",\"";
@@ -1469,7 +1554,7 @@ if (found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") && (lept
 
             if ((tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16) && j <= 5)
             {
-                auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+                auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
                 outfile << std::setprecision(6) << tStdHepPdg[j] << "\",\"" << 0 << "\",\"" << fKE << "\",\"" << tStdHepP4[4 * j] << "\",\"" << tStdHepP4[4 * j + 1] << "\",\"" << tStdHepP4[4 * j + 2] << "\",\"" << tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum << "\",\"" << (180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum) << "\",\"";
 
                 Fin_NC_Lept_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1480,7 +1565,7 @@ if (found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") && (lept
             else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
             {
                 finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
             }
         }
     }
@@ -1545,13 +1630,22 @@ if (found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") && (lept
     double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
     double p_miss = tot_fKE - p_tot;
 
-    // Calculate missing 4-momentum components
-    double MissE = E_nu - E_lep - tot_fKE;
-    double P_miss_x = P_x_nu - P_x_lep - tot_fpx;
-    double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
-    double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
+    double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
+    double p_miss = tot_fKE - p_tot;
+    double MissE = E_nu - tot_fKE;
+    double P_miss_x = P_x_nu - tot_fpx;
+    double P_miss_y = P_y_nu - tot_fpy;
+    double P_miss_z = P_z_nu - tot_fpz;
+    double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
 
-    outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+    // Fill missing momentum histograms
+    Miss_Energy->Fill(MissE);
+    Miss_Momentum_X->Fill(P_miss_x);
+    Miss_Momentum_Y->Fill(P_miss_y);
+    Miss_Momentum_Z->Fill(P_miss_z);
+    Miss_Momentum_Magnitude->Fill(P_miss_magnitude);
+
+    outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
 }
 
 // AnyNuCCNpNpi
@@ -1570,7 +1664,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "CC") &
         if (tStdHepStatus[j] == 0 && (tStdHepPdg[j] == -16 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16))
         {
 
-            auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+            auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
             // Store neutrino 4-momentum
             E_nu = fAbsoluteParticleMomentum;
@@ -1590,6 +1684,8 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "CC") &
             Init_Nu_Theta->Fill(acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum));
             Init_Nu_Phi->Fill(phi);
             Oscillogram->Fill(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum, fAbsoluteParticleMomentum);
+            Nu_Theta_Z->Fill(theta_z_nu);
+            Nu_Phi_Z->Fill(phi_z_nu);
 
             // outfile << "\"" << i << "\",";
             outfile << "\"" << i << "\"," << std::setprecision(6) << "\"" << tStdHepPdg[j] << "\",\"" << fAbsoluteParticleMomentum << "\",\"" << tStdHepP4[4 * j] << "\",\"" << tStdHepP4[4 * j + 1] << "\",\"" << tStdHepP4[4 * j + 2] << "\",\"" << tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum << "\",\"" << (180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum) << "\",\"" << phi << "\",\"" << theta_z_nu << "\",\"" << phi_z_nu << "\",\"" << baseline << "\",\"";
@@ -1636,7 +1732,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "CC") &
             else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
             {
                 finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
             }
         }
     }
@@ -1701,13 +1797,22 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "CC") &
     double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
     double p_miss = tot_fKE - p_tot;
 
-    // Calculate missing 4-momentum components
-    double MissE = E_nu - E_lep - tot_fKE;
-    double P_miss_x = P_x_nu - P_x_lep - tot_fpx;
-    double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
-    double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
+    double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
+    double p_miss = tot_fKE - p_tot;
+    double MissE = E_nu - tot_fKE;
+    double P_miss_x = P_x_nu - tot_fpx;
+    double P_miss_y = P_y_nu - tot_fpy;
+    double P_miss_z = P_z_nu - tot_fpz;
+    double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
 
-    outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+    // Fill missing momentum histograms
+    Miss_Energy->Fill(MissE);
+    Miss_Momentum_X->Fill(P_miss_x);
+    Miss_Momentum_Y->Fill(P_miss_y);
+    Miss_Momentum_Z->Fill(P_miss_z);
+    Miss_Momentum_Magnitude->Fill(P_miss_magnitude);
+
+    outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
 }
 
 // AnyNuNCNpNpi
@@ -1759,7 +1864,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") &
 
         if ((tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16) && j <= 5)
         {
-            auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+            auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
             outfile << std::setprecision(6) << tStdHepPdg[j] << "\",\"" << 0 << "\",\"" << fKE << "\",\"" << tStdHepP4[4 * j] << "\",\"" << tStdHepP4[4 * j + 1] << "\",\"" << tStdHepP4[4 * j + 2] << "\",\"" << tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum << "\",\"" << (180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum) << "\",\"";
 
             Fin_NC_Lept_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1770,7 +1875,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "NC") &
         else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
         {
             finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
         }
     }
 }
@@ -1835,13 +1940,22 @@ writeVectorToFile(outfile, theta_arr);
 double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
 double p_miss = tot_fKE - p_tot;
 
-// Calculate missing 4-momentum components
-double MissE = E_nu - E_lep - tot_fKE;
-double P_miss_x = P_x_nu - P_x_lep - tot_fpx;
-double P_miss_y = P_y_nu - P_y_lep - tot_fpy;
-double P_miss_z = P_z_nu - P_z_lep - tot_fpz;
+double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
+double p_miss = tot_fKE - p_tot;
+double MissE = E_nu - tot_fKE;
+double P_miss_x = P_x_nu - tot_fpx;
+double P_miss_y = P_y_nu - tot_fpy;
+double P_miss_z = P_z_nu - tot_fpz;
+double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
 
-outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
+// Fill missing momentum histograms
+Miss_Energy->Fill(MissE);
+Miss_Momentum_X->Fill(P_miss_x);
+Miss_Momentum_Y->Fill(P_miss_y);
+Miss_Momentum_Z->Fill(P_miss_z);
+Miss_Momentum_Magnitude->Fill(P_miss_magnitude);
+
+outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
 }
 
 // AnyNuInclusiveNpNpi(Basically All)
@@ -1860,7 +1974,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "Inclus
 
         if (tStdHepStatus[j] == 0 && (tStdHepPdg[j] == -16 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16))
         {
-            auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+            auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
             // Store neutrino 4-momentum
             E_nu = fAbsoluteParticleMomentum;
@@ -1880,6 +1994,8 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "Inclus
             Init_Nu_Theta->Fill(acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum));
             Init_Nu_Phi->Fill(phi);
             Oscillogram->Fill(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum, fAbsoluteParticleMomentum);
+            Nu_Theta_Z->Fill(theta_z_nu);
+            Nu_Phi_Z->Fill(phi_z_nu);
 
             // outfile << "\"" << i << "\",";
             outfile << "\"" << i << "\"," << std::setprecision(6) << "\"" << tStdHepPdg[j] << "\",\"" << fAbsoluteParticleMomentum << "\",\"" << tStdHepP4[4 * j] << "\",\"" << tStdHepP4[4 * j + 1] << "\",\"" << tStdHepP4[4 * j + 2] << "\",\"" << tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum << "\",\"" << (180. / PI) * acos(tStdHepP4[4 * j + 1] / fAbsoluteParticleMomentum) << "\",\"" << phi << "\",\"" << theta_z_nu << "\",\"" << phi_z_nu << "\",\"" << baseline << "\",\"";
@@ -1917,7 +2033,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "Inclus
             // Neutral current cases
             else if ((tStdHepPdg[j] == 12 || tStdHepPdg[j] == 14 || tStdHepPdg[j] == 16 || tStdHepPdg[j] == -12 || tStdHepPdg[j] == -14 || tStdHepPdg[j] == -16) && j <= 5)
             {
-                auto [fAbsoluteParticleMomentum, fKE] = kinematics_massless(tStdHepP4, j);
+                auto [fAbsoluteParticleMomentum, fInvMass, fKE] = kinematics_massless(tStdHepP4, j);
 
                 // Store "lepton" (outgoing neutrino) 4-momentum for NC
                 E_lep = fKE;
@@ -1940,7 +2056,7 @@ if (string_found && (!is_Final_lepton_PDG_int && str_Final_lepton_PDG == "Inclus
             else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
             {
                 finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                    energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
             }
         }
     }
@@ -2050,6 +2166,15 @@ Fin_PiPlus_Mom->Write();
 Fin_PiMinus_Mom->Write();
 Fin_PiZero_Mom->Write();
 Fin_Gamma_Mom->Write();
+Miss_Energy->Write();
+Miss_Momentum_X->Write();
+Miss_Momentum_Y->Write();
+Miss_Momentum_Z->Write();
+Miss_Momentum_Magnitude->Write();
+Nu_Theta_Z->Write();
+Nu_Phi_Z->Write();
+
+// std::cout << "Initial Neutrino Momentum, AR23" << endl;
 
 // std::cout << "Initial Neutrino Momentum, AR23" << endl;
 // Init_Nu_Mom->Print("all");
@@ -2195,6 +2320,55 @@ c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
 c1->SetLogy(1);
 c1->Print((directory + "/" + last_name + "Fin_Gamma_Mom.png").c_str());
 c1->Print((directory + "/" + last_name + "Fin_Gamma_Mom.root").c_str());
+c1->Clear();
+
+Miss_Energy->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(1);
+c1->Print((directory + "/" + last_name + "Miss_Energy.png").c_str());
+c1->Print((directory + "/" + last_name + "Miss_Energy.root").c_str());
+c1->Clear();
+
+Miss_Momentum_X->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(1);
+c1->Print((directory + "/" + last_name + "Miss_Momentum_X.png").c_str());
+c1->Print((directory + "/" + last_name + "Miss_Momentum_X.root").c_str());
+c1->Clear();
+
+Miss_Momentum_Y->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(1);
+c1->Print((directory + "/" + last_name + "Miss_Momentum_Y.png").c_str());
+c1->Print((directory + "/" + last_name + "Miss_Momentum_Y.root").c_str());
+c1->Clear();
+
+Miss_Momentum_Z->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(1);
+c1->Print((directory + "/" + last_name + "Miss_Momentum_Z.png").c_str());
+c1->Print((directory + "/" + last_name + "Miss_Momentum_Z.root").c_str());
+c1->Clear();
+
+Miss_Momentum_Magnitude->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(1);
+c1->Print((directory + "/" + last_name + "Miss_Momentum_Magnitude.png").c_str());
+c1->Print((directory + "/" + last_name + "Miss_Momentum_Magnitude.root").c_str());
+c1->Clear();
+
+Nu_Theta_Z->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(0);
+c1->Print((directory + "/" + last_name + "Nu_Theta_Z.png").c_str());
+c1->Print((directory + "/" + last_name + "Nu_Theta_Z.root").c_str());
+c1->Clear();
+
+Nu_Phi_Z->Draw("hist");
+c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
+c1->SetLogy(0);
+c1->Print((directory + "/" + last_name + "Nu_Phi_Z.png").c_str());
+c1->Print((directory + "/" + last_name + "Nu_Phi_Z.root").c_str());
 c1->Clear();
 
 treefile->Write();
