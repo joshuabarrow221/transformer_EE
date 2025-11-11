@@ -988,7 +988,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1143,7 +1143,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1291,7 +1291,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1435,7 +1435,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1572,7 +1572,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1713,7 +1713,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
@@ -1850,7 +1850,7 @@ void VectorLept_wNC(const std::string &input_file)
                     double phi = phi_nu(tStdHepP4, fAbsoluteParticleMomentum, j);
 
                     // Calculate theta_z and phi_z for neutrino
-                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum);
+                    double theta_z_nu = acos(P_y_nu / fAbsoluteParticleMomentum) * (180. / PI);
                     double phi_z_nu = atan2(P_x_nu, P_z_nu) * (180. / PI);
 
                     Init_Nu_Mom->Fill(1000. * fAbsoluteParticleMomentum);
