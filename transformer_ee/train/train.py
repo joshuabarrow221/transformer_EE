@@ -9,6 +9,7 @@ from typing import Dict, List
 
 import numpy as np
 import torch
+import pandas as pd
 
 from transformer_ee.dataloader.load import get_train_valid_test_dataloader
 from transformer_ee.logger.train_logger import BaseLogger
@@ -54,6 +55,8 @@ class MVtrainer:
         self.input_d = input_d
         self.logger = logger
         print(json.dumps(self.input_d, indent=4))
+        # A single, ever-increasing step counter for W&B
+        self.global_step = 0
 
         # dataloaders & model
         (
@@ -146,6 +149,16 @@ class MVtrainer:
                 self.optimizer.step()
 
                 epoch_total_loss.append(lcl_loss.detach())
+                # ---- W&B per-step logging (main process only) ----
+                if self.logger is not None:
+                    # ensure plain Python floats; also log a monotonic step
+                    self.logger.log({
+                        "train/loss": float(lcl_loss.detach().item()),
+                        "train/step": int(self.global_step),
+                        "epoch": int(epoch),
+                    }, step=int(self.global_step))
+                self.global_step += 1
+
 
                 if batch_idx % self.print_interval == 0:
                     print(f"Epoch: {epoch}, batch: {batch_idx} Loss: {lcl_loss:0.4f}")
@@ -177,6 +190,25 @@ class MVtrainer:
 
             self.valid_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_val_loss)))
             self.valid_comp_loss_per_epoch.append(comp_val_sum / len(self.validloader))
+
+            # ---- Optional: epoch-level summaries (once per epoch) ----
+            if self.logger is not None:
+                tr = float(self.train_loss_list_per_epoch[-1].detach().cpu().item()
+                           if hasattr(self.train_loss_list_per_epoch[-1], "detach") else
+                           float(self.train_loss_list_per_epoch[-1]))
+                va = float(self.valid_loss_list_per_epoch[-1].detach().cpu().item()
+                           if hasattr(self.valid_loss_list_per_epoch[-1], "detach") else
+                           float(self.valid_loss_list_per_epoch[-1]))
+                # batch components (example: log as a small dict)
+                comp = self.train_comp_loss_per_epoch[-1].detach().cpu().tolist()
+                comp_dict = {f"train/comp_{j}": float(x) for j, x in enumerate(comp)}
+                self.logger.log({
+                    "epoch": int(epoch),
+                    "train/loss_epoch": tr,
+                    "valid/loss_epoch": va,
+                    **comp_dict,
+                    "train/step": int(self.global_step),  # keeps charts aligned
+                }, step=int(self.global_step))
 
             # ------------------- bookkeeping & plots -------------------
             self._checkpoint_and_plot(epoch, scheme="LCL", n_vars=n_vars)
@@ -338,17 +370,39 @@ class MVtrainer:
     # ------------------------------------------------------------------
 
     def eval(self):
+        self.net.to(self.gpu_device)
         self.net.load_state_dict(
             torch.load(os.path.join(self.save_path, "best_model.zip"), map_location=torch.device("cpu"))
         )
         self.net.eval()
-        self.net.to(self.gpu_device)
 
         trueval, prediction = [], []
-        for batch in self.testloader:
-            vec, sca, msk, tgt = [x.to(self.gpu_device) for x in batch[:4]]
-            out = self.net.forward(vec, sca, msk)
-            trueval.append(tgt.detach().cpu().numpy())
-            prediction.append(out.detach().cpu().numpy())
+        # Make sure eval does not build graphs and uses lean CUDA paths
+        with torch.inference_mode():
+            for batch in self.testloader:
+                vec, sca, msk, tgt = [x.to(self.gpu_device) for x in batch[:4]]
+                out = self.net.forward(vec, sca, msk)
+                trueval.append(tgt.detach().cpu().numpy())
+                prediction.append(out.detach().cpu().numpy())
 
         np.savez(os.path.join(self.save_path, "result.npz"), trueval=np.concatenate(trueval), prediction=np.concatenate(prediction))
+
+        # save true and predicted target variables to df 
+        true_arr = np.concatenate(trueval, axis=0)
+        pred_arr = np.concatenate(prediction, axis=0)
+        
+        target = self.input_d["target"]
+        truevars = [f"true_{x}" for x in target]
+        predvars = [f"pred_{x}" for x in target]
+        
+        truevars_df = pd.DataFrame(true_arr, columns=truevars)
+        predvars_df = pd.DataFrame(pred_arr, columns=predvars)
+        df = pd.concat([truevars_df, predvars_df], axis=1)
+        
+        # add tag column
+        model_phys_name = self.input_d["model_phys_name"]
+        df[model_phys_name] = -999999
+        
+        df.to_csv(os.path.join(self.save_path, "result.csv"), index=False)
+
+        
