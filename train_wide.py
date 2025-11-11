@@ -9,7 +9,7 @@ from copy import deepcopy
 from transformer_ee.train import MVtrainer
 from transformer_ee.logger.wandb_train_logger import WandBLogger
 import wandb
-
+import torch
 
 # ---------- Helpers ----------
 def kset(d, dotted_key, value):
@@ -136,7 +136,7 @@ def build_argparser():
 
     # Core I/O
     p.add_argument("--base-config",
-                   default="/home/cborden/git/josh_transformer_EE/transformer_EE/transformer_ee/config/wEID/input_GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MAE_E_Px_Py_Pz_EID.json")
+                   default="/home/cborden/git/josh_transformer_EE/transformer_EE/transformer_ee/config/wEID/input_GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MSE_E_Px_Py_Pz_EID.json")
     p.add_argument("--data-path",
                    default="/exp/dune/app/users/rrichi/FinalCodes/Numu_CC_Thresh_p1to1_VectorLeptWithoutNC_eventnum_All_NpNpi.csv")
     p.add_argument("--save-path",
@@ -256,6 +256,10 @@ def main():
 
     my_trainer = MVtrainer(cfg, logger=my_logger)
     my_trainer.train_LCL()
+
+    torch.cuda.empty_cache() # free cached blocks from training
+    torch.cuda.ipc_collect() # collect any stray IPC handles
+    
     my_trainer.eval()
 
 

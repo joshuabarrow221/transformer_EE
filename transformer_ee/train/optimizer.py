@@ -10,32 +10,42 @@ def create_optimizer(config: dict, model: nn.Module):
     """
     Create an optimizer from a config.
     Args:
-        "config":
+        config:
         {
-            "optimizer":
-            {
-                name: the name of optimizer.
-                kwargs: the arguments of optimizer.
+            "optimizer": {
+                "name": <str>,        # e.g. "AdamW" or "adamw"
+                "kwargs": <dict>      # args for the optimizer ctor
+            },
             ...
-            }
         }
+        model: an nn.Module to optimize
 
-        model: a model of nn.Module class to optimize
     Returns:
         an optimizer
     """
-    _kwgs = config["optimizer"]["kwargs"]
-    if config["optimizer"]["name"] == "Adam":
-        optimizer = optim.Adam(model.parameters(), **_kwgs)
-    elif config["optimizer"]["name"] == "AdamW":
-        optimizer = optim.AdamW(model.parameters(), **_kwgs)
-    elif config["optimizer"]["name"] == "adamax":
-        optimizer = optim.Adamax(model.parameters(), **_kwgs)
-    elif config["optimizer"]["name"] == "sgd":
-        optimizer = optim.SGD(model.parameters(), **_kwgs)
-    elif config["optimizer"]["name"] == "rmsprop":
-        optimizer = optim.RMSprop(model.parameters(), **_kwgs)
+    # --- Backward-compatible reads ---
+    opt_block = config.get("optimizer", {})
+    name_raw = opt_block.get("name", "sgd")
+    name = str(name_raw).lower()                 # accept "AdamW" and "adamw"
+    kw = dict(opt_block.get("kwargs", {}) or {}) # safe copy; default to {}
+
+    # (Optional but harmless) If some configs accidentally pass None values,
+    # strip them so torch doesn't choke on kwarg=None.
+    kw = {k: v for k, v in kw.items() if v is not None}
+
+    # --- Mapping (unchanged behavior; just case-insensitive) ---
+    if name == "adam":
+        optimizer = optim.Adam(model.parameters(), **kw)
+    elif name == "adamw":
+        optimizer = optim.AdamW(model.parameters(), **kw)
+    elif name == "adamax":
+        optimizer = optim.Adamax(model.parameters(), **kw)
+    elif name == "sgd":
+        optimizer = optim.SGD(model.parameters(), **kw)
+    elif name == "rmsprop":
+        optimizer = optim.RMSprop(model.parameters(), **kw)
     else:
-        raise ValueError("Unsupported optimizer: {}".format(config.optimizer))
+        # Avoid attribute access on dict in the error path
+        raise ValueError("Unsupported optimizer: {}".format(name_raw))
 
     return optimizer
