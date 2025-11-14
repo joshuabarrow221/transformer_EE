@@ -535,25 +535,8 @@ void ScalarLept_wNC(const std::string &input_file)
     std::string proton_num_str = variantToString(dictionary["num_proton"]);
     std::string pion_num_str = variantToString(dictionary["num_pion"]);
 
-    std::string add_file = std::get<std::string>(dictionary["OUTPUT_ROOT_FILE"]);
-    std::string Output_Root_file = add_file + "ScalarLeptwNC_eventnum_" + num_events_str + "_" + proton_num_str + "p" + pion_num_str + "pi.root";
-
-    TFile *treefile = new TFile(Output_Root_file.c_str(), "RECREATE");
-
-    std::string output_name = std::get<std::string>(dictionary["OUTPUT_NAME"]);
-    std::string outfile_name = output_name + "ScalarLeptwNC_eventnum_" + num_events_str + "_" + proton_num_str + "p" + pion_num_str + "pi.csv";
-
-    ofstream outfile(outfile_name);
-
-    // define the header for the CSV file
-    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Lept_Theta_z\",\"Lept_Phi_z\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"tot_hadronic_energy\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
-    // outfile << "\"Event_Index\",\"Initial_State_Neutrino_PDG\",\"Initial_State_Neutrino_Energy\",\"Initial_State_Neutrino_Momentum_X\",\"Initial_State_Neutrino_Momentum_Y\",\"Initial_State_Neutrino_Momentum_Z\",\"Initial_Neutrino_CosTheta\",\"Initial_Neutrino_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\"\n";
-
-    // //print the output file
-    // //std::cout << "Output_Root_file: " << Output_Root_file << std::endl;
-    // //std::cout << "Outfile_name: " << outfile_name << std::endl;
-
-    // directory here
+   
+     // directory here
 
     std::string output_directory = std::get<std::string>(dictionary["OUTPUT_DIR"]);
     std::string directory = output_directory + "ScalarLeptwNC_eventnum_" + num_events_str + "_" + proton_num_str + "p" + pion_num_str + "pi";
@@ -574,7 +557,21 @@ void ScalarLept_wNC(const std::string &input_file)
         std::cerr << "An error occurred while creating the directory: " << e.what() << std::endl;
     }
 
-    std::string last_name = output_name + num_events_str + proton_num_str + "p" + pion_num_str + "pi_";
+    std::string Output_Root_file = output_directory + "ScalarLeptwNC_eventnum_" + num_events_str + "_" + proton_num_str + "p" + pion_num_str + "pi.root";
+
+    TFile *treefile = new TFile(Output_Root_file.c_str(), "RECREATE");
+
+    std::string output_name = std::get<std::string>(dictionary["OUTPUT_NAME"]);
+    std::string outfile_name = output_directory + "ScalarLeptwNC_eventnum_" + num_events_str + "_" + proton_num_str + "p" + pion_num_str + "pi.csv";
+
+    ofstream outfile(outfile_name);
+    std::string last_name = output_name + "ScalarLeptwNC_eventnum_"+ num_events_str+ "_" + proton_num_str + "p" + pion_num_str + "pi_";
+
+    // define the header for the CSV file
+    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Lept_Theta_z\",\"Lept_Phi_z\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"tot_hadronic_energy\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
+    // outfile << "\"Event_Index\",\"Initial_State_Neutrino_PDG\",\"Initial_State_Neutrino_Energy\",\"Initial_State_Neutrino_Momentum_X\",\"Initial_State_Neutrino_Momentum_Y\",\"Initial_State_Neutrino_Momentum_Z\",\"Initial_Neutrino_CosTheta\",\"Initial_Neutrino_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\"\n";
+
+
 
     gStyle->SetStatY(0.9);
     gStyle->SetStatX(0.9);
