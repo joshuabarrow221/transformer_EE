@@ -294,7 +294,7 @@ double phi_nu(const double tStdHepP4[], double fAbsoluteParticleMomentum, int j)
 
 void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[], std::vector<int> &pdgs, std::vector<double> &masses,
                          std::vector<double> &energies, std::vector<double> &pxs,
-                         std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_fpx, double &tot_fpy, double &tot_fpz,
+                         std::vector<double> &pys, std::vector<double> &pzs, std::vector<double> &costheta_arr, std::vector<double> &theta_arr, double &tot_fKE, double &tot_hadronic_energy, double &tot_fpx, double &tot_fpy, double &tot_fpz,
                          const std::map<std::string, std::variant<int, float, std::string>> &dictionary)
 {
     double muon_ke = getDoubleValue(dictionary.at("Muon_KE"));
@@ -408,6 +408,15 @@ void finalparticles_info(const double tStdHepP4[], int j, const int tStdHepPdg[]
                 Fin_PiMinus_Mom->Fill(1000. * fAbsoluteParticleMomentum);
             if (tStdHepPdg[j] == 111)
                 Fin_PiZero_Mom->Fill(1000. * fAbsoluteParticleMomentum);
+
+            if ((tStdHepPdg[j] == 2212 && fKE >= prot_ke) ||
+                (tStdHepPdg[j] == 211 && fKE >= pion_ke) ||
+                (tStdHepPdg[j] == -211 && fKE >= pion_ke) ||
+                (tStdHepPdg[j] == 111) ||
+                ((tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310) && fKE >= kaon_ke))
+            {
+                tot_hadronic_energy += fKE;
+            }
         }
     }
 }
@@ -537,7 +546,7 @@ void ScalarLept_wNC(const std::string &input_file)
     ofstream outfile(outfile_name);
 
     // define the header for the CSV file
-    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Lept_Theta_z\",\"Lept_Phi_z\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
+    outfile << "\"Event_Index\",\"Nu_PDG\",\"Nu_Energy\",\"Nu_Mom_X\",\"Nu_Mom_Y\",\"Nu_Mom_Z\",\"Nu_CosTheta\",\"Nu_Theta\",\"Nu_Phi\",\"Nu_Theta_z\",\"Nu_Phi_z\",\"Nu_Baseline\",\"Lept_PDG\",\"Lept_Mass\",\"Lept_Energy\",\"Lept_MomX\",\"Lept_MomY\",\"Lept_MomZ\",\"Lept_CosTheta\",\"Lept_Theta\",\"Lept_Theta_z\",\"Lept_Phi_z\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"tot_hadronic_energy\",\"p_tot\",\"P_miss\",\"MissE\",\"P_miss_x\",\"P_miss_y\",\"P_miss_z\",\"Topology\"\n";
     // outfile << "\"Event_Index\",\"Initial_State_Neutrino_PDG\",\"Initial_State_Neutrino_Energy\",\"Initial_State_Neutrino_Momentum_X\",\"Initial_State_Neutrino_Momentum_Y\",\"Initial_State_Neutrino_Momentum_Z\",\"Initial_Neutrino_CosTheta\",\"Initial_Neutrino_Theta\",\"Final_State_Particles_PDG\",\"Final_State_Particles_Mass\",\"Final_State_Particles_Energy\",\"Final_State_Particles_Momentum_X\",\"Final_State_Particles_Momentum_Y\",\"Final_State_Particles_Momentum_Z\",\"Final_State_Particles_CosTheta\",\"Final_State_Particles_Theta\",\"tot_fKE\",\"p_tot\",\"P_miss\"\n";
 
     // //print the output file
@@ -742,6 +751,7 @@ void ScalarLept_wNC(const std::string &input_file)
 
         double tot_fpx = 0, tot_fpy = 0, tot_fpz = 0;
         double tot_fKE = 0;
+        double tot_hadronic_energy = 0;
         double nu_energy = 0, nu_px = 0, nu_py = 0, nu_pz = 0;
         double lep_energy = 0, lep_px = 0, lep_py = 0, lep_pz = 0;
 
@@ -1013,7 +1023,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1075,20 +1085,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // NumuInclusiveNpNpi/NueInclusiveNpNpi
@@ -1195,7 +1203,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1257,20 +1265,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // NumuCCNpNpi/NueCCNpNpi
@@ -1360,7 +1366,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1413,20 +1419,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // NumuNCNpNpi/NueNCNpNpi
@@ -1488,7 +1492,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1550,20 +1554,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuCCNpNpi
@@ -1654,7 +1656,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1716,20 +1718,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuNCNpNpi
@@ -1792,7 +1792,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -1854,20 +1854,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
         // AnyNuInclusiveNpNpi(Basically All)
@@ -1965,7 +1963,7 @@ void ScalarLept_wNC(const std::string &input_file)
                     else if (tStdHepPdg[j] == 2212 || tStdHepPdg[j] == 211 || tStdHepPdg[j] == -211 || tStdHepPdg[j] == 111 || tStdHepPdg[j] == 321 || tStdHepPdg[j] == -321 || tStdHepPdg[j] == 130 || tStdHepPdg[j] == 310 || tStdHepPdg[j] == 22 || tStdHepPdg[j] == 11 || tStdHepPdg[j] == -11 || tStdHepPdg[j] == 13 || tStdHepPdg[j] == -13)
                     {
                         finalparticles_info(tStdHepP4, j, tStdHepPdg, pdgs, masses,
-                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_fpx, tot_fpy, tot_fpz, dictionary);
+                                            energies, pxs, pys, pzs, costheta_arr, theta_arr, tot_fKE, tot_hadronic_energy, tot_fpx, tot_fpy, tot_fpz, dictionary);
                     }
                 }
             }
@@ -2027,20 +2025,18 @@ void ScalarLept_wNC(const std::string &input_file)
             writeVectorToFile(outfile, costheta_arr);
             writeVectorToFile(outfile, theta_arr);
 
-            double e_had = tot_fKE - lep_energy;
             double p_tot = sqrt(pow(tot_fpx, 2) + pow(tot_fpy, 2) + pow(tot_fpz, 2));
             double p_miss = tot_fKE - p_tot;
+            double MissE = nu_energy - tot_fKE;
+            double P_miss_x = nu_px - tot_fpx;
+            double P_miss_y = nu_py - tot_fpy;
+            double P_miss_z = nu_pz - tot_fpz;
 
-            double miss_e = nu_energy - lep_energy - e_had;
-            double p_miss_x = nu_px - lep_px - (tot_fpx - lep_px);
-            double p_miss_y = nu_py - lep_py - (tot_fpy - lep_py);
-            double p_miss_z = nu_pz - lep_pz - (tot_fpz - lep_pz);
+            double P_miss_magnitude = sqrt(pow(P_miss_x, 2) + pow(P_miss_y, 2) + pow(P_miss_z, 2));
+            double theta_z = (P_miss_magnitude > 0) ? (180. / PI) * acos(P_miss_y / P_miss_magnitude) : 0;
+            double phi_z = (180. / PI) * atan2(P_miss_z, P_miss_x);
 
-            double p_miss_mag = sqrt(pow(p_miss_x, 2) + pow(p_miss_y, 2) + pow(p_miss_z, 2));
-            double theta_z = (p_miss_mag > 0) ? (180. / PI) * acos(p_miss_y / p_miss_mag) : 0;
-            double phi_z = (180. / PI) * atan2(p_miss_z, p_miss_x);
-
-            outfile << tot_fKE << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << miss_e << "\",\"" << p_miss_x << "\",\"" << p_miss_y << "\",\"" << p_miss_z << "\",\"" << topology << "\"\n";
+            outfile << tot_fKE << "\",\"" << tot_hadronic_energy << "\",\"" << p_tot << "\",\"" << p_miss << "\",\"" << MissE << "\",\"" << P_miss_x << "\",\"" << P_miss_y << "\",\"" << P_miss_z << "\",\"" << topology << "\"\n";
         }
 
     } // End of event loop
