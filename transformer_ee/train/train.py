@@ -114,8 +114,35 @@ class MVtrainer:
     # core training loops – LCL only
     # ------------------------------------------------------------------
 
+    def _check_tensor(self, name: str, t: torch.Tensor, max_print: int = 3):
+        """Debug helper: print NaN/Inf and basic stats for a tensor."""
+        if t is None:
+            print(f"[CHECK] {name}: is None")
+            return
+
+        if not isinstance(t, torch.Tensor):
+            print(f"[CHECK] {name}: not a tensor (type={type(t)})")
+            return
+
+        has_nan = torch.isnan(t).any().item()
+        has_inf = torch.isinf(t).any().item()
+        print(
+            f"[CHECK] {name}: shape={tuple(t.shape)}, "
+            f"nan={has_nan}, inf={has_inf}, "
+            f"min={t.min().item() if t.numel() > 0 else 'NA'}, "
+            f"max={t.max().item() if t.numel() > 0 else 'NA'}"
+        )
+        if has_nan or has_inf:
+            flat = t.flatten()
+            idx = torch.nonzero(torch.isnan(flat) | torch.isinf(flat)).squeeze()
+            idx = idx[:max_print] if idx.numel() > max_print else idx
+            print(f"  -> first problematic indices in {name}: {idx.tolist()}")
+            print(f"  -> values at those indices: {flat[idx].tolist()}")
+
     def train_LCL(self):
         """Standard LCL training with per‑component loss tracking."""
+        # torch.autograd.set_detect_anomaly(True) #debugging-----
+        
         loss_kwargs = self.input_d["loss"]["kwargs"]
         base_loss_names = loss_kwargs["base_loss_names"]
         coeffs = loss_kwargs["coefficients"]
@@ -130,10 +157,33 @@ class MVtrainer:
             for batch_idx, batch in enumerate(self.trainloader):
                 vec, sca, msk, tgt, wgt = [x.to(self.gpu_device) for x in batch]
 
+                # ---- ONE-TIME DEEP CHECK ON FIRST BATCH ----
+                if epoch == 0 and batch_idx == 0:
+                    print("\n=== DEBUG: First training batch sanity check ===")
+                    self._check_tensor("vec", vec)
+                    self._check_tensor("sca", sca)
+                    self._check_tensor("msk", msk)
+                    self._check_tensor("tgt", tgt)
+                    self._check_tensor("wgt", wgt)
+                    # inspect per-target column ranges
+                    for j in range(tgt.shape[1]):
+                        col = tgt[:, j]
+                        self._check_tensor(f"tgt[:, {j}]", col)
+                    print("=== END first batch sanity check ===\n")
+
                 out = self.net.forward(vec, sca, msk)
+
+                if epoch == 0 and batch_idx == 0:
+                    print("\n=== DEBUG: First forward pass output ===")
+                    self._check_tensor("out", out)
+                    for j in range(out.shape[1]):
+                        self._check_tensor(f"out[:, {j}]", out[:, j])
+                    print("=== END forward output check ===\n")
 
                 # total loss (legacy)
                 lcl_loss = linear_combination_loss(out, tgt, weight=wgt, **loss_kwargs)
+                if epoch == 0 and batch_idx == 0:
+                    print(f"[DEBUG] lcl_loss on first batch: {lcl_loss}")
 
                 # component‑wise contributions (un‑weighted by alpha/beta)
                 for j, (name, coef) in enumerate(zip(base_loss_names, coeffs)):
@@ -146,6 +196,21 @@ class MVtrainer:
                 # step
                 self.optimizer.zero_grad()
                 lcl_loss.backward()
+
+                if epoch == 0 and batch_idx == 0:
+                    print("\n=== DEBUG: Gradient check (first batch) ===")
+                    bad_params = []
+                    for name, p in self.net.named_parameters():
+                        if p.grad is None:
+                            continue
+                        if torch.isnan(p.grad).any() or torch.isinf(p.grad).any():
+                            bad_params.append(name)
+                    if bad_params:
+                        print("NaN/Inf gradients in parameters:", bad_params)
+                    else:
+                        print("No NaN/Inf gradients detected in first batch.")
+                    print("=== END gradient check ===\n")
+        
                 self.optimizer.step()
 
                 epoch_total_loss.append(lcl_loss.detach())

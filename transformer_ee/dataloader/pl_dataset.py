@@ -42,6 +42,51 @@ def get_polars_df_from_file(file_path):
         return get_polars_df_from_xz_file(file_path)
     else:
         raise ValueError("File format not supported")
+        
+
+def drop_nan_rows(df: pl.DataFrame) -> pl.DataFrame:
+    """
+    Detects and removes rows that contain NaN (in float columns) or null (in any column).
+    Logs the indices (row numbers) of all dropped rows.
+    """
+
+    # Add an internal index so we know which rows were dropped
+    df_with_idx = df.with_row_count(name="_orig_idx")
+
+    # --- 1) Mask for NULLs in any column ---
+    null_mask_series = df_with_idx.select(
+        pl.any_horizontal(pl.all().exclude("_orig_idx").is_null())
+    ).to_series()
+
+    # --- 2) Mask for NaNs in FLOAT columns only ---
+    schema = df_with_idx.schema
+    float_cols = [
+        name
+        for name, dtype in schema.items()
+        if name != "_orig_idx" and dtype in (pl.Float32, pl.Float64)
+    ]
+
+    if float_cols:
+        nan_mask_series = df_with_idx.select(
+            pl.any_horizontal(pl.col(float_cols).is_nan())
+        ).to_series()
+        bad_mask = null_mask_series | nan_mask_series
+    else:
+        bad_mask = null_mask_series
+
+    # --- 3) Collect indices & filter ---
+    bad_indices = df_with_idx.filter(bad_mask)["_orig_idx"].to_list()
+    n_bad = len(bad_indices)
+
+    if n_bad > 0:
+        print(f"[INFO] Found {n_bad} rows containing NaN/null — removing them.")
+        print(f"[INFO] Dropped row indices (0-based, original CSV order): {bad_indices}")
+        df_clean = df_with_idx.filter(~bad_mask).drop("_orig_idx")
+    else:
+        print("[INFO] No NaN/null values found.")
+        df_clean = df_with_idx.drop("_orig_idx")
+
+    return df_clean
 
 
 class Polars_Dataset(Dataset): # pylint: disable=C0103, W0223
@@ -53,6 +98,8 @@ class Polars_Dataset(Dataset): # pylint: disable=C0103, W0223
         self.eval = eval
         self.config = config.copy()
 
+        # Drop NaN rows automatically before processing
+        dtframe = drop_nan_rows(dtframe)
         self.df = dtframe
 
         self.maxpronglen = config["max_num_prongs"]
