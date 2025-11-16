@@ -144,6 +144,44 @@ def build_argparser():
     p.add_argument("--dataframe-type", default="polars")
     p.add_argument("--num-workers", type=int, default=10)
 
+     # ---------- Noise configuration ----------
+    p.add_argument(
+        "--enable-noise",
+        action="store_true",
+        help="Enable input noise as in train_script.py example."
+    )
+    p.add_argument(
+        "--noise-name",
+        default="gaussian",
+        help="Noise type (default: gaussian)."
+    )
+    p.add_argument(
+        "--noise-mean",
+        type=float,
+        default=0.0,
+        help="Mean of the noise distribution (default: 0.0)."
+    )
+    p.add_argument(
+        "--noise-std",
+        type=float,
+        default=0.2,
+        help="Std of the noise distribution (default: 0.2)."
+    )
+    # If you want to override the default variable lists from the CLI, you can
+    # allow them as space-separated lists; otherwise we'll hardcode the train_script ones.
+    p.add_argument(
+        "--noise-vector",
+        nargs="+",
+        default=None,
+        help="Vector variable names for noise; if omitted, use train_script defaults."
+    )
+    p.add_argument(
+        "--noise-scalar",
+        nargs="+",
+        default=None,
+        help="Scalar variable names for noise; if omitted, use train_script defaults."
+    )
+
     # Training / Optim
     p.add_argument("--epochs", type=int, default=20)
     p.add_argument("--optimizer", default="sgd", choices=["sgd", "adam", "adamw"])
@@ -203,6 +241,37 @@ def main():
     kset(cfg, "num_workers", args.num_workers)
 
     kset(cfg, "model.epochs", args.epochs)
+
+    # --- Optional noise configuration (mirrors train_script.py example) ---
+    if args.enable_noise:
+        # Defaults from your train_script.py example:
+        default_vector = [
+            "Final_State_Particles_Energy",
+            "Final_State_Particles_Momentum_X",
+            "Final_State_Particles_Momentum_Y",
+            "Final_State_Particles_Momentum_Z",
+            "Final_State_Particles_CosTheta",
+            "Final_State_Particles_Theta",
+        ]
+        default_scalar = [
+            "tot_fKE",
+            "tot_hadronic_energy",
+            "p_tot",
+            "P_miss",
+        ]
+
+        vector_vars = args.noise_vector if args.noise_vector is not None else default_vector
+        scalar_vars = args.noise_scalar if args.noise_scalar is not None else default_scalar
+
+        cfg["noise"] = {
+            "name": args.noise_name,
+            "mean": args.noise_mean,
+            "std": args.noise_std,
+            "vector": vector_vars,
+            "scalar": scalar_vars,
+        }
+        print("[INFO] Noise configuration enabled:", cfg["noise"])
+
 
     # Optimizer
     kset(cfg, "optimizer.name", args.optimizer)
