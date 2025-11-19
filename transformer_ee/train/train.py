@@ -158,6 +158,8 @@ class MVtrainer:
             self.net.eval()
             epoch_val_loss = []
             comp_val_sum = torch.zeros(n_vars, device=self.gpu_device)
+            val_true_batches: List[np.ndarray] = []
+            val_pred_batches: List[np.ndarray] = []
 
             with torch.no_grad():
                 for batch_idx, batch in enumerate(self.validloader):
@@ -174,9 +176,13 @@ class MVtrainer:
                         )
 
                     epoch_val_loss.append(lcl_loss.detach())
+                    val_true_batches.append(tgt.detach().cpu().numpy())
+                    val_pred_batches.append(out.detach().cpu().numpy())
 
             self.valid_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_val_loss)))
             self.valid_comp_loss_per_epoch.append(comp_val_sum / len(self.validloader))
+
+            self._save_epoch_predictions(epoch, val_true_batches, val_pred_batches)
 
             # ------------------- bookkeeping & plots -------------------
             self._checkpoint_and_plot(epoch, scheme="LCL", n_vars=n_vars)
@@ -253,6 +259,8 @@ class MVtrainer:
             pm_val_sum = 0.0
             aLCL_val_sum = 0.0
             bPM_val_sum = 0.0
+            val_true_batches: List[np.ndarray] = []
+            val_pred_batches: List[np.ndarray] = []
 
             with torch.no_grad():
                 for batch_idx, batch in enumerate(self.validloader):
@@ -274,6 +282,8 @@ class MVtrainer:
                     pm_val_sum += pm_loss.detach()
                     aLCL_val_sum += (a_val * lcl_loss).detach()
                     bPM_val_sum += (b_val * pm_loss).detach()
+                    val_true_batches.append(tgt.detach().cpu().numpy())
+                    val_pred_batches.append(out.detach().cpu().numpy())
 
             n_val_batches = len(self.validloader)
             self.valid_loss_list_per_epoch.append(torch.mean(torch.tensor(epoch_val_loss)))
@@ -281,6 +291,8 @@ class MVtrainer:
             self.valid_pred_mass_per_epoch.append(pm_val_sum / n_val_batches)
             self.valid_alpha_LCL_per_epoch.append(aLCL_val_sum / n_val_batches)
             self.valid_beta_PM_per_epoch.append(bPM_val_sum / n_val_batches)
+
+            self._save_epoch_predictions(epoch, val_true_batches, val_pred_batches)
 
             # ------------------- checkpoint & plots -------------------
             self._checkpoint_and_plot(epoch, scheme="Hybrid", n_vars=n_vars)
@@ -334,6 +346,23 @@ class MVtrainer:
         plot_loss(metrics, self.save_path)
 
     # ------------------------------------------------------------------
+    # helper – persist epoch predictions
+    # ------------------------------------------------------------------
+
+    def _save_epoch_predictions(
+        self, epoch: int, true_batches: List[np.ndarray], pred_batches: List[np.ndarray]
+    ) -> None:
+        """Persist validation predictions for the provided epoch."""
+
+        if not true_batches or not pred_batches:
+            return
+
+        epoch_true = np.concatenate(true_batches, axis=0)
+        epoch_pred = np.concatenate(pred_batches, axis=0)
+        filename = os.path.join(self.save_path, f"result_epoch{epoch:03d}.npz")
+        np.savez(filename, trueval=epoch_true, prediction=epoch_pred)
+
+    # ------------------------------------------------------------------
     # eval (unchanged)
     # ------------------------------------------------------------------
 
@@ -351,4 +380,8 @@ class MVtrainer:
             trueval.append(tgt.detach().cpu().numpy())
             prediction.append(out.detach().cpu().numpy())
 
-        np.savez(os.path.join(self.save_path, "result.npz"), trueval=np.concatenate(trueval), prediction=np.concatenate(prediction))
+        np.savez(
+            os.path.join(self.save_path, "result.npz"),
+            trueval=np.concatenate(trueval),
+            prediction=np.concatenate(prediction),
+        )
