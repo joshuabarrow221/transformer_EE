@@ -670,10 +670,42 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         return std::make_pair(*minIt - margin, *maxIt + margin);
     };
 
+    // 1D histograms for all non true_/pred_ variables (auto range)
     for (const auto& kv : data) {
         if (kv.second.empty()) continue;
+
+        const std::string& name = kv.first;
+        // Skip true_*/pred_* here; they will be handled in paired logic below
+        if (name.rfind("true_", 0) == 0 || name.rfind("pred_", 0) == 0) continue;
+
         auto r = find_range(kv.second);
-        make_hist(kv.first, kv.second, r.first, r.second);
+        make_hist(name, kv.second, r.first, r.second);
+    }
+
+    // 1D histograms for true/pred pairs with shared axes (range from pred)
+    for (const auto& kv : data) {
+        const std::string& name = kv.first;
+
+        // Only iterate over predicted variables
+        if (name.rfind("pred_", 0) != 0) continue;
+
+        std::string base = name.substr(5);              // strip "pred_"
+        std::string trueName = "true_" + base;
+
+        auto itTrue = data.find(trueName);
+        if (itTrue == data.end()) continue;             // no matching true_*
+
+        const auto& pred_vals = kv.second;
+        const auto& true_vals = itTrue->second;
+        if (pred_vals.empty() || true_vals.empty()) continue;
+
+        // Determine axis range from *predicted* values
+        auto r = find_range(pred_vals);
+
+        // Predicted histogram
+        make_hist(name,     pred_vals, r.first, r.second);
+        // True histogram using the SAME range & binning
+        make_hist(trueName, true_vals, r.first, r.second);
     }
 
     make_hist("Cos_Theta_nu_pred", Cos_Theta_nu_pred, -1, 1);
@@ -771,31 +803,61 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     bool has_predMom = (data.find("pred_Nu_Mom_X") != data.end()
                         && data.find("pred_Nu_Mom_Y") != data.end()
                         && data.find("pred_Nu_Mom_Z") != data.end());
+    bool has_theta = (data.find("true_Nu_Theta") != data.end()
+                  && data.find("pred_Nu_Theta") != data.end());
 
-    if (has_trueE && has_predE && has_trueMom && has_predMom) {
-        size_t N = data["true_Nu_Energy"].size();
-        // Sanity: make sure sizes match for columns used
-        size_t NpredE = data["pred_Nu_Energy"].size();
-        size_t NtrueMom = data["true_Nu_Mom_X"].size();
-        size_t NpredMom = data["pred_Nu_Mom_X"].size();
-        size_t Nmin = std::min({N, NpredE, NtrueMom, NpredMom});
+
+    if (has_trueE && has_predE && ((has_trueMom && has_predMom) || has_theta)) {
+        // Base sizes from energy columns
+        size_t NtrueE  = data["true_Nu_Energy"].size();
+        size_t NpredE  = data["pred_Nu_Energy"].size();
+        size_t Nmin    = std::min(NtrueE, NpredE);
+
+        // Also constrain by momentum sizes if using momentum
+        if (has_trueMom && has_predMom) {
+            size_t NtrueMom = data["true_Nu_Mom_X"].size();
+            size_t NpredMom = data["pred_Nu_Mom_X"].size();
+            Nmin = std::min({Nmin, NtrueMom, NpredMom});
+        }
+
+        // Also constrain by theta sizes if using explicit angles
+        if (has_theta) {
+            size_t NtrueTheta = data["true_Nu_Theta"].size();
+            size_t NpredTheta = data["pred_Nu_Theta"].size();
+            Nmin = std::min({Nmin, NtrueTheta, NpredTheta});
+        }
 
         for (size_t i = 0; i < Nmin; ++i) {
             double Etrue = data["true_Nu_Energy"][i];
             double Epred = data["pred_Nu_Energy"][i];
-            double tx = data["true_Nu_Mom_X"][i];
-            double ty = data["true_Nu_Mom_Y"][i];
-            double tz = data["true_Nu_Mom_Z"][i];
-            double px = data["pred_Nu_Mom_X"][i];
-            double py = data["pred_Nu_Mom_Y"][i];
-            double pz = data["pred_Nu_Mom_Z"][i];
 
             if (std::isnan(Etrue) || std::isnan(Epred)) continue;
             if (Etrue == 0) continue; // avoid divide by zero
 
+            double thet_true = 0.0;
+            double thet_pred = 0.0;
+
+            if (has_theta) {
+                // Use explicit theta columns if present
+                thet_true = data["true_Nu_Theta"][i];
+                thet_pred = data["pred_Nu_Theta"][i];
+            } else if (has_trueMom && has_predMom) {
+                // Fall back to momentum-based computation
+                double tx = data["true_Nu_Mom_X"][i];
+                double ty = data["true_Nu_Mom_Y"][i];
+                double tz = data["true_Nu_Mom_Z"][i];
+                double px = data["pred_Nu_Mom_X"][i];
+                double py = data["pred_Nu_Mom_Y"][i];
+                double pz = data["pred_Nu_Mom_Z"][i];
+
+                thet_true = calcTheta(tx, ty, tz);
+                thet_pred = calcTheta(px, py, pz);
+            } else {
+                // Should not happen given the guards, but be safe
+                continue;
+            }
+
             double eres = 100.0 * (Epred - Etrue) / Etrue;
-            double thet_true = calcTheta(tx, ty, tz);
-            double thet_pred = calcTheta(px, py, pz);
             double tdiff = thet_pred - thet_true;
 
             if (!std::isnan(eres) && !std::isnan(tdiff)) {
@@ -803,9 +865,10 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
                 theta_diff_signed.push_back(tdiff);
             }
         }
-    } else {
-        std::cout << "Skipping 2D energy/theta plot: missing columns (need true_Nu_Energy, pred_Nu_Energy, true_Nu_Mom_*, pred_Nu_Mom_*)." << std::endl;
-    }
+
+   } else {
+    std::cout << "Skipping 2D energy/theta plot: missing columns (need true_Nu_Energy, pred_Nu_Energy, and either true/pred_Nu_Mom_* or true/pred_Nu_Theta)." << std::endl;
+}
 
     // If we have entries for 2D, make the 2D histogram, draw contours and ellipse, compute fraction
     if (!energy_res_percent.empty() && !theta_diff_signed.empty()) {
