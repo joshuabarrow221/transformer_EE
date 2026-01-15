@@ -15,7 +15,7 @@ from typing import Dict, Iterable, List, Optional, Sequence, Tuple
 import pandas as pd
 import numpy as np
 
-from transformer_ee.inference.pred import Predictor
+from transformer_ee.inference.pred_wBatch import Predictor
 
 
 @dataclass(frozen=True)
