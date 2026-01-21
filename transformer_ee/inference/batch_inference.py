@@ -320,6 +320,8 @@ def normalize_model_paths(
     search_roots: Optional[Sequence[Path]],
 ) -> List[Tuple[str, Path]]:
     if isinstance(model_path, list):
+        if len(model_path) == 1:
+            return [(label, model_path[0])]
         return [
             (label_with_origin(label, path, search_roots), path) for path in model_path
         ]
