@@ -1,0 +1,25 @@
+{
+  "model_search_roots": [
+    "/exp/dune/data/users/cborden/MLProject/Training_Samples",
+    "/exp/dune/data/users/rrichi/MLProject/Training_Samples",
+    "/exp/dune/data/users/jbarrow/MLProject/Training_Samples"
+  ],
+  "models": [
+    {
+      "name": "MV_DUNEAtmo_Flat_Vect_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE",
+      "training_name": "Numu_CC_Train_DUNEAtmo_Flat_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE"
+    }
+  ],
+  "samples": [
+    {
+      "name": "DUNEAtmo_Nat_Vect_p1to10_NpNpi",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_VectorLeptwNC_eventnum_All_NpNpi.csv"
+    }
+  ],
+  "pairs": [
+    {
+      "model": "MV_DUNEAtmo_Flat_Vect_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE",
+      "sample": "DUNEAtmo_Nat_Vect_p1to10_NpNpi"
+    }
+  ]
+}
