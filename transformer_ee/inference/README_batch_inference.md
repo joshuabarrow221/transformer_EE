@@ -99,6 +99,11 @@ python transformer_ee/inference/batch_inference.py \
 - `--max-samples` limits the number of rows per CSV.
 - `--device` can be `cpu`, `cuda`, or `cuda:<index>`.
 
+Note: Some versions of `pred_wBatch.Predictor` do not accept `device` or `num_workers`
+arguments or return batch timing metadata. The batch inference runner detects this and
+falls back to the supported signature automatically, so these flags may be ignored in
+older predictor implementations.
+
 Outputs include:
 
 - CSV/NPZ outputs per model + sample pair in `--output-dir`.

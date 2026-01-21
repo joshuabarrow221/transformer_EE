@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import inspect
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
@@ -427,17 +428,25 @@ def run_task(
     )
     dataframe = pd.read_csv(task.sample_path)
     dataframe = trim_dataframe(dataframe, max_rows)
-    predictor = Predictor(
-        str(task.model_dir),
-        dataframe,
-        device=device,
-        num_workers=num_workers,
-    )
-    predictions, batch_times, batch_sizes = predictor.go(return_batch_times=True)
+    predictor_kwargs = {}
+    predictor_params = inspect.signature(Predictor).parameters
+    if "device" in predictor_params:
+        predictor_kwargs["device"] = device
+    if "num_workers" in predictor_params:
+        predictor_kwargs["num_workers"] = num_workers
+    predictor = Predictor(str(task.model_dir), dataframe, **predictor_kwargs)
+
+    go_params = inspect.signature(predictor.go).parameters
+    if "return_batch_times" in go_params:
+        predictions, batch_times, batch_sizes = predictor.go(return_batch_times=True)
+    else:
+        predictions = predictor.go()
+        batch_times = []
+        batch_sizes = []
     target_names = predictor.train_config.get("target", [])
     if len(target_names) != predictions.shape[1]:
         target_names = [f"target_{idx}" for idx in range(predictions.shape[1])]
-    raw_truth_df = predictor.original_df
+    raw_truth_df = getattr(predictor, "original_df", dataframe)
     truth_available = all(name in raw_truth_df.columns for name in target_names)
     if truth_available:
         truth_vals = raw_truth_df[target_names].to_numpy()
@@ -466,13 +475,15 @@ def run_task(
         sample_row_index=raw_truth_df.index.to_numpy(),
     )
     print(f"[INFO] Saved predictions to {csv_path} and {npz_path}")
-    total_time = record_batch_timings(
-        output_dir=output_dir,
-        task=task,
-        batch_times=batch_times,
-        batch_sizes=batch_sizes,
-        total_rows=len(result_df),
-    )
+    total_time = 0.0
+    if batch_times:
+        total_time = record_batch_timings(
+            output_dir=output_dir,
+            task=task,
+            batch_times=batch_times,
+            batch_sizes=batch_sizes,
+            total_rows=len(result_df),
+        )
     return {
         "model_name": task.model_name,
         "model_dir": str(task.model_dir),
