@@ -10,7 +10,7 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 import pandas as pd
 import numpy as np
@@ -172,11 +172,20 @@ def load_pairs_from_config(
     if "pairs" not in payload:
         raise ValueError("Pair config must include a 'pairs' list.")
 
-    model_lookup: Dict[str, Path] = {}
+    training_search_roots = [
+        Path(path).expanduser().resolve() for path in payload.get("model_search_roots", [])
+    ]
+
+    model_lookup: Dict[str, Union[Path, List[Path]]] = {}
     sample_lookup: Dict[str, Path] = {}
 
     for entry in payload.get("models", []):
-        label, resolved = parse_entity(entry, model_root, resolve_model_dir)
+        label, resolved = parse_entity(
+            entry,
+            model_root,
+            resolve_model_dir,
+            training_search_roots=training_search_roots,
+        )
         model_lookup[label] = resolved
 
     for entry in payload.get("samples", []):
@@ -191,6 +200,7 @@ def load_pairs_from_config(
             lookup=model_lookup,
             root=model_root,
             resolver=resolve_model_dir,
+            training_search_roots=training_search_roots,
         )
         sample_label, sample_path = parse_pair_entry(
             pair,
@@ -198,22 +208,40 @@ def load_pairs_from_config(
             lookup=sample_lookup,
             root=sample_root,
             resolver=resolve_sample_path,
+            training_search_roots=None,
         )
-        tasks.append(
-            InferenceTask(
-                model_name=model_label,
-                model_dir=model_path,
-                sample_name=sample_label,
-                sample_path=sample_path,
+        for resolved_label, resolved_path in normalize_model_paths(
+            model_label, model_path, training_search_roots
+        ):
+            tasks.append(
+                InferenceTask(
+                    model_name=resolved_label,
+                    model_dir=resolved_path,
+                    sample_name=sample_label,
+                    sample_path=sample_path,
+                )
             )
-        )
     return tasks
 
 
 def parse_entity(
-    entry, root: Optional[Path], resolver
-) -> Tuple[str, Path]:
+    entry,
+    root: Optional[Path],
+    resolver,
+    training_search_roots: Optional[Sequence[Path]] = None,
+) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(entry, dict):
+        if "training_name" in entry:
+            training_name = entry["training_name"]
+            label = entry.get("name", training_name)
+            if not training_search_roots:
+                raise ValueError(
+                    "Model entries with 'training_name' require 'model_search_roots'."
+                )
+            resolved_path = resolve_model_from_training_name(
+                training_name, training_search_roots
+            )
+            return label, resolved_path
         path_value = entry.get("path") or entry.get("dir") or entry.get("file")
         if path_value is None:
             raise ValueError("Each entity dict must include a 'path' field.")
@@ -230,10 +258,11 @@ def parse_entity(
 def parse_pair_entry(
     pair_entry,
     key: str,
-    lookup: Dict[str, Path],
+    lookup: Dict[str, Union[Path, List[Path]]],
     root: Optional[Path],
     resolver,
-) -> Tuple[str, Path]:
+    training_search_roots: Optional[Sequence[Path]] = None,
+) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(pair_entry, dict):
         if key in pair_entry:
             value = pair_entry[key]
@@ -253,12 +282,63 @@ def parse_pair_entry(
     if isinstance(value, str) and value in lookup:
         return value, lookup[value]
     if isinstance(value, dict):
-        label, resolved = parse_entity(value, root, resolver)
+        label, resolved = parse_entity(
+            value,
+            root,
+            resolver,
+            training_search_roots=training_search_roots,
+        )
     else:
         resolved = resolver(resolve_relative(value, root))
         label = default_label(resolved, root)
     lookup[label] = resolved
     return label, resolved
+
+
+def resolve_model_from_training_name(
+    training_name: str, search_roots: Sequence[Path]
+) -> List[Path]:
+    candidates: List[Path] = []
+    for root in search_roots:
+        if not root.exists():
+            continue
+        for path in root.rglob("input.json"):
+            if training_name in path.parts and (path.parent / "best_model.zip").exists():
+                candidates.append(path.parent.resolve())
+    unique = sorted({path.resolve() for path in candidates}, key=lambda p: str(p))
+    if not unique:
+        roots = ", ".join(str(root) for root in search_roots)
+        raise FileNotFoundError(
+            f"No model export found for training '{training_name}' under: {roots}"
+        )
+    return unique
+
+
+def normalize_model_paths(
+    label: str,
+    model_path: Union[Path, List[Path]],
+    search_roots: Optional[Sequence[Path]],
+) -> List[Tuple[str, Path]]:
+    if isinstance(model_path, list):
+        if len(model_path) == 1:
+            return [(label, model_path[0])]
+        return [
+            (label_with_origin(label, path, search_roots), path) for path in model_path
+        ]
+    return [(label, model_path)]
+
+
+def label_with_origin(
+    label: str, model_dir: Path, search_roots: Optional[Sequence[Path]]
+) -> str:
+    if search_roots:
+        for root in search_roots:
+            try:
+                relative = model_dir.relative_to(root)
+            except ValueError:
+                continue
+            return f"{label}::{relative}"
+    return f"{label}::{model_dir.name}"
 
 
 def build_tasks_from_lists(
