@@ -17,7 +17,7 @@
   - A fixed ellipse (±10% × ±30°)
   - Computation of the fraction of events inside the ellipse
 * Stores the ellipse fractions in a cumulative `ellipse_fraction.csv` file (auto-created and auto-expanded).
-* Appends or updates a directory inside `combined_output.root` named after the model (taken from the final CSV column header).
+* Appends or updates a directory inside `combined_output.root` (or a custom ROOT output name) named after the model (taken from the final CSV column header).
 * Runs in ROOT **batch mode** so plots are written to file without opening GUI windows.
 
 ## Requirements
@@ -42,7 +42,7 @@ A structured ROOT file containing:
 * Contour plots and energy-vs-angle canvases
 * All outputs organized under a directory named after the model
 
-If the ROOT file already exists, new outputs are appended.
+If the ROOT file already exists and is non-empty, new outputs are appended.
 
 ### ellipse_fraction.csv
 A cumulative CSV summary containing:
@@ -58,3 +58,11 @@ Run the macro from a shell:
 
 ```bash
 root -l 'eval_model.C("result.csv")'
+```
+
+Optional arguments can set the output directory, PNG export path/size, and the ROOT
+output filename:
+
+```bash
+root -l 'eval_model.C("result.csv", "./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
+```

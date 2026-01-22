@@ -492,7 +492,8 @@ void eval_model(
     const char* output_dir = ".",
     const char* png_path = "",
     int png_width = 0,
-    int png_height = 0
+    int png_height = 0,
+    const char* root_output_name = "combined_output.root"
 ) {
 
      // Put ROOT into batch mode so canvases are not shown on screen
@@ -556,21 +557,31 @@ void eval_model(
     }
 
     // === Open output file (append if it exists) ===
-    bool fileExists = !gSystem->AccessPathName("combined_output.root"); 
-    // AccessPathName returns kTRUE if "inaccessible", so ! means "exists and accessible"
+    std::string root_output_path = root_output_name ? root_output_name : "";
+    if (root_output_path.empty()) {
+        root_output_path = "combined_output.root";
+    }
+
+    Long_t id = 0;
+    Long_t size = 0;
+    Long_t flags = 0;
+    Long_t modtime = 0;
+    bool fileExists = (gSystem->GetPathInfo(root_output_path.c_str(), &id, &size, &flags, &modtime) == 0);
+    bool hasContents = fileExists && size > 0;
 
     TFile* outfile = nullptr;
-    if (fileExists) {
-        outfile = TFile::Open("combined_output.root", "UPDATE");
-        std::cout << "Opened existing combined_output.root in UPDATE mode.\n";
+    if (hasContents) {
+        outfile = TFile::Open(root_output_path.c_str(), "UPDATE");
+        std::cout << "Opened existing " << root_output_path << " in UPDATE mode.\n";
     } else {
-        outfile = TFile::Open("combined_output.root", "RECREATE");
-        std::cout << "Created new combined_output.root.\n";
+        outfile = TFile::Open(root_output_path.c_str(), "RECREATE");
+        std::cout << "Created new " << root_output_path << ".\n";
     }
 
     if (!outfile || outfile->IsZombie()) {
-        std::cerr << "Error opening combined_output.root" << std::endl;
+        std::cerr << "Error opening " << root_output_path << std::endl;
         gSystem->ChangeDirectory(original_dir.c_str());
+        gROOT->SetBatch(oldBatch);
         return;
     }
 
@@ -986,7 +997,7 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     // Finish writing output file (preserve existing behavior)
     outfile->cd();
     outfile->Close();
-    std::cout << "All outputs written to combined_output.root in directory: " 
+    std::cout << "All outputs written to " << root_output_path << " in directory: "
               << dirName << std::endl;
     
     // Restore previous batch mode

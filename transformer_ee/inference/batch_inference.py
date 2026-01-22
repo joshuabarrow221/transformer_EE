@@ -448,6 +448,7 @@ def record_batch_timings(
 def run_eval_model(
     csv_path: Path,
     model_name: str,
+    model_label: str,
     eval_macro_path: Path,
     eval_output_dir: Path,
     eval_save_png: bool,
@@ -471,6 +472,7 @@ def run_eval_model(
             f"\"{png_path}\","
             f"{width},"
             f"{height}"
+            f",\"combined_inference_output.root\""
             f")"
         ),
     ]
@@ -480,6 +482,7 @@ def run_eval_model(
         "png_path": png_path or None,
         "returncode": None,
         "ellipse_fraction": None,
+        "model_label": model_label,
     }
     try:
         completed = subprocess.run(
@@ -500,7 +503,7 @@ def run_eval_model(
     if ellipse_path.exists():
         try:
             ellipse_df = pd.read_csv(ellipse_path)
-            matched = ellipse_df[ellipse_df["model_name"] == model_name]
+            matched = ellipse_df[ellipse_df["model_name"] == model_label]
             if not matched.empty:
                 result["ellipse_fraction"] = matched.tail(1).to_dict(orient="records")[0]
         except Exception as exc:
@@ -557,7 +560,10 @@ def run_task(
     for idx, name in enumerate(target_names):
         result_df[f"pred_{name}"] = predictions[:, idx]
     # trailing model name column (value placeholder to mirror legacy exports)
-    result_df[task.model_name] = -999999
+    eval_label = task.model_name
+    if eval_macro_path is not None:
+        eval_label = f"{safe_name(task.model_name)}__{safe_name(task.sample_name)}"
+    result_df[eval_label] = -999999
     model_bucket = output_dir / safe_name(task.model_name)
     model_bucket.mkdir(parents=True, exist_ok=True)
     base_name = safe_name(task.sample_name)
@@ -577,6 +583,7 @@ def run_task(
         eval_meta = run_eval_model(
             csv_path=csv_path,
             model_name=task.model_name,
+            model_label=eval_label,
             eval_macro_path=eval_macro_path,
             eval_output_dir=eval_output_dir or output_dir,
             eval_save_png=eval_save_png,
