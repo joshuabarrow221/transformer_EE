@@ -650,7 +650,7 @@ def main():
         print("[WARN] No inference tasks to execute.")
         return
 
-    output_dir = Path(args.output_dir).resolve()
+    output_dir = Path(args.output_dir).expanduser().resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
     summary: List[Dict[str, str]] = []
@@ -662,10 +662,10 @@ def main():
             device=args.device,
             num_workers=args.num_workers,
             max_rows=args.max_samples,
-            eval_macro_path=Path(args.eval_macro_path).resolve()
+            eval_macro_path=Path(args.eval_macro_path).expanduser().resolve()
             if args.eval_macro_path
             else None,
-            eval_output_dir=Path(args.eval_output_dir).resolve()
+            eval_output_dir=Path(args.eval_output_dir).expanduser().resolve()
             if args.eval_output_dir
             else None,
             eval_save_png=args.eval_save_png,
