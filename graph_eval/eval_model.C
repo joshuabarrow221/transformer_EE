@@ -487,15 +487,28 @@ void drawLargestContourAtLevel(TH2D* h, double level, int lineColor, int lineWid
 }
 
 /// === Main Function ===
-void eval_model(const char* filename) {
+void eval_model(
+    const char* filename,
+    const char* output_dir = ".",
+    const char* png_path = "",
+    int png_width = 0,
+    int png_height = 0
+) {
 
      // Put ROOT into batch mode so canvases are not shown on screen
     Bool_t oldBatch = gROOT->IsBatch();
     gROOT->SetBatch(kTRUE);
 
+    std::string original_dir = gSystem->WorkingDirectory();
+    if (output_dir && std::string(output_dir).size() > 0) {
+        gSystem->mkdir(output_dir, kTRUE);
+        gSystem->ChangeDirectory(output_dir);
+    }
+
     std::ifstream infile(filename);
     if (!infile.is_open()) {
         std::cerr << "Could not open file: " << filename << std::endl;
+        gSystem->ChangeDirectory(original_dir.c_str());
         gROOT->SetBatch(oldBatch); // restore batch state before returning
         return;
     }
@@ -550,6 +563,7 @@ void eval_model(const char* filename) {
 
     if (!outfile || outfile->IsZombie()) {
         std::cerr << "Error opening combined_output.root" << std::endl;
+        gSystem->ChangeDirectory(original_dir.c_str());
         return;
     }
 
@@ -950,6 +964,13 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         // Write canvas and histogram to the selected directory
         if (plotDir) plotDir->cd();
         c2->Write("energy_theta_2d_canvas");
+        if (png_path && std::string(png_path).size() > 0) {
+            if (png_width > 0 && png_height > 0) {
+                c2->SetCanvasSize(png_width, png_height);
+                c2->Update();
+            }
+            c2->SaveAs(png_path);
+        }
         h2->Write("h2_energy_theta");
     } else {
         std::cout << "No 2D entries available; energy/theta 2D histogram not created." << std::endl;
@@ -963,5 +984,6 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     
     // Restore previous batch mode
     gROOT->SetBatch(oldBatch);
+    gSystem->ChangeDirectory(original_dir.c_str());
 
 }

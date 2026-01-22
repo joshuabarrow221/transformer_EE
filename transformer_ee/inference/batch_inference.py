@@ -8,9 +8,11 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import inspect
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Sequence, Tuple
+from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
 
 import pandas as pd
 import numpy as np
@@ -86,6 +88,35 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=None,
         help="Limit the number of samples processed per CSV (useful for smoke tests).",
+    )
+    parser.add_argument(
+        "--eval-macro-path",
+        type=str,
+        default=None,
+        help="Optional ROOT macro (eval_model.C) to run on each output CSV.",
+    )
+    parser.add_argument(
+        "--eval-output-dir",
+        type=str,
+        default=None,
+        help="Directory to store eval_model outputs (combined_output.root, ellipse_fraction.csv).",
+    )
+    parser.add_argument(
+        "--eval-save-png",
+        action="store_true",
+        help="Save energy_theta_2d_canvas as a PNG per model/sample.",
+    )
+    parser.add_argument(
+        "--eval-png-width",
+        type=int,
+        default=3000,
+        help="PNG width for eval_model output (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--eval-png-height",
+        type=int,
+        default=2000,
+        help="PNG height for eval_model output (default: %(default)s).",
     )
     return parser.parse_args()
 
@@ -172,11 +203,20 @@ def load_pairs_from_config(
     if "pairs" not in payload:
         raise ValueError("Pair config must include a 'pairs' list.")
 
-    model_lookup: Dict[str, Path] = {}
+    training_search_roots = [
+        Path(path).expanduser().resolve() for path in payload.get("model_search_roots", [])
+    ]
+
+    model_lookup: Dict[str, Union[Path, List[Path]]] = {}
     sample_lookup: Dict[str, Path] = {}
 
     for entry in payload.get("models", []):
-        label, resolved = parse_entity(entry, model_root, resolve_model_dir)
+        label, resolved = parse_entity(
+            entry,
+            model_root,
+            resolve_model_dir,
+            training_search_roots=training_search_roots,
+        )
         model_lookup[label] = resolved
 
     for entry in payload.get("samples", []):
@@ -191,6 +231,7 @@ def load_pairs_from_config(
             lookup=model_lookup,
             root=model_root,
             resolver=resolve_model_dir,
+            training_search_roots=training_search_roots,
         )
         sample_label, sample_path = parse_pair_entry(
             pair,
@@ -198,22 +239,40 @@ def load_pairs_from_config(
             lookup=sample_lookup,
             root=sample_root,
             resolver=resolve_sample_path,
+            training_search_roots=None,
         )
-        tasks.append(
-            InferenceTask(
-                model_name=model_label,
-                model_dir=model_path,
-                sample_name=sample_label,
-                sample_path=sample_path,
+        for resolved_label, resolved_path in normalize_model_paths(
+            model_label, model_path, training_search_roots
+        ):
+            tasks.append(
+                InferenceTask(
+                    model_name=resolved_label,
+                    model_dir=resolved_path,
+                    sample_name=sample_label,
+                    sample_path=sample_path,
+                )
             )
-        )
     return tasks
 
 
 def parse_entity(
-    entry, root: Optional[Path], resolver
-) -> Tuple[str, Path]:
+    entry,
+    root: Optional[Path],
+    resolver,
+    training_search_roots: Optional[Sequence[Path]] = None,
+) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(entry, dict):
+        if "training_name" in entry:
+            training_name = entry["training_name"]
+            label = entry.get("name", training_name)
+            if not training_search_roots:
+                raise ValueError(
+                    "Model entries with 'training_name' require 'model_search_roots'."
+                )
+            resolved_path = resolve_model_from_training_name(
+                training_name, training_search_roots
+            )
+            return label, resolved_path
         path_value = entry.get("path") or entry.get("dir") or entry.get("file")
         if path_value is None:
             raise ValueError("Each entity dict must include a 'path' field.")
@@ -230,10 +289,11 @@ def parse_entity(
 def parse_pair_entry(
     pair_entry,
     key: str,
-    lookup: Dict[str, Path],
+    lookup: Dict[str, Union[Path, List[Path]]],
     root: Optional[Path],
     resolver,
-) -> Tuple[str, Path]:
+    training_search_roots: Optional[Sequence[Path]] = None,
+) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(pair_entry, dict):
         if key in pair_entry:
             value = pair_entry[key]
@@ -253,12 +313,63 @@ def parse_pair_entry(
     if isinstance(value, str) and value in lookup:
         return value, lookup[value]
     if isinstance(value, dict):
-        label, resolved = parse_entity(value, root, resolver)
+        label, resolved = parse_entity(
+            value,
+            root,
+            resolver,
+            training_search_roots=training_search_roots,
+        )
     else:
         resolved = resolver(resolve_relative(value, root))
         label = default_label(resolved, root)
     lookup[label] = resolved
     return label, resolved
+
+
+def resolve_model_from_training_name(
+    training_name: str, search_roots: Sequence[Path]
+) -> List[Path]:
+    candidates: List[Path] = []
+    for root in search_roots:
+        if not root.exists():
+            continue
+        for path in root.rglob("input.json"):
+            if training_name in path.parts and (path.parent / "best_model.zip").exists():
+                candidates.append(path.parent.resolve())
+    unique = sorted({path.resolve() for path in candidates}, key=lambda p: str(p))
+    if not unique:
+        roots = ", ".join(str(root) for root in search_roots)
+        raise FileNotFoundError(
+            f"No model export found for training '{training_name}' under: {roots}"
+        )
+    return unique
+
+
+def normalize_model_paths(
+    label: str,
+    model_path: Union[Path, List[Path]],
+    search_roots: Optional[Sequence[Path]],
+) -> List[Tuple[str, Path]]:
+    if isinstance(model_path, list):
+        if len(model_path) == 1:
+            return [(label, model_path[0])]
+        return [
+            (label_with_origin(label, path, search_roots), path) for path in model_path
+        ]
+    return [(label, model_path)]
+
+
+def label_with_origin(
+    label: str, model_dir: Path, search_roots: Optional[Sequence[Path]]
+) -> str:
+    if search_roots:
+        for root in search_roots:
+            try:
+                relative = model_dir.relative_to(root)
+            except ValueError:
+                continue
+            return f"{label}::{relative}"
+    return f"{label}::{model_dir.name}"
 
 
 def build_tasks_from_lists(
@@ -334,12 +445,79 @@ def record_batch_timings(
     return float(np.sum(batch_times))
 
 
+def run_eval_model(
+    csv_path: Path,
+    model_name: str,
+    eval_macro_path: Path,
+    eval_output_dir: Path,
+    eval_save_png: bool,
+    eval_png_size: Optional[Tuple[int, int]],
+) -> Dict[str, object]:
+    eval_output_dir.mkdir(parents=True, exist_ok=True)
+    png_path = ""
+    if eval_save_png:
+        png_base = f"{safe_name(model_name)}__{safe_name(csv_path.stem)}__energy_theta_2d.png"
+        png_path = str((eval_output_dir / png_base).resolve())
+    width, height = eval_png_size or (0, 0)
+    cmd = [
+        "root",
+        "-l",
+        "-b",
+        "-q",
+        (
+            f"{eval_macro_path}("
+            f"\"{csv_path}\","
+            f"\"{eval_output_dir}\","
+            f"\"{png_path}\","
+            f"{width},"
+            f"{height}"
+            f")"
+        ),
+    ]
+    result = {
+        "macro_path": str(eval_macro_path),
+        "output_dir": str(eval_output_dir),
+        "png_path": png_path or None,
+        "returncode": None,
+        "ellipse_fraction": None,
+    }
+    try:
+        completed = subprocess.run(
+            cmd,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError:
+        result["error"] = "root command not found on PATH"
+        return result
+    result["returncode"] = completed.returncode
+    if completed.returncode != 0:
+        result["error"] = completed.stderr.strip() or completed.stdout.strip()
+        return result
+
+    ellipse_path = eval_output_dir / "ellipse_fraction.csv"
+    if ellipse_path.exists():
+        try:
+            ellipse_df = pd.read_csv(ellipse_path)
+            matched = ellipse_df[ellipse_df["model_name"] == model_name]
+            if not matched.empty:
+                result["ellipse_fraction"] = matched.tail(1).to_dict(orient="records")[0]
+        except Exception as exc:
+            result["error"] = f"Failed to parse ellipse_fraction.csv: {exc}"
+    return result
+
+
 def run_task(
     task: InferenceTask,
     output_dir: Path,
     device: Optional[str],
     num_workers: Optional[int],
     max_rows: Optional[int],
+    eval_macro_path: Optional[Path] = None,
+    eval_output_dir: Optional[Path] = None,
+    eval_save_png: bool = False,
+    eval_png_size: Optional[Tuple[int, int]] = None,
 ) -> Dict[str, str]:
     print(
         f"[INFO] Running model '{task.model_name}' on sample '{task.sample_name}' "
@@ -347,17 +525,25 @@ def run_task(
     )
     dataframe = pd.read_csv(task.sample_path)
     dataframe = trim_dataframe(dataframe, max_rows)
-    predictor = Predictor(
-        str(task.model_dir),
-        dataframe,
-        device=device,
-        num_workers=num_workers,
-    )
-    predictions, batch_times, batch_sizes = predictor.go(return_batch_times=True)
+    predictor_kwargs = {}
+    predictor_params = inspect.signature(Predictor).parameters
+    if "device" in predictor_params:
+        predictor_kwargs["device"] = device
+    if "num_workers" in predictor_params:
+        predictor_kwargs["num_workers"] = num_workers
+    predictor = Predictor(str(task.model_dir), dataframe, **predictor_kwargs)
+
+    go_params = inspect.signature(predictor.go).parameters
+    if "return_batch_times" in go_params:
+        predictions, batch_times, batch_sizes = predictor.go(return_batch_times=True)
+    else:
+        predictions = predictor.go()
+        batch_times = []
+        batch_sizes = []
     target_names = predictor.train_config.get("target", [])
     if len(target_names) != predictions.shape[1]:
         target_names = [f"target_{idx}" for idx in range(predictions.shape[1])]
-    raw_truth_df = predictor.original_df
+    raw_truth_df = getattr(predictor, "original_df", dataframe)
     truth_available = all(name in raw_truth_df.columns for name in target_names)
     if truth_available:
         truth_vals = raw_truth_df[target_names].to_numpy()
@@ -386,13 +572,26 @@ def run_task(
         sample_row_index=raw_truth_df.index.to_numpy(),
     )
     print(f"[INFO] Saved predictions to {csv_path} and {npz_path}")
-    total_time = record_batch_timings(
-        output_dir=output_dir,
-        task=task,
-        batch_times=batch_times,
-        batch_sizes=batch_sizes,
-        total_rows=len(result_df),
-    )
+    eval_meta: Dict[str, object] = {}
+    if eval_macro_path is not None:
+        eval_meta = run_eval_model(
+            csv_path=csv_path,
+            model_name=task.model_name,
+            eval_macro_path=eval_macro_path,
+            eval_output_dir=eval_output_dir or output_dir,
+            eval_save_png=eval_save_png,
+            eval_png_size=eval_png_size,
+        )
+
+    total_time = 0.0
+    if batch_times:
+        total_time = record_batch_timings(
+            output_dir=output_dir,
+            task=task,
+            batch_times=batch_times,
+            batch_sizes=batch_sizes,
+            total_rows=len(result_df),
+        )
     return {
         "model_name": task.model_name,
         "model_dir": str(task.model_dir),
@@ -404,6 +603,7 @@ def run_task(
         "num_outputs": len(target_names),
         "truth_available": truth_available,
         "total_time_sec": total_time,
+        "eval_model": eval_meta,
     }
 
 
@@ -455,6 +655,16 @@ def main():
             device=args.device,
             num_workers=args.num_workers,
             max_rows=args.max_samples,
+            eval_macro_path=Path(args.eval_macro_path).resolve()
+            if args.eval_macro_path
+            else None,
+            eval_output_dir=Path(args.eval_output_dir).resolve()
+            if args.eval_output_dir
+            else None,
+            eval_save_png=args.eval_save_png,
+            eval_png_size=(args.eval_png_width, args.eval_png_height)
+            if args.eval_save_png
+            else None,
         )
         summary.append(meta)
 
