@@ -522,6 +522,8 @@ void eval_model(
     std::string line;
     if (!std::getline(infile, line)) {
         std::cerr << "Empty file or missing header: " << filename_abs << std::endl;
+        gSystem->ChangeDirectory(original_dir.c_str());
+        gROOT->SetBatch(oldBatch);
         return;
     }
     std::stringstream header_ss(line);
