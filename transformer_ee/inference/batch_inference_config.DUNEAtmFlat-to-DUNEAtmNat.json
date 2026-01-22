@@ -14,12 +14,20 @@
     {
       "name": "DUNEAtmo_Nat_Vect_p1to10_NpNpi",
       "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_VectorLeptwNC_eventnum_All_NpNpi.csv"
+    },
+    {
+      "name": "DUNEAtmo_Nat_Vect_p1to10_NpNpi_200k_Inf",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/HondaDUNEOsc/Numu_CC_Train_DUNEAtmo_Natural_p1to10_VectorLeptwNC_eventnum_200k_NpNpi.csv"
     }
   ],
   "pairs": [
     {
       "model": "MV_DUNEAtmo_Flat_Vect_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE",
       "sample": "DUNEAtmo_Nat_Vect_p1to10_NpNpi"
+    },
+    {
+      "model": "MV_DUNEAtmo_Flat_Vect_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE",
+      "sample": "DUNEAtmo_Nat_Vect_p1to10_NpNpi_200k_Inf"
     }
   ]
 }
