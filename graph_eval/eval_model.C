@@ -505,9 +505,14 @@ void eval_model(
         gSystem->ChangeDirectory(output_dir);
     }
 
-    std::ifstream infile(filename);
+    std::string filename_abs = filename ? filename : "";
+    if (!filename_abs.empty() && filename_abs.front() != '/') {
+        filename_abs = original_dir + "/" + filename_abs;
+    }
+
+    std::ifstream infile(filename_abs);
     if (!infile.is_open()) {
-        std::cerr << "Could not open file: " << filename << std::endl;
+        std::cerr << "Could not open file: " << filename_abs << std::endl;
         gSystem->ChangeDirectory(original_dir.c_str());
         gROOT->SetBatch(oldBatch); // restore batch state before returning
         return;
@@ -516,7 +521,7 @@ void eval_model(
     // === Parse header ===
     std::string line;
     if (!std::getline(infile, line)) {
-        std::cerr << "Empty file or missing header: " << filename << std::endl;
+        std::cerr << "Empty file or missing header: " << filename_abs << std::endl;
         return;
     }
     std::stringstream header_ss(line);
