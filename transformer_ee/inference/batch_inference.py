@@ -589,7 +589,6 @@ def run_task(
             eval_save_png=eval_save_png,
             eval_png_size=eval_png_size,
         )
-
     total_time = 0.0
     if batch_times:
         total_time = record_batch_timings(

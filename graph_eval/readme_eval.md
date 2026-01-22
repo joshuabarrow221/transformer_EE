@@ -1,4 +1,66 @@
-# eval_model.C
+# Evaluation scripts
+
+This repository includes two convenience scripts for evaluating many trainings by repeatedly running `eval_model.C` over relevant result.csv files. `eval_model.C` is a ROOT macro and the core script for evalutating models. NOTE: both bash scripts rely on the ROOT macro `eval_model.C` and thus require ROOT to be setup before they can be run.
+
+## run_eval_all.sh
+
+`run_eval_all.sh` scans a base directory and runs `eval_model.C` in ROOT batch mode for each `result.csv` it finds.
+
+### What it expects
+
+You call it with a single argument: the base directory to scan.
+
+It supports **two input layouts**:
+
+1. **Training directories:** `BASE_DIR` contains multiple training run subdirectories, each with one or more `model_*/` folders that contain `result.csv`.
+   - If multiple `model_*/` exist, the script evaluates the **most recently modified** one that contains `result.csv`.
+
+2. **Combined-CSV directories:** `BASE_DIR` directly contains one or more files named:
+  - `combined_result__*.csv`
+   In this case, the script evaluates each combined CSV directly.
+
+### How to run run_eval_all.sh
+```bash
+chmod +x run_eval_all.sh
+./run_eval_all.sh /path/to/base_dir
+```
+For example:
+```bash
+./run_eval_all.sh /exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAND/
+```
+
+### Outputs for run_eval_all.sh
+All outputs are written to the current working directory by default and consist of a .root file and a ellipse_fraction.csv file including evaluation tools for all of the trainings found in the given base directory.
+
+## run_full_evals_all_users.sh
+
+`run_full_evals_all_users.sh` is a driver that runs `run_eval_all.sh` repeatedly across a predefined set of training types and users, and aggregates outputs into per-type directories.
+
+### What it does
+
+For each configured training type, it:
+
+1. Creates an output directory named like `*_FullEval/`
+2. `cd`s into that directory
+3. Runs `run_eval_all.sh <BASE_DIR_FOR_THIS_TYPE>`
+4. Appends stdout/stderr to a log file:
+   - `*_FullEval/full_eval.log`
+
+Because it runs evaluations *inside* each `*_FullEval/` directory, each training type gets its own:
+- `combined_output.root`
+- `ellipse_fraction.csv`
+- `full_eval.log`
+
+### How to run run_full_evals_all_users.sh
+The set of USERS, TRAINING_TYPES, and corresponding base directories must be adjusted to match the file path of the trainings that are intended to be run over.
+
+After adjusting those configuration to match your directory structure, simply run
+```bash
+chmod +x run_eval_all.sh run_full_evals_all_users.sh
+./run_full_evals_all_users.sh /path/where/you/want/outputs
+```
+
+## eval_model.C
 
 `eval_model.C` is a ROOT macro for evaluating neutrino energy and momentum reconstruction performance using a CSV file containing **true** and **predicted** kinematic variables. The script automatically generates a large collection of 1D/2D histograms, resolution plots, contour plots, and summary metrics used for model evaluation. All outputs are appended to a central ROOT file and a CSV summary file.
 
