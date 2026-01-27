@@ -30,6 +30,7 @@ import torch
 
 from transformer_ee.dataloader.load import (
     get_sample_indices,
+    get_sample_sizes,
     get_train_valid_test_dataloader,
 )
 from transformer_ee.dataloader.pd_dataset import string_to_float_list
@@ -73,36 +74,41 @@ def _normalise_config(config: Dict) -> Dict:
     return cfg
 
 
-def _load_dataframe(config: Dict) -> pd.DataFrame:
-    """Load the CSV described by *config* into a pandas ``DataFrame``.
+def _train_subset(config: Dict) -> pd.DataFrame:
+    """Return the training split as a pandas ``DataFrame``.
 
-    The training configs already encode the path to the preprocessed CSV used
-    for training.  By delegating to those configs we guarantee that the
-    statistics computed here are in one-to-one correspondence with the data that
-    trained the checkpoint under study.
+    The correlation analysis is intentionally anchored to the same distribution
+    of events used during training, so the split logic mirrors
+    ``get_train_valid_test_dataloader`` exactly.  For pandas-backed training we
+    reuse ``get_sample_indices``.  For polars-backed training we shuffle and
+    slice using the same polars calls before converting the subset to pandas for
+    downstream numeric analysis.
     """
 
     cfg = _normalise_config(config)
     path = cfg["data_path"]
     if not os.path.exists(path):
         raise FileNotFoundError(f"Could not locate dataset: {path}")
-    df = pd.read_csv(path)
-    return df
 
+    dataframe_type = cfg.get("dataframe_type", "pandas")
+    if dataframe_type == "pandas":
+        df = pd.read_csv(path)
+        train_idx, _, _ = get_sample_indices(len(df), cfg)
+        train_df = df.iloc[train_idx].reset_index(drop=True)
+        return train_df
+    if dataframe_type == "polars":
+        from transformer_ee.dataloader.pl_dataset import (  # pylint: disable=C0415
+            get_polars_df_from_file,
+        )
 
-def _train_subset(df: pd.DataFrame, config: Dict) -> pd.DataFrame:
-    """Return the subset of *df* corresponding to the training split.
-
-    The goal is to base the correlation analysis on the same distribution of
-    events that the model saw during training.  ``get_sample_indices`` applies
-    the exact split logic (including random seeding) as the trainer, hence
-    slicing the DataFrame with those indices reproduces the training split.
-    """
-
-    cfg = _normalise_config(config)
-    train_idx, _, _ = get_sample_indices(len(df), cfg)
-    train_df = df.iloc[train_idx].reset_index(drop=True)
-    return train_df
+        df = get_polars_df_from_file(path)
+        randomdf = df.sample(fraction=1.0, seed=cfg["seed"], shuffle=True)
+        sizes = get_sample_sizes(randomdf.height, cfg)
+        train_df = randomdf.slice(offset=0, length=sizes[0]).to_pandas()
+        return train_df.reset_index(drop=True)
+    raise ValueError(
+        f"Unknown dataframe_type: {dataframe_type}. Supported types: ['pandas', 'polars']"
+    )
 
 
 def _sequence_to_array(df: pd.DataFrame, columns: Sequence[str]) -> pd.DataFrame:
@@ -395,8 +401,11 @@ def run_analysis(args):
     scalar_cols = config["scalar"]
     target_cols = config["target"]
 
-    df = _load_dataframe(config)
-    train_df = _train_subset(df, config)
+    # Correlations are computed on the training split to mirror the feature
+    # distribution seen during optimization.  If you want to probe generalised
+    # behaviour instead, consider re-running this analysis on a held-out split
+    # by adapting this helper.
+    train_df = _train_subset(config)
     feature_frame = summarise_features(train_df, vector_cols, scalar_cols)
 
     targets = train_df[target_cols].apply(pd.to_numeric, errors="coerce")
