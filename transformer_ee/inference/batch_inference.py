@@ -196,8 +196,10 @@ def resolve_relative(candidate: str, root: Optional[Path]) -> Path:
 
 
 def load_pairs_from_config(
-    config_path: Path, model_root: Optional[Path], sample_root: Optional[Path]
-) -> List[InferenceTask]:
+    config_path: Path,
+    model_root: Optional[Path],
+    sample_root: Optional[Path],
+) -> Tuple[List[InferenceTask], List[str]]:
     with open(config_path, encoding="utf-8") as handle:
         payload = json.load(handle)
     if "pairs" not in payload:
@@ -209,6 +211,7 @@ def load_pairs_from_config(
 
     model_lookup: Dict[str, Union[Path, List[Path]]] = {}
     sample_lookup: Dict[str, Path] = {}
+    missing_models: List[str] = []
 
     for entry in payload.get("models", []):
         label, resolved = parse_entity(
@@ -216,6 +219,7 @@ def load_pairs_from_config(
             model_root,
             resolve_model_dir,
             training_search_roots=training_search_roots,
+            missing_models=missing_models,
         )
         model_lookup[label] = resolved
 
@@ -232,6 +236,7 @@ def load_pairs_from_config(
             root=model_root,
             resolver=resolve_model_dir,
             training_search_roots=training_search_roots,
+            missing_models=missing_models,
         )
         sample_label, sample_path = parse_pair_entry(
             pair,
@@ -252,7 +257,7 @@ def load_pairs_from_config(
                     sample_path=sample_path,
                 )
             )
-    return tasks
+    return tasks, missing_models
 
 
 def parse_entity(
@@ -260,6 +265,7 @@ def parse_entity(
     root: Optional[Path],
     resolver,
     training_search_roots: Optional[Sequence[Path]] = None,
+    missing_models: Optional[List[str]] = None,
 ) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(entry, dict):
         if "training_name" in entry:
@@ -270,7 +276,7 @@ def parse_entity(
                     "Model entries with 'training_name' require 'model_search_roots'."
                 )
             resolved_path = resolve_model_from_training_name(
-                training_name, training_search_roots
+                training_name, training_search_roots, missing_models
             )
             return label, resolved_path
         path_value = entry.get("path") or entry.get("dir") or entry.get("file")
@@ -293,6 +299,7 @@ def parse_pair_entry(
     root: Optional[Path],
     resolver,
     training_search_roots: Optional[Sequence[Path]] = None,
+    missing_models: Optional[List[str]] = None,
 ) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(pair_entry, dict):
         if key in pair_entry:
@@ -318,6 +325,7 @@ def parse_pair_entry(
             root,
             resolver,
             training_search_roots=training_search_roots,
+            missing_models=missing_models,
         )
     else:
         resolved = resolver(resolve_relative(value, root))
@@ -327,7 +335,9 @@ def parse_pair_entry(
 
 
 def resolve_model_from_training_name(
-    training_name: str, search_roots: Sequence[Path]
+    training_name: str,
+    search_roots: Sequence[Path],
+    missing_models: Optional[List[str]] = None,
 ) -> List[Path]:
     candidates: List[Path] = []
     for root in search_roots:
@@ -338,10 +348,9 @@ def resolve_model_from_training_name(
                 candidates.append(path.parent.resolve())
     unique = sorted({path.resolve() for path in candidates}, key=lambda p: str(p))
     if not unique:
-        roots = ", ".join(str(root) for root in search_roots)
-        raise FileNotFoundError(
-            f"No model export found for training '{training_name}' under: {roots}"
-        )
+        if missing_models is not None and training_name not in missing_models:
+            missing_models.append(training_name)
+        return []
     return unique
 
 
@@ -351,6 +360,8 @@ def normalize_model_paths(
     search_roots: Optional[Sequence[Path]],
 ) -> List[Tuple[str, Path]]:
     if isinstance(model_path, list):
+        if not model_path:
+            return []
         if len(model_path) == 1:
             return [(label, model_path[0])]
         return [
@@ -618,9 +629,14 @@ def main():
     args = parse_args()
     model_root = Path(args.model_root).resolve() if args.model_root else None
     sample_root = Path(args.sample_root).resolve() if args.sample_root else None
+    output_dir = Path(args.output_dir).expanduser().resolve()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    missing_models: List[str] = []
 
     if args.pair_config:
-        tasks = load_pairs_from_config(Path(args.pair_config), model_root, sample_root)
+        tasks, missing_models = load_pairs_from_config(
+            Path(args.pair_config), model_root, sample_root
+        )
     else:
         if args.models:
             model_paths = [resolve_relative(p, model_root) for p in args.models]
@@ -645,13 +661,19 @@ def main():
             model_root,
             sample_root,
         )
+    if missing_models:
+        missing_path = output_dir / "models_not_found.txt"
+        with open(missing_path, "w", encoding="utf-8") as handle:
+            for name in sorted(set(missing_models)):
+                handle.write(f"{name}\n")
+        print(
+            "[WARN] Missing model exports for training names. "
+            f"See {missing_path} for details."
+        )
 
     if not tasks:
         print("[WARN] No inference tasks to execute.")
         return
-
-    output_dir = Path(args.output_dir).expanduser().resolve()
-    output_dir.mkdir(parents=True, exist_ok=True)
 
     summary: List[Dict[str, str]] = []
     for task_idx, task in enumerate(tasks, start=1):
