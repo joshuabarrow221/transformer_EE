@@ -6,10 +6,13 @@ Batch inference runner that pairs multiple trained models with multiple CSV samp
 from __future__ import annotations
 
 import argparse
+import errno
+import hashlib
 import json
 import os
 import inspect
 import subprocess
+import traceback
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Tuple, Union
@@ -118,6 +121,26 @@ def parse_args() -> argparse.Namespace:
         default=2000,
         help="PNG height for eval_model output (default: %(default)s).",
     )
+    parser.add_argument(
+        "--start-task",
+        type=int,
+        default=1,
+        help="Start from this 1-based task index (default: %(default)s).",
+    )
+    parser.add_argument(
+        "--skip-errors",
+        action="store_true",
+        help="Continue after task failures and record errors in failed_tasks.jsonl.",
+    )
+    parser.add_argument(
+        "--missing-models-file",
+        type=str,
+        default=None,
+        help=(
+            "Path to a models_not_found.txt file. If provided, skip training_name lookups "
+            "that were already recorded as missing."
+        ),
+    )
     return parser.parse_args()
 
 
@@ -184,6 +207,34 @@ def safe_name(label: str) -> str:
     return name.replace(" ", "_")
 
 
+def shorten_component(name: str, max_length: int = 120) -> str:
+    if len(name) <= max_length:
+        return name
+    digest = hashlib.sha1(name.encode("utf-8")).hexdigest()[:12]
+    keep = max_length - (len(digest) + 1)
+    return f"{name[:keep]}_{digest}"
+
+
+def ensure_bucket(output_dir: Path, model_name: str) -> Tuple[Path, str]:
+    base = safe_name(model_name)
+    candidate = output_dir / base
+    try:
+        candidate.mkdir(parents=True, exist_ok=True)
+        return candidate, base
+    except OSError as exc:
+        if exc.errno != errno.ENAMETOOLONG:
+            raise
+    shortened = shorten_component(base, max_length=120)
+    candidate = output_dir / shortened
+    candidate.mkdir(parents=True, exist_ok=True)
+    return candidate, shortened
+
+
+def safe_output_base(label: str, max_length: int = 180) -> str:
+    base = safe_name(label)
+    return shorten_component(base, max_length=max_length)
+
+
 def resolve_relative(candidate: str, root: Optional[Path]) -> Path:
     path = Path(candidate)
     if path.exists():
@@ -199,6 +250,7 @@ def load_pairs_from_config(
     config_path: Path,
     model_root: Optional[Path],
     sample_root: Optional[Path],
+    known_missing_models: Optional[Iterable[str]] = None,
 ) -> Tuple[List[InferenceTask], List[str]]:
     with open(config_path, encoding="utf-8") as handle:
         payload = json.load(handle)
@@ -212,6 +264,7 @@ def load_pairs_from_config(
     model_lookup: Dict[str, Union[Path, List[Path]]] = {}
     sample_lookup: Dict[str, Path] = {}
     missing_models: List[str] = []
+    known_missing = set(known_missing_models or [])
 
     for entry in payload.get("models", []):
         label, resolved = parse_entity(
@@ -220,6 +273,7 @@ def load_pairs_from_config(
             resolve_model_dir,
             training_search_roots=training_search_roots,
             missing_models=missing_models,
+            known_missing=known_missing,
         )
         model_lookup[label] = resolved
 
@@ -237,6 +291,7 @@ def load_pairs_from_config(
             resolver=resolve_model_dir,
             training_search_roots=training_search_roots,
             missing_models=missing_models,
+            known_missing=known_missing,
         )
         sample_label, sample_path = parse_pair_entry(
             pair,
@@ -266,6 +321,7 @@ def parse_entity(
     resolver,
     training_search_roots: Optional[Sequence[Path]] = None,
     missing_models: Optional[List[str]] = None,
+    known_missing: Optional[Iterable[str]] = None,
 ) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(entry, dict):
         if "training_name" in entry:
@@ -276,7 +332,10 @@ def parse_entity(
                     "Model entries with 'training_name' require 'model_search_roots'."
                 )
             resolved_path = resolve_model_from_training_name(
-                training_name, training_search_roots, missing_models
+                training_name,
+                training_search_roots,
+                missing_models,
+                known_missing=known_missing,
             )
             return label, resolved_path
         path_value = entry.get("path") or entry.get("dir") or entry.get("file")
@@ -300,6 +359,7 @@ def parse_pair_entry(
     resolver,
     training_search_roots: Optional[Sequence[Path]] = None,
     missing_models: Optional[List[str]] = None,
+    known_missing: Optional[Iterable[str]] = None,
 ) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(pair_entry, dict):
         if key in pair_entry:
@@ -326,6 +386,7 @@ def parse_pair_entry(
             resolver,
             training_search_roots=training_search_roots,
             missing_models=missing_models,
+            known_missing=known_missing,
         )
     else:
         resolved = resolver(resolve_relative(value, root))
@@ -338,7 +399,10 @@ def resolve_model_from_training_name(
     training_name: str,
     search_roots: Sequence[Path],
     missing_models: Optional[List[str]] = None,
+    known_missing: Optional[Iterable[str]] = None,
 ) -> List[Path]:
+    if known_missing and training_name in set(known_missing):
+        return []
     candidates: List[Path] = []
     for root in search_roots:
         if not root.exists():
@@ -575,9 +639,8 @@ def run_task(
     if eval_macro_path is not None:
         eval_label = f"{safe_name(task.model_name)}__{safe_name(task.sample_name)}"
     result_df[eval_label] = -999999
-    model_bucket = output_dir / safe_name(task.model_name)
-    model_bucket.mkdir(parents=True, exist_ok=True)
-    base_name = safe_name(task.sample_name)
+    model_bucket, bucket_label = ensure_bucket(output_dir, task.model_name)
+    base_name = safe_output_base(task.sample_name)
     csv_path = model_bucket / f"{base_name}.csv"
     npz_path = model_bucket / f"{base_name}.npz"
     result_df.to_csv(csv_path, index=False)
@@ -614,6 +677,7 @@ def run_task(
         "model_dir": str(task.model_dir),
         "sample_name": task.sample_name,
         "sample_path": str(task.sample_path),
+        "output_bucket": bucket_label,
         "output_csv": str(csv_path),
         "output_npz": str(npz_path),
         "num_rows": len(result_df),
@@ -632,9 +696,23 @@ def main():
     output_dir.mkdir(parents=True, exist_ok=True)
     missing_models: List[str] = []
 
+    known_missing = set()
+    if args.missing_models_file:
+        missing_path = Path(args.missing_models_file).expanduser().resolve()
+        if missing_path.exists():
+            with open(missing_path, encoding="utf-8") as handle:
+                known_missing = {
+                    line.strip()
+                    for line in handle
+                    if line.strip() and not line.startswith("#")
+                }
+
     if args.pair_config:
         tasks, missing_models = load_pairs_from_config(
-            Path(args.pair_config), model_root, sample_root
+            Path(args.pair_config),
+            model_root,
+            sample_root,
+            known_missing_models=known_missing,
         )
     else:
         if args.models:
@@ -675,26 +753,46 @@ def main():
         return
 
     summary: List[Dict[str, str]] = []
+    failed_tasks_path = output_dir / "failed_tasks.jsonl"
+    start_idx = max(1, args.start_task)
     for task_idx, task in enumerate(tasks, start=1):
+        if task_idx < start_idx:
+            print(f"[INFO] Skipping task {task_idx} / {len(tasks)}")
+            continue
         print(f"[INFO] Task {task_idx} / {len(tasks)}")
-        meta = run_task(
-            task,
-            output_dir=output_dir,
-            device=args.device,
-            num_workers=args.num_workers,
-            max_rows=args.max_samples,
-            eval_macro_path=Path(args.eval_macro_path).expanduser().resolve()
-            if args.eval_macro_path
-            else None,
-            eval_output_dir=Path(args.eval_output_dir).expanduser().resolve()
-            if args.eval_output_dir
-            else None,
-            eval_save_png=args.eval_save_png,
-            eval_png_size=(args.eval_png_width, args.eval_png_height)
-            if args.eval_save_png
-            else None,
-        )
-        summary.append(meta)
+        try:
+            meta = run_task(
+                task,
+                output_dir=output_dir,
+                device=args.device,
+                num_workers=args.num_workers,
+                max_rows=args.max_samples,
+                eval_macro_path=Path(args.eval_macro_path).expanduser().resolve()
+                if args.eval_macro_path
+                else None,
+                eval_output_dir=Path(args.eval_output_dir).expanduser().resolve()
+                if args.eval_output_dir
+                else None,
+                eval_save_png=args.eval_save_png,
+                eval_png_size=(args.eval_png_width, args.eval_png_height)
+                if args.eval_save_png
+                else None,
+            )
+            summary.append(meta)
+        except Exception as exc:
+            error_meta = {
+                "model_name": task.model_name,
+                "model_dir": str(task.model_dir),
+                "sample_name": task.sample_name,
+                "sample_path": str(task.sample_path),
+                "error": str(exc),
+                "traceback": traceback.format_exc(),
+            }
+            with open(failed_tasks_path, "a", encoding="utf-8") as handle:
+                handle.write(json.dumps(error_meta) + "\n")
+            print(f"[ERROR] Task {task_idx} failed: {exc}")
+            if not args.skip_errors:
+                raise
 
     summary_path = output_dir / "summary.json"
     with open(summary_path, "w", encoding="utf-8") as handle:
