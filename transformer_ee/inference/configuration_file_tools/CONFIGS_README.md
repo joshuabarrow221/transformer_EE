@@ -32,13 +32,9 @@ The tool then deduplicates across all provided lists.
 - `generate_batch_inference_configs.py` — core generator which reads lists, dedupes, builds `models`, `samples`, and `pairs`
 - `make_batch_inference_configs.sh` — convenient bash shell wrapper which calls the Python generator
 
-Recommended location in the repo (suggested):
-- Put both scripts under something like `transformer_ee/inference/config_tools/` or `tools/`
-- Or keep them in the repo root and call them from there
-
 ### 3) Output: the 4 configuration files
 
-The generator writes:
+The generator currently writes out configuration files pertinent to flat atmospheric neutrino spectra - trained models to be used on separate natural atmospheric neutrino spectra inference samples:
 
 1. `batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json`
 2. `batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json`
@@ -49,7 +45,7 @@ The generator writes:
 
 ## What a batch inference config contains (schema)
 
-Each config JSON contains four top-level keys:
+Each config JSON contains four top-level keys (including a map):
 
 1) **`model_search_roots`**
 - List of directories that hold trained model exports (the batch tool recursively searches these).
@@ -70,9 +66,9 @@ Each config JSON contains four top-level keys:
 
 ### Why `training_name` matters
 
-When you provide `training_name`, `batch_inference.py` searches the configured roots for trained model directories by scanning for `input.json` files and checking whether `training_name` appears as a path component of that model export directory tree.
+When we provide a `training_name`, `batch_inference.py` searches the configured roots for trained model directories by scanning for `input.json` files and checking whether `training_name` appears as a path component of that model export directory tree.
 
-**Devil’s advocate / failure mode:** if your exported model directory layout does *not* include the full training name in its path components, the resolver won’t find it. In that case you must either:
+**Devil’s advocate / failure mode:** if our exported model directory layout does *not* include the full training name in its path components, the resolver won’t end up finding it. In that case, we must either:
 - switch to using explicit model directory `path`s in `models`, **or**
 - adjust how exports are stored (so the training name appears in the directory path)
 
@@ -80,15 +76,15 @@ When you provide `training_name`, `batch_inference.py` searches the configured r
 
 ## Vector vs Scalar pairing logic
 
-Your training names contain either `...Vector...` or `...Scalar...` in the name.
+Our training names contain either `...Vector...` or `...Scalar...` in the name, implicating the different training/inference data format which either brings the charge current lepton into the full list (vector) of visible final state particles or instead lead the final state lepton in a single-valued column of data.
 
-The generator applies a strict rule:
+The generator currently applies a couple of strict rules which are pretty important:
 - Vector models are paired **only** with Vector CSV samples
 - Scalar models are paired **only** with Scalar CSV samples
 
-If a model name contains neither substring, it is treated as “Unknown” and is not paired (it may still appear in `models`, depending on how you want to run).
+If a model name contains neither substring, it is treated as “Unknown” and is not paired (it may still appear in `models`, depending on how we want to run--in principle this shouldn't happen given our current scope of data preprocessing, associated naming, and data sample organization).
 
-**Devil’s advocate:** if a training name uses a different convention (e.g., `Vect`/`Scal` or missing those substrings), it will be miscategorized. Fix by editing the `_model_kind()` function in the generator.
+**Devil’s advocate:** if a training name uses a different convention (e.g., `Vect`/`Scal` or missing those substrings), it will inevitably be miscategorized. We can fix this by editing the `_model_kind()` function in the generator.
 
 ---
 
@@ -96,26 +92,34 @@ If a model name contains neither substring, it is treated as “Unknown” and i
 
 The generator hardcodes the exact CSV sample paths in a `SAMPLES` dictionary near the top of `generate_batch_inference_configs.py`.
 
-Current sample paths in that file correspond to:
+The current inference sample paths in that file correspond to:
 
-1. DUNE Atmo Natural (p1to10):
+1. DUNE-like Atmospheric Natural Spectra, already oscillated and assumed to only pertain to FD (p1to10 = 0.1 - 10 GeV of incoming neutrino energy):
 - Vector: `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/...Vector...csv`
 - Scalar: `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/...Scalar...csv`
 
-2. Beam Natural, OnAxis FD Osc (p1to6):
+2. DUNE-like Beam Natural Spectra, OnAxis FD Oscillated (p1to6 = 0.1 - 6 GeV of incoming neutrino energy):
 - Vector + Scalar in `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/`
 
-3. Beam Natural, 39m OffAxis ND (p1to2):
+3. DUNE-like Beam Natural Spectra, but now 39m OffAxis ND and so unoscillated (p1to2 = 0.1 - 2 GeV of incoming neutrino enegy):
 - Vector + Scalar in `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/`
 
-4. Beam Natural, OnAxis ND (p1to6):
+4. DUNE-like Beam Natural Spectra, OnAxis ND and so unoscillated (p1to6 = 0.1 - 6 GeV of incoming neutrino energy):
 - Vector + Scalar in `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/`
 
-If you move samples or want different ones, edit only the paths in that dict—no other logic changes needed.
+Note that some/all of these are under Richi's `Training_Samples` area -- while it is true they were used for training, because they are statistically independent than the flat spectra, we can use them for inference purposes without issue, while also guaranteeing that we have high statistics for inference-related performance plots.
+
+If we move samples or want different ones, edit only the paths in this dictionary—no other logic changes needed.
 
 ---
 
 ## How to generate the configs
+
+### Step -1 — make relevant text files from the analyzers' directories listing model names
+
+```bash
+ls /exp/dune/data/users/<user>/MLProject/Training_Samples/Atmospherics_DUNE_Like/Flat_Spectra/ > Train_Atmospheric_Flat_Models_<user>.txt
+```
 
 ### Step 0 — clone the repo and check out the right branch
 
@@ -124,6 +128,7 @@ git clone https://github.com/joshuabarrow221/transformer_EE.git
 cd transformer_EE
 git checkout wide_model_test
 ```
+Note that eventually this may be under `main`
 
 ### Step 1 — put the generator scripts somewhere convenient
 
@@ -135,7 +140,7 @@ cp /path/to/make_batch_inference_configs.sh .
 chmod +x make_batch_inference_configs.sh
 ```
 
-### Step 2 — put the 6 text files next to the scripts (or update paths)
+### Step 2 — put the text files next to the scripts (or update paths)
 
 If they are not in the current working directory, either:
 - move them there, or
@@ -148,7 +153,7 @@ If they are not in the current working directory, either:
 ./make_batch_inference_configs.sh
 ```
 
-This writes the four JSON files into the current directory (or the configured output dir).
+This writes the (currently four) JSON files into the current directory (or the configured output dir).
 
 ### Re-running behavior (backups)
 
@@ -180,7 +185,7 @@ python3 transformer_ee/inference/batch_inference.py   --pair-config batch_infere
 
 ### Optional ROOT macro evaluation
 
-If you want ROOT-based evaluation per output:
+If we want a ROOT-based plotting + ellipse (basic 2D performance metric) evaluation per output:
 
 ```bash
 python3 transformer_ee/inference/batch_inference.py   --pair-config batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json   --output-dir /exp/dune/data/users/$USER/MLProject/Inference_Samples/HondaDUNEOsc/Results   --device cuda:0   --eval-macro-path ./graph_eval/eval_model.C   --eval-output-dir /exp/dune/data/users/$USER/MLProject/Inference_Samples/HondaDUNEOsc/Results   --eval-save-png   --eval-png-width 3000   --eval-png-height 2000
@@ -196,7 +201,7 @@ To avoid collisions, the generator:
 - creates stable short names for models that include a SHA1 hash fragment of the `training_name`
 - uses fixed names for each sample entry (one for Vector, one for Scalar)
 
-**Devil’s advocate:** if you want *human-readable* model shorthand names (instead of hashed), you can replace the `_make_model_name()` function with a readable template; just keep a collision-resistant suffix (hash, or a monotonically increasing ID).
+**Devil’s advocate:** if we want *human-readable* model shorthand names (instead of hashed), we could replace the `_make_model_name()` function with a readable template; just keep a collision-resistant suffix (hash, or a monotonically increasing ID).
 
 ---
 
@@ -213,18 +218,15 @@ Fixes:
 - verify each `model_search_roots` path exists on the machine where you run inference
 - locate the export directory and confirm it contains both `input.json` and `best_model.zip`
 - if necessary, switch from `training_name` resolution to explicit `path` resolution in the config
+- the `batch_inference.py` now supports output for a `models_not_found.txt` which can be saved to the area wherever we output the finished inference samples, allowing for us to go back and retrain if need be if we are somehow missing the `best_model.zip` files storing the model weights. Why this has happened isn't exactly clear, but it can and has happened sadly.
 
-### “I got multiple models for one training_name”
+### “We got multiple models for one training_name because we accidentally ran over each others training ranges...”
 
-That’s expected if multiple users have the same training under different roots.
+This is expected if multiple users have ended up with accidentally training the same model, ending up under different roots.
 
-The batch tool will run inference for each discovered instance. If you want **only one**, either:
-- narrow `model_search_roots`, or
-- adjust labeling/selection logic in `batch_inference.py` (advanced)
-
-### Vector/Scalar mismatch
-
-If your model name contains `Vector` but was trained on scalar inputs (or vice-versa), pairing will be wrong. Fix the naming convention or adjust the generator’s `_model_kind()` rules.
+The batch tool will run inference for each discovered instance. If we want **only one**, either:
+- we can narrow `model_search_roots` (easy), or
+- we can adjust the labeling/selection logic in `batch_inference.py` down the line (more advanced)
 
 ---
 
@@ -240,28 +242,7 @@ If that works, switch to GPU and full-stat inference.
 
 ---
 
-## Where to commit these files in the repo
-
-Suggested layout (not required):
-
-```
-transformer_ee/inference/
-  configs/
-    batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json
-    batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json
-    batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json
-    batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json
-  config_tools/
-    generate_batch_inference_configs.py
-    make_batch_inference_configs.sh
-  CONFIGS_README.md
-```
-
-This keeps everything inference-related together and makes it obvious how the JSONs were produced.
-
----
-
 ## Notes
 
-- This workflow assumes your “flat” training name strings are correct and correspond to actual exported model directories searchable under `model_search_roots`.
-- Natural-spectrum inference samples can absolutely live under `Training_Samples/` (the name is historical; what matters is statistical independence, not the folder name).
+- This workflow currently assumes our “flat” training name strings are correct and correspond to actual exported model directories searchable under `model_search_roots`.
+- Natural-spectrum inference samples can absolutely live under `Training_Samples/` -- see above explanation.
