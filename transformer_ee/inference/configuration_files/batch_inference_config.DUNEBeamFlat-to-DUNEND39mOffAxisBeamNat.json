@@ -1,0 +1,2069 @@
+{
+  "model_search_roots": [
+    "/exp/dune/data/users/cborden/MLProject/Training_Samples",
+    "/exp/dune/data/users/rrichi/MLProject/Training_Samples",
+    "/exp/dune/data/users/jbarrow/MLProject/Training_Samples"
+  ],
+  "models": [
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MACE_Topology_MAE_bc8ef9274a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MAE_Topology_MAE_fe97f942df",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MAPE_Topology_MAE_b5aea650f2",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE_87101e4fbf",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MACE_Topology_MAE_42f12e2d39",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE_1a68bddf86",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE_a2fe72a885",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MSE_Topology_MAE_57d6eca185",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_a441748bed",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MACE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_e16744f617",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_284ced6111",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MACE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_e995d7cd76",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_8ca11bd53c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MACE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_51539a6bd7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_2a14ddc32c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MACE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_487c74c6c3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_85cdbe938a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE_b2f4656cea",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_da72f1b51d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MAE_Topology_MAE_dfaac4de8f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_83fd734df3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE_44d852f222",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_d44f9beccd",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MSE_Topology_MAE_ed752f7886",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE_440382330a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE_9722c9e8c4",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MAE_Topology_MAE_4c8ac9e9fc",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MAPE_Topology_MAE_35bfa06cd2",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE_b633497115",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_616bfb0736",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_db216afbfa",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_de8750251f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_2a1fd4a6ba",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_d43df6332e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_12c5dc76eb",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_ad95c11119",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_1a59128e49",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_e54a5ee36f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MACE_Topology_MAE_9706c7f2fa",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_6e36032260",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MAE_Topology_MAE_5859948479",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_beab6c875c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MAPE_Topology_MAE_addaec8d09",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_8b1acc2e6a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE_db60302b39",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MAE_Topology_MAE_f93350ebe6",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MACE_Topology_MAE_6fb034b265",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MAE_Topology_MAE_689042c323",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MAPE_Topology_MAE_8534599f56",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MSE_Topology_MAE_ae93d09aed",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_3f3869a1c9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_32856ea96a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_ac53c946fd",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAPE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_28d997329c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_be02738df6",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAPE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_9dcf2e6493",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_01e8448a86",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAPE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_79f7a56eb7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_5da99de66f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MACE_Topology_MAE_f95c02e249",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_db9b24fd9a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MAE_Topology_MAE_22e75acaba",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_57ada44754",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MAPE_Topology_MAE_3e53741623",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_031dceb32e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MSE_Topology_MAE_289398bdde",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MAPE_Topology_MAE_8f8f103de0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MACE_Topology_MAE_fc2ef6c969",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MAE_Topology_MAE_d8748f342f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MAPE_Topology_MAE_bc47e2e744",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE_d7c3cd64e7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_3c172d41b9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_8d2bd5b278",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_cb361c9e57",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MSE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_04a057a2d7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_d28293358f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MSE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_017906dcee",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_4ce3eb346c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MSE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_e4f20a481f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_9707df5abc",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MACE_Topology_MAE_e13654a97c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_ccb18138fd",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MAE_Topology_MAE_523a2405a0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_ad6f3cf9c6",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MAPE_Topology_MAE_77077671b1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_51252b4ced",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MSE_Topology_MAE_67ebc3ae93",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MSE_Topology_MAE_156716fd64",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_db4c8c851f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MACE_Topology_MAE_8210877d7f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_1ab1fe5404",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MAE_Topology_MAE_d1d1703724",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_38e2ebfe2a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MAPE_Topology_MAE_fa465b62b5",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_5276a7fc7e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MSE_Topology_MAE_9b6fdf0520",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE_dbcfd52ac5",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MAE_Topology_MAE_2f7b235c0e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MAPE_Topology_MAE_eb87e93e3f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MSE_Topology_MAE_767214b660",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE_0a2ad42a48",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE_73f2f31c3c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MAPE_Topology_MAE_5894f2daae",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MSE_Topology_MAE_3a1f6c390f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE_d90fdb6d25",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE_a642be4a83",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE_98f57f45bf",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE_61cb1fb00d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MACE_Topology_MAE_50a1028ade",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE_46a121c730",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MAPE_Topology_MAE_8a22799fd3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE_23cefd5ac7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MACE_Top_74fde9c613",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAE_Topo_fd56bd22f8",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAPE_Top_42747d4a7e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MSE_Topo_f9027c3a4e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MACE_Topology_MAE_b923b038e5",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MAE_Topology_MAE_a8abf2594b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MAPE_Topology_MAE_f962370031",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MSE_Topology_MAE_013eb79686",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_eb6d1126b0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_22496efb65",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_28abfffbe9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_c1a520c1d2",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MACE_Topology_MAE_d922f2d44b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MAE_Topology_MAE_8e967f8fbd",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MAPE_Topology_MAE_deb2e2248a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MSE_Topology_MAE_df83a49160",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MACE_Topology_MAE_6262b45f17",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MACE_Topology_MAE_5b1ecef9b8",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MAE_Topology_MAE_0a0623d265",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MAPE_Topology_MAE_5b51765c44",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MSE_Topology_MAE_f717c126ab",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MAE_Topology_MAE_870078d633",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MACE_Topology_MAE_d9e4e68e2a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MAE_Topology_MAE_dc6eebb90b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MAPE_Topology_MAE_7627d5bd31",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MSE_Topology_MAE_5f20fe1447",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MAPE_Topology_MAE_cb45bdb2ec",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MACE_Topology_MAE_b1d01dcf48",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MAE_Topology_MAE_105fc3d3d9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MAPE_Topology_MAE_6d80e8aed9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MSE_Topology_MAE_f1a82c14e6",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MSE_Topology_MAE_4a46d4ddec",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Topol_0fc26621b7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MACE_Topology_MAE_8c8d373f6d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MAE_Topology_MAE_57c884baf8",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MAPE_Topology_MAE_a6e44a66f0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MSE_Topology_MAE_fc673cbdf7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_0cc0ef46f3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_731fdff0e0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_b28c0ea75e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_55e84652e7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MACE_Topology_MAE_3f64f3faec",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_1b691a19f3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MAPE_Topology_MAE_151201d0bb",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MSE_Topology_MAE_6d986b4371",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MACE_Topology_MAE_d473ef113b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MACE_Topology_MAE_a80a2e1215",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MAE_Topology_MAE_1f1f07b175",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MAPE_Topology_MAE_96970434c7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MSE_Topology_MAE_e59719112c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE_087a9ab018",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MACE_Topology_MAE_313184a8de",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MAE_Topology_MAE_19f085af11",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MAPE_Topology_MAE_66a9103999",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MSE_Topology_MAE_b6d27b40a9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MAPE_Topology_MAE_dd38bf0ebc",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MACE_Topology_MAE_345ca8c24c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MAE_Topology_MAE_708c2b98d8",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MAPE_Topology_MAE_a80b3f97e5",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MSE_Topology_MAE_f6faf9cc72",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MSE_Topology_MAE_6f4ed5e088",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Topolo_52c9d1f1a3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MACE_Topology_MAE_05e6b67539",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MAE_Topology_MAE_54097a7166",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MAPE_Topology_MAE_750d0afb32",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MSE_Topology_MAE_cd6aa3e7c4",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_1c251f81da",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_59adb57a9e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_9f9c1213d7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_cf7f9d0c70",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MACE_Topology_MAE_2eaf6201d2",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MAE_Topology_MAE_d407fe35e1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MAPE_Topology_MAE_7b181acd3b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MSE_Topology_MAE_9e4796aaf0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MACE_Topology_MAE_eae424af63",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MACE_Topology_MAE_56df6235f0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MAE_Topology_MAE_c18a9b3f7a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MAPE_Topology_MAE_0508cfd62f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MSE_Topology_MAE_3257cf12ad",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MAE_Topology_MAE_4fd87afaea",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MACE_Topology_MAE_1afd1f4dc5",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MAE_Topology_MAE_5215f4581a",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MAPE_Topology_MAE_a9f331a12e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MSE_Topology_MAE_a1b567151b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MAPE_Topology_MAE_f48e94ebd0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MACE_Topology_MAE_ca1a55460d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MAE_Topology_MAE_bc2692989b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MAPE_Topology_MAE_9d9f2bab7b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MSE_Topology_MAE_90bf388231",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MSE_Topology_MAE_b4126861e6",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Topol_20e8d2cf01",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MACE_Topology_MAE_8b0071ca81",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MAE_Topology_MAE_4383b25f34",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MAPE_Topology_MAE_940edf9871",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MSE_Topology_MAE_94bccb8ea2",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_eefc5b38f6",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_a792c93b4e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_900e9622f3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_276c716c82",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MACE_Topology_MAE_f27d66ef85",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MAE_Topology_MAE_96fc3a032d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MAPE_Topology_MAE_996ccb21a7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MSE_Topology_MAE_b529adbffc",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MACE_Topology_MAE_189bc97260",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MACE_Topology_MAE_4e0f6aaad1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_c0ec5db2d3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_8b0e6f737f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MSE_Topology_MAE_0cd9027cd1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MAE_Topology_MAE_7e796487ee",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MACE_Topology_MAE_b761150ebc",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MAE_Topology_MAE_c025ecc040",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MAPE_Topology_MAE_184fa443e4",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MSE_Topology_MAE_0329bbade0",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MAPE_Topology_MAE_21976b9fde",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MACE_Topology_MAE_8163f34b5b",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MAE_Topology_MAE_f32c0daa88",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MAPE_Topology_MAE_880553f5f3",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MSE_Topology_MAE_fd116c6d1e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MSE_Topology_MAE_7fe8942713",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Topolo_409a879b31",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_a8d134793e",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MACE_Topology_MAE_f0c0eb7288",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_8f31b06dd7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MAE_Topology_MAE_68c82e7590",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_a768003a7d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MAPE_Topology_MAE_80b42e7999",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_c0310e5258",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_d4184fec3c",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MACE_Topology_MAE_3c6e2187fe",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MAE_Topology_MAE_75aef95aed",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MAPE_Topology_MAE_d4efb292be",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MSE_Topology_MAE_8feefc50f9",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MACE_Topology_MAE_457773159f",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MAE_Topology_MAE_3b57aee17d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MAPE_Topology_MAE_fd9bc69f01",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MSE_Topology_MAE_daf5c6c664",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_32da5a46bd",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAE_Topology__509efce2e8",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAPE_Topology_5781507ebc",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MSE_Topology__14f2fd7bd7",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MACE_Topolo_f117df10ce",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAE_Topolog_c926edd6b8",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAPE_Topolo_bed11f364d",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MSE_Topolog_fc1aa6ccef",
+      "training_name": "Numu_CC_Train_DUNEBeam_Flat_Ar40_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MSE_Topology_MAE"
+    }
+  ],
+  "samples": [
+    {
+      "name": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_VectorLeptwNC_eventnum_All_NpNpi.csv"
+    },
+    {
+      "name": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_ScalarLeptwNC_eventnum_All_NpNpi.csv"
+    }
+  ],
+  "pairs": [
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MACE_Topology_MAE_bc8ef9274a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MAE_Topology_MAE_fe97f942df",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MAPE_Topology_MAE_b5aea650f2",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE_87101e4fbf",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MACE_Topology_MAE_42f12e2d39",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE_1a68bddf86",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE_a2fe72a885",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_CosTheta_MSE_Topology_MAE_57d6eca185",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_a441748bed",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_e16744f617",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_284ced6111",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_e995d7cd76",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_8ca11bd53c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_51539a6bd7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_2a14ddc32c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_487c74c6c3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_85cdbe938a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE_b2f4656cea",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_da72f1b51d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MAE_Topology_MAE_dfaac4de8f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_83fd734df3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE_44d852f222",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_d44f9beccd",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MACE_Nu_Theta_MSE_Topology_MAE_ed752f7886",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE_440382330a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE_9722c9e8c4",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MAE_Topology_MAE_4c8ac9e9fc",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MAPE_Topology_MAE_35bfa06cd2",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE_b633497115",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_616bfb0736",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_db216afbfa",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_de8750251f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_2a1fd4a6ba",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_d43df6332e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_12c5dc76eb",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_ad95c11119",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_1a59128e49",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_e54a5ee36f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MACE_Topology_MAE_9706c7f2fa",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_6e36032260",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MAE_Topology_MAE_5859948479",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_beab6c875c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MAPE_Topology_MAE_addaec8d09",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_8b1acc2e6a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE_db60302b39",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MAE_Topology_MAE_f93350ebe6",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MACE_Topology_MAE_6fb034b265",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MAE_Topology_MAE_689042c323",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MAPE_Topology_MAE_8534599f56",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_CosTheta_MSE_Topology_MAE_ae93d09aed",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_3f3869a1c9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_32856ea96a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_ac53c946fd",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_28d997329c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_be02738df6",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_9dcf2e6493",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_01e8448a86",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_79f7a56eb7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_5da99de66f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MACE_Topology_MAE_f95c02e249",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_db9b24fd9a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MAE_Topology_MAE_22e75acaba",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_57ada44754",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MAPE_Topology_MAE_3e53741623",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_031dceb32e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MAPE_Nu_Theta_MSE_Topology_MAE_289398bdde",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MAPE_Topology_MAE_8f8f103de0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MACE_Topology_MAE_fc2ef6c969",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MAE_Topology_MAE_d8748f342f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MAPE_Topology_MAE_bc47e2e744",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE_d7c3cd64e7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_3c172d41b9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_8d2bd5b278",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_cb361c9e57",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_04a057a2d7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_d28293358f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_017906dcee",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_4ce3eb346c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_e4f20a481f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_9707df5abc",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MACE_Topology_MAE_e13654a97c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_ccb18138fd",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MAE_Topology_MAE_523a2405a0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_ad6f3cf9c6",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MAPE_Topology_MAE_77077671b1",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_51252b4ced",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_Energy_MSE_Nu_Theta_MSE_Topology_MAE_67ebc3ae93",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Energy_MSE_Topology_MAE_156716fd64",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_db4c8c851f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MACE_Topology_MAE_8210877d7f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_1ab1fe5404",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MAE_Topology_MAE_d1d1703724",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_38e2ebfe2a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MAPE_Topology_MAE_fa465b62b5",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_5276a7fc7e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomX_MSE_Topology_MAE_9b6fdf0520",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE_dbcfd52ac5",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MAE_Topology_MAE_2f7b235c0e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MAPE_Topology_MAE_eb87e93e3f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomY_MSE_Topology_MAE_767214b660",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE_0a2ad42a48",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE_73f2f31c3c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MAPE_Topology_MAE_5894f2daae",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_MomZ_MSE_Topology_MAE_3a1f6c390f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE_d90fdb6d25",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE_a642be4a83",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE_98f57f45bf",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE_61cb1fb00d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MACE_Topology_MAE_50a1028ade",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE_46a121c730",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MAPE_Topology_MAE_8a22799fd3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Scalar_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE_23cefd5ac7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MACE_Top_74fde9c613",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAE_Topo_fd56bd22f8",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAPE_Top_42747d4a7e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MSE_Topo_f9027c3a4e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MACE_Topology_MAE_b923b038e5",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MAE_Topology_MAE_a8abf2594b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MAPE_Topology_MAE_f962370031",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_CosTheta_MSE_Topology_MAE_013eb79686",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_eb6d1126b0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_22496efb65",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_28abfffbe9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_c1a520c1d2",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MACE_Topology_MAE_d922f2d44b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MAE_Topology_MAE_8e967f8fbd",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MAPE_Topology_MAE_deb2e2248a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MACE_Phi_MSE_Topology_MAE_df83a49160",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MACE_Topology_MAE_6262b45f17",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MACE_Topology_MAE_5b1ecef9b8",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MAE_Topology_MAE_0a0623d265",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MAPE_Topology_MAE_5b51765c44",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAE_Phi_MSE_Topology_MAE_f717c126ab",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MAE_Topology_MAE_870078d633",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MACE_Topology_MAE_d9e4e68e2a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MAE_Topology_MAE_dc6eebb90b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MAPE_Topology_MAE_7627d5bd31",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MAPE_Phi_MSE_Topology_MAE_5f20fe1447",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MAPE_Topology_MAE_cb45bdb2ec",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MACE_Topology_MAE_b1d01dcf48",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MAE_Topology_MAE_105fc3d3d9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MAPE_Topology_MAE_6d80e8aed9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MACE_Theta_MSE_Phi_MSE_Topology_MAE_f1a82c14e6",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MACE_Theta_MSE_Topology_MAE_4a46d4ddec",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Topol_0fc26621b7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MACE_Topology_MAE_8c8d373f6d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MAE_Topology_MAE_57c884baf8",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MAPE_Topology_MAE_a6e44a66f0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_CosTheta_MSE_Topology_MAE_fc673cbdf7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_0cc0ef46f3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_731fdff0e0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_b28c0ea75e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_55e84652e7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MACE_Topology_MAE_3f64f3faec",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_1b691a19f3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MAPE_Topology_MAE_151201d0bb",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MACE_Phi_MSE_Topology_MAE_6d986b4371",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MACE_Topology_MAE_d473ef113b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MACE_Topology_MAE_a80a2e1215",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MAE_Topology_MAE_1f1f07b175",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MAPE_Topology_MAE_96970434c7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAE_Phi_MSE_Topology_MAE_e59719112c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE_087a9ab018",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MACE_Topology_MAE_313184a8de",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MAE_Topology_MAE_19f085af11",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MAPE_Topology_MAE_66a9103999",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MAPE_Phi_MSE_Topology_MAE_b6d27b40a9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MAPE_Topology_MAE_dd38bf0ebc",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MACE_Topology_MAE_345ca8c24c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MAE_Topology_MAE_708c2b98d8",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MAPE_Topology_MAE_a80b3f97e5",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAE_Theta_MSE_Phi_MSE_Topology_MAE_f6faf9cc72",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAE_Theta_MSE_Topology_MAE_6f4ed5e088",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Topolo_52c9d1f1a3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MACE_Topology_MAE_05e6b67539",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MAE_Topology_MAE_54097a7166",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MAPE_Topology_MAE_750d0afb32",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_CosTheta_MSE_Topology_MAE_cd6aa3e7c4",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_1c251f81da",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_59adb57a9e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_9f9c1213d7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_cf7f9d0c70",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MACE_Topology_MAE_2eaf6201d2",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MAE_Topology_MAE_d407fe35e1",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MAPE_Topology_MAE_7b181acd3b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MACE_Phi_MSE_Topology_MAE_9e4796aaf0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MACE_Topology_MAE_eae424af63",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MACE_Topology_MAE_56df6235f0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MAE_Topology_MAE_c18a9b3f7a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MAPE_Topology_MAE_0508cfd62f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAE_Phi_MSE_Topology_MAE_3257cf12ad",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MAE_Topology_MAE_4fd87afaea",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MACE_Topology_MAE_1afd1f4dc5",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MAE_Topology_MAE_5215f4581a",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MAPE_Topology_MAE_a9f331a12e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MAPE_Phi_MSE_Topology_MAE_a1b567151b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MAPE_Topology_MAE_f48e94ebd0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MACE_Topology_MAE_ca1a55460d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MAE_Topology_MAE_bc2692989b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MAPE_Topology_MAE_9d9f2bab7b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MAPE_Theta_MSE_Phi_MSE_Topology_MAE_90bf388231",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MAPE_Theta_MSE_Topology_MAE_b4126861e6",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Topol_20e8d2cf01",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MACE_Topology_MAE_8b0071ca81",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MAE_Topology_MAE_4383b25f34",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MAPE_Topology_MAE_940edf9871",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_CosTheta_MSE_Topology_MAE_94bccb8ea2",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_eefc5b38f6",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_a792c93b4e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_900e9622f3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_276c716c82",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MACE_Topology_MAE_f27d66ef85",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MAE_Topology_MAE_96fc3a032d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MAPE_Topology_MAE_996ccb21a7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MACE_Phi_MSE_Topology_MAE_b529adbffc",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MACE_Topology_MAE_189bc97260",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MACE_Topology_MAE_4e0f6aaad1",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_c0ec5db2d3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_8b0e6f737f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAE_Phi_MSE_Topology_MAE_0cd9027cd1",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MAE_Topology_MAE_7e796487ee",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MACE_Topology_MAE_b761150ebc",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MAE_Topology_MAE_c025ecc040",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MAPE_Topology_MAE_184fa443e4",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MAPE_Phi_MSE_Topology_MAE_0329bbade0",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MAPE_Topology_MAE_21976b9fde",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MACE_Topology_MAE_8163f34b5b",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MAE_Topology_MAE_f32c0daa88",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MAPE_Topology_MAE_880553f5f3",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Energy_MSE_Theta_MSE_Phi_MSE_Topology_MAE_fd116c6d1e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_All_NpNpi_Energy_MSE_Theta_MSE_Topology_MAE_7fe8942713",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Topolo_409a879b31",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_a8d134793e",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MACE_Topology_MAE_f0c0eb7288",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_8f31b06dd7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MAE_Topology_MAE_68c82e7590",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_a768003a7d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MAPE_Topology_MAE_80b42e7999",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_c0310e5258",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_d4184fec3c",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MACE_Topology_MAE_3c6e2187fe",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MAE_Topology_MAE_75aef95aed",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MAPE_Topology_MAE_d4efb292be",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Y_MSE_Topology_MAE_8feefc50f9",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MACE_Topology_MAE_457773159f",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MAE_Topology_MAE_3b57aee17d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MAPE_Topology_MAE_fd9bc69f01",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_eventnum_All_NpNpi_Mom_Z_MSE_Topology_MAE_daf5c6c664",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_32da5a46bd",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAE_Topology__509efce2e8",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAPE_Topology_5781507ebc",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Phi_MSE_Topology__14f2fd7bd7",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MACE_Topolo_f117df10ce",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAE_Topolog_c926edd6b8",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAPE_Topolo_bed11f364d",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    },
+    {
+      "model": "DUNEBeam_Vector_VectorLeptwNC_eventnum_All_NpNpi_Theta_MSE_Topolog_fc1aa6ccef",
+      "sample": "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector"
+    }
+  ]
+}
