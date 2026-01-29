@@ -138,7 +138,8 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help=(
             "Path to a models_not_found.txt file. If provided, skip training_name lookups "
-            "that were already recorded as missing."
+            "that were already recorded as missing and record skips to "
+            "models_missing_previously.txt."
         ),
     )
     return parser.parse_args()
@@ -251,7 +252,7 @@ def load_pairs_from_config(
     model_root: Optional[Path],
     sample_root: Optional[Path],
     known_missing_models: Optional[Iterable[str]] = None,
-) -> Tuple[List[InferenceTask], List[str]]:
+) -> Tuple[List[InferenceTask], List[str], List[str]]:
     with open(config_path, encoding="utf-8") as handle:
         payload = json.load(handle)
     if "pairs" not in payload:
@@ -264,6 +265,7 @@ def load_pairs_from_config(
     model_lookup: Dict[str, Union[Path, List[Path]]] = {}
     sample_lookup: Dict[str, Path] = {}
     missing_models: List[str] = []
+    known_missing_hits: List[str] = []
     known_missing = set(known_missing_models or [])
 
     for entry in payload.get("models", []):
@@ -273,6 +275,7 @@ def load_pairs_from_config(
             resolve_model_dir,
             training_search_roots=training_search_roots,
             missing_models=missing_models,
+            known_missing_hits=known_missing_hits,
             known_missing=known_missing,
         )
         model_lookup[label] = resolved
@@ -291,6 +294,7 @@ def load_pairs_from_config(
             resolver=resolve_model_dir,
             training_search_roots=training_search_roots,
             missing_models=missing_models,
+            known_missing_hits=known_missing_hits,
             known_missing=known_missing,
         )
         sample_label, sample_path = parse_pair_entry(
@@ -312,7 +316,7 @@ def load_pairs_from_config(
                     sample_path=sample_path,
                 )
             )
-    return tasks, missing_models
+    return tasks, missing_models, known_missing_hits
 
 
 def parse_entity(
@@ -321,6 +325,7 @@ def parse_entity(
     resolver,
     training_search_roots: Optional[Sequence[Path]] = None,
     missing_models: Optional[List[str]] = None,
+    known_missing_hits: Optional[List[str]] = None,
     known_missing: Optional[Iterable[str]] = None,
 ) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(entry, dict):
@@ -335,6 +340,7 @@ def parse_entity(
                 training_name,
                 training_search_roots,
                 missing_models,
+                known_missing_hits,
                 known_missing=known_missing,
             )
             return label, resolved_path
@@ -359,6 +365,7 @@ def parse_pair_entry(
     resolver,
     training_search_roots: Optional[Sequence[Path]] = None,
     missing_models: Optional[List[str]] = None,
+    known_missing_hits: Optional[List[str]] = None,
     known_missing: Optional[Iterable[str]] = None,
 ) -> Tuple[str, Union[Path, List[Path]]]:
     if isinstance(pair_entry, dict):
@@ -386,6 +393,7 @@ def parse_pair_entry(
             resolver,
             training_search_roots=training_search_roots,
             missing_models=missing_models,
+            known_missing_hits=known_missing_hits,
             known_missing=known_missing,
         )
     else:
@@ -399,9 +407,12 @@ def resolve_model_from_training_name(
     training_name: str,
     search_roots: Sequence[Path],
     missing_models: Optional[List[str]] = None,
+    known_missing_hits: Optional[List[str]] = None,
     known_missing: Optional[Iterable[str]] = None,
 ) -> List[Path]:
     if known_missing and training_name in set(known_missing):
+        if known_missing_hits is not None and training_name not in known_missing_hits:
+            known_missing_hits.append(training_name)
         return []
     candidates: List[Path] = []
     for root in search_roots:
@@ -695,6 +706,7 @@ def main():
     output_dir = Path(args.output_dir).expanduser().resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
     missing_models: List[str] = []
+    known_missing_hits: List[str] = []
 
     known_missing = set()
     if args.missing_models_file:
@@ -708,7 +720,7 @@ def main():
                 }
 
     if args.pair_config:
-        tasks, missing_models = load_pairs_from_config(
+        tasks, missing_models, known_missing_hits = load_pairs_from_config(
             Path(args.pair_config),
             model_root,
             sample_root,
@@ -746,6 +758,15 @@ def main():
         print(
             "[WARN] Missing model exports for training names. "
             f"See {missing_path} for details."
+        )
+    if known_missing_hits:
+        missing_path = output_dir / "models_missing_previously.txt"
+        with open(missing_path, "w", encoding="utf-8") as handle:
+            for name in sorted(set(known_missing_hits)):
+                handle.write(f"{name}\n")
+        print(
+            "[WARN] Training names skipped because they were listed as missing "
+            f"in {args.missing_models_file}. See {missing_path} for details."
         )
 
     if not tasks:
