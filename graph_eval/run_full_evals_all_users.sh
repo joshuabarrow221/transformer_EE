@@ -1,6 +1,39 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+BEAM_ONLY=false
+
+usage() {
+  echo "Usage: $0 [--beam-only] [OUT_BASE_DIR]"
+  echo "  --beam-only   Run only beam training types (ND beam / NOvA beam / etc.)"
+}
+
+# Parse optional flags
+while (( $# > 0 )); do
+  case "$1" in
+    --beam-only)
+      BEAM_ONLY=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    -*)
+      echo "ERROR: unknown option: $1" >&2
+      usage
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
 # Driver script:
 # - Runs ./run_eval_all.sh over multiple users + multiple training types
 # - Keeps per-type aggregated outputs in dedicated directories:
@@ -29,12 +62,26 @@ if [[ ! -x "$EVAL_SCRIPT" ]]; then
   exit 1
 fi
 
-COMBINED_BASE="/exp/dune/data/users/cborden/eval_model/single_var_models_combined"
-
 # Training types:
 # Each entry is: OUTDIR_NAME|RELATIVE_PATH_UNDER_USER_DIR
 # (RELATIVE path starts at: /exp/dune/data/users/<USER>/ )
-TRAINING_TYPES=(
+# --------------------------
+# 1) ORIGINAL training dirs (per-user; rel_path is RELATIVE under /exp/dune/data/users/<USER>/)
+# --------------------------
+TRAINING_TYPES_ORIG=(
+  "DUNEAtmoNat_FullEval|MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra"
+  "DUNEAtmoFlat_FullEval|MLProject/Training_Samples/Atmospherics_DUNE_Like/Flat_Spectra"
+  "DUNEOnAxisNDBeamNat_FullEval|MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND"
+  "DUNEBeamFlat_FullEval|MLProject/Training_Samples/Beam_Like/Flat_Spectra/Ar40"
+  "NOvABeamND_FullEval|MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAND"
+)
+
+# --------------------------
+# 2) SINGLE-VAR combined CSV dirs (absolute paths; run once, no users)
+# --------------------------
+COMBINED_BASE="/exp/dune/data/users/cborden/eval_model/single_var_models_combined"
+
+TRAINING_TYPES_SINGLEVAR=(
   "DUNEAtmoNat_FullEval|${COMBINED_BASE}/DUNEAtmoNat"
   "DUNEAtmoFlat_FullEval|${COMBINED_BASE}/DUNEAtmoFlat"
   "DUNEOnAxisNDBeamNat_FullEval|${COMBINED_BASE}/DUNEOnAxisNDBeamNat"
@@ -42,6 +89,34 @@ TRAINING_TYPES=(
   "NOvABeamND_FullEval|${COMBINED_BASE}/NOvABeamND"
 )
 
+filter_beam_only() {
+  local -n in_arr=$1
+  local -a out=()
+  for entry in "${in_arr[@]}"; do
+    outdir_name="${entry%%|*}"
+    case "$outdir_name" in
+      *Beam*|*NOvABeam*|*OnAxisNDBeam*)
+        out+=( "$entry" )
+        ;;
+    esac
+  done
+  in_arr=( "${out[@]}" )
+}
+
+if [[ "$BEAM_ONLY" == true ]]; then
+  filter_beam_only TRAINING_TYPES_ORIG
+  filter_beam_only TRAINING_TYPES_SINGLEVAR
+fi
+
+is_beam_type() {
+  local outdir_name="$1"
+  case "$outdir_name" in
+    *Beam*|*NOvABeam*|*OnAxisNDBeam*)
+      return 0 ;;  # yes, beam
+    *)
+      return 1 ;;  # not beam
+  esac
+}
 
 timestamp() { date +"%Y-%m-%d %H:%M:%S"; }
 
@@ -56,6 +131,12 @@ mkdir -p "$OUT_BASE_DIR"
 run_type_across_users() {
   local outdir_name="$1"
   local rel_path="$2"
+
+  local beam_arg=()
+  if is_beam_type "$outdir_name"; then
+    beam_arg=(--beam)
+  fi
+
 
   local outdir="${OUT_BASE_DIR%/}/$outdir_name"
   mkdir -p "$outdir"
@@ -78,9 +159,9 @@ run_type_across_users() {
 
   # For combined CSV directories, rel_path is an absolute path. Run once, no users.
   if [[ "$rel_path" = /* ]]; then
-    echo "[$(timestamp)] [RUN ] Combined CSV dir: $rel_path" | tee -a "$logfile"
+    echo "[$(timestamp)] [RUN ] $EVAL_SCRIPT ${beam_arg[*]} \"$rel_path\"" | tee -a "$logfile"
 
-    { time "$EVAL_SCRIPT" "$rel_path"; } >>"$logfile" 2>&1 || {
+    { time "$EVAL_SCRIPT" "${beam_arg[@]}" "$rel_path"; } >>"$logfile" 2>&1 || {
       echo "[$(timestamp)] [ERROR] run_eval_all.sh failed for $rel_path (see $logfile)" | tee -a "$logfile"
     }
 
@@ -102,10 +183,10 @@ run_type_across_users() {
 
     # Run eval; append stdout/stderr to the per-type log
     # Use `time` to see roughly how long each user takes.
-    echo "[$(timestamp)] [RUN ] $EVAL_SCRIPT \"$basepath\"" | tee -a "$logfile"
+    echo "[$(timestamp)] [RUN ] $EVAL_SCRIPT ${beam_arg[*]} \"$basepath\"" | tee -a "$logfile"
 
     set +e
-    { time "$EVAL_SCRIPT" "$basepath"; } >>"$logfile" 2>&1
+    { time "$EVAL_SCRIPT" "${beam_arg[@]}" "$basepath"; } >>"$logfile" 2>&1
     rc=$?
     set -e
 
@@ -134,8 +215,18 @@ run_type_across_users() {
   echo | tee -a "$logfile"
 }
 
-# Main loop over training types
-for entry in "${TRAINING_TYPES[@]}"; do
+# --------------------------
+# Run ORIGINAL training dirs first (per-user)
+# --------------------------
+for entry in "${TRAINING_TYPES_ORIG[@]}"; do
+  IFS="|" read -r outdir_name rel_path <<<"$entry"
+  run_type_across_users "$outdir_name" "$rel_path"
+done
+
+# --------------------------
+# Run SINGLE-VAR combined dirs second (absolute paths)
+# --------------------------
+for entry in "${TRAINING_TYPES_SINGLEVAR[@]}"; do
   IFS="|" read -r outdir_name rel_path <<<"$entry"
   run_type_across_users "$outdir_name" "$rel_path"
 done

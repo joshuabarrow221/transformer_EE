@@ -71,12 +71,38 @@ double calcCosTheta(double x, double y, double z) {
     return (p == 0) ? 0 : y / p;
 }
 
+double calcEnergyFromP(double px, double py, double pz) {
+    if (!std::isfinite(px) || !std::isfinite(py) || !std::isfinite(pz)) return NAN;
+    return std::sqrt(px*px + py*py + pz*pz); // massless approximation
+}
+
 double calc_baseline(const double Nu_Mom_X, const double Nu_Mom_Y, const double Nu_Mom_Z) {
     double Nu_Mom_Tot = sqrt(Nu_Mom_X * Nu_Mom_X + Nu_Mom_Y * Nu_Mom_Y + Nu_Mom_Z * Nu_Mom_Z);
     if (Nu_Mom_Tot == 0) return 0.0;
     double theta_z = acos(Nu_Mom_Y / Nu_Mom_Tot);
     double eta = PI - theta_z;
     return (sqrt(pow(R + h, 2) - pow(R * sin(eta), 2)) + (R * cos(eta))) / 1000.0;
+}
+
+// Clamp helper
+double clamp(double x, double lo, double hi) {
+    return std::max(lo, std::min(hi, x));
+}
+
+// cos(theta) -> theta (deg), safe against slight |cos|>1
+double thetaFromCos(double c) {
+    if (std::isnan(c) || std::isinf(c)) return NAN;
+    c = clamp(c, -1.0, 1.0);
+    return (180.0 / PI) * std::acos(c);
+}
+
+bool isCosThetaVar(const std::string& base) {
+    // base is the name WITHOUT true_/pred_ prefix (your "base" variable)
+    // Add patterns you actually use in CSV headers.
+    return (base.find("CosTheta")     != std::string::npos) ||
+           (base.find("Cos_Theta")    != std::string::npos) ||
+           (base.find("cosTheta")     != std::string::npos) ||
+           (base.find("cos_theta")    != std::string::npos);
 }
 
 /// === Contour / ellipse helpers (adapted from plot_2d_hist_contour.C) ===
@@ -146,7 +172,8 @@ double polygonArea(const TGraph* g) {
 void updateEllipseCSV(const std::string& modelName,
                       double ell_a,
                       double ell_b,
-                      double frac)
+                      double frac,
+                      double runtime_hours = -1.0)
 {
     const std::string filename = "ellipse_fraction.csv";
 
@@ -231,10 +258,24 @@ void updateEllipseCSV(const std::string& modelName,
         }
     }
 
+    // Ensure runtime_hours column exists (W&B tracked runtime in hours)
+    int rtCol = getColIndex("wandb_runtime_hours");
+    if (rtCol == -1) {
+        colNames.push_back("wandb_runtime_hours");
+        rtCol = static_cast<int>(colNames.size()) - 1;
+        for (auto& r : rows) {
+            r.resize(colNames.size(), "");
+        }
+    }
+
     // Create new row with all columns
     std::vector<std::string> newRow(colNames.size(), "");
     newRow[modelCol] = modelName;
     newRow[ellCol] = std::to_string(frac);
+    // Fill runtime only if provided and positive
+    if (std::isfinite(runtime_hours) && runtime_hours > 0.0) {
+        newRow[rtCol] = std::to_string(runtime_hours);
+    }
 
     rows.push_back(std::move(newRow));
 
@@ -275,8 +316,10 @@ void graph_resolution_stat(
     int bins = NUM_BINS,
     double xmin = XMIN_DEFAULT,
     double xmax = XMAX_DEFAULT,
-    TDirectory* outdir = nullptr
-) {
+    TDirectory* outdir = nullptr,
+    bool is_percent = true
+)
+ {
     if (x_data.empty() || resolution.empty()) return;
 
     if (xmin == xmax) {
@@ -330,9 +373,12 @@ void graph_resolution_stat(
     }
 
     // Clamp to ±200%
-    const double LIM = 200.0;
-    if (ymin < -LIM) ymin = -LIM;
-    if (ymax >  LIM) ymax =  LIM;
+    if (is_percent) {
+        const double LIM = 200.0;
+        if (ymin < -LIM) ymin = -LIM;
+        if (ymax >  LIM) ymax =  LIM;
+    }
+
 
     // Avoid zero-width range after clamping
     if (ymin == ymax) {
@@ -349,7 +395,7 @@ void graph_resolution_stat(
     gr->SetLineColor(kOrange + 7);
     gr->SetTitle((base_var + ": mean #pm " + stat2).c_str());
     gr->GetXaxis()->SetTitle(base_var.c_str());
-    gr->GetYaxis()->SetTitle("Resolution (%)");
+    gr->GetYaxis()->SetTitle(is_percent ? "Resolution (%)" : "Residual (pred - true)");
     gr->GetYaxis()->SetRangeUser(ymin, ymax);
 
     if (outdir) outdir->cd(); // ensure writing to correct directory
@@ -370,6 +416,74 @@ std::pair<double,double> clamp_res_range(double xmin, double xmax) {
         xmax += 1.0;
     }
     return {xmin, xmax};
+}
+
+// === Robust dynamic range helper using quantiles (reject outliers) ===
+std::pair<double,double> quantile_range(const std::vector<double>& v,
+                                        double qlo = 0.01, double qhi = 0.99,
+                                        double padFrac = 0.10,
+                                        double hardMin = -std::numeric_limits<double>::infinity(),
+                                        double hardMax =  std::numeric_limits<double>::infinity(),
+                                        double minWidth = 0.0)
+{
+    std::vector<double> w;
+    w.reserve(v.size());
+    for (double x : v) {
+        if (std::isfinite(x)) w.push_back(x);
+    }
+    if (w.empty()) return {-1.0, 1.0};
+
+    std::sort(w.begin(), w.end());
+
+    auto pick = [&](double q) {
+        if (q <= 0.0) return w.front();
+        if (q >= 1.0) return w.back();
+        double pos = q * (w.size() - 1);
+        size_t i0 = (size_t)std::floor(pos);
+        size_t i1 = std::min(i0 + 1, w.size() - 1);
+        double t = pos - i0;
+        return (1.0 - t) * w[i0] + t * w[i1];
+    };
+
+    double lo = pick(qlo);
+    double hi = pick(qhi);
+
+    // Clamp to hard limits if requested
+    lo = std::max(lo, hardMin);
+    hi = std::min(hi, hardMax);
+
+    if (!std::isfinite(lo) || !std::isfinite(hi) || lo == hi) {
+        lo = w.front();
+        hi = w.back();
+    }
+
+    // Pad
+    double width = hi - lo;
+    if (!(width > 0.0)) width = 1.0;
+    lo -= padFrac * width;
+    hi += padFrac * width;
+
+    // Enforce minimum width (useful for very narrow beam distributions)
+    if (minWidth > 0.0 && (hi - lo) < minWidth) {
+        double mid = 0.5 * (hi + lo);
+        lo = mid - 0.5 * minWidth;
+        hi = mid + 0.5 * minWidth;
+    }
+
+    // Final hard clamp
+    lo = std::max(lo, hardMin);
+    hi = std::min(hi, hardMax);
+
+    if (lo == hi) { lo -= 1.0; hi += 1.0; }
+    return {lo, hi};
+}
+
+// Optional: enforce symmetric range about zero (nice for Δθ)
+std::pair<double,double> symmetric_about_zero(double lo, double hi, double minHalfWidth = 0.0)
+{
+    double a = std::max(std::fabs(lo), std::fabs(hi));
+    if (a < minHalfWidth) a = minHalfWidth;
+    return {-a, +a};
 }
 
 // === utilities for 2D truth-vs-reco plots ===
@@ -394,15 +508,62 @@ void plot_truth_vs_reco_2d(const std::string& base,
 {
     if (vtrue.empty() || vreco.empty()) return;
 
-    // Determine a common range that covers both truth and reco (nice for the y=x line)
-    auto [tmin, tmax] = finite_minmax(vtrue);
-    auto [pmin, pmax] = finite_minmax(vreco);
-    double xmin = std::min(tmin, pmin);
-    double xmax = std::max(tmax, pmax);
+        // === Quantile-based common range (robust against outliers) ===
+        double hardMin = -std::numeric_limits<double>::infinity();
+        double hardMax =  std::numeric_limits<double>::infinity();
+        double minWidth = 0.0;
 
-    // Small padding
-    double pad = 0.05 * std::max(1.0, std::fabs(xmax - xmin));
-    xmin -= pad; xmax += pad;
+        // Optional hard clamps for specific variables (based on "base" name)
+        std::string b = base;
+        std::transform(b.begin(), b.end(), b.begin(), ::tolower);
+
+        // Identify momentum components robustly
+        const bool isMom =
+            (b.find("mom") != std::string::npos);
+
+        // Identify energy robustly
+        const bool isEnergy =
+            (!isMom) && (
+                b.find("energy") != std::string::npos);   // matches "nu_energy"
+
+        // energy-like variables (GeV)
+        if (isEnergy) {
+            // Energy in GeV should not go negative
+            hardMin = std::max(hardMin, 0.0);
+
+            // Optional: enforce a minimum visible width so zoom doesn't collapse
+            minWidth = std::max(minWidth, 0.2); // GeV, adjust as you like
+        }
+
+        // cos(theta)-like variables
+        if (b.find("cos") != std::string::npos) {
+            hardMin = -1.0;
+            hardMax =  1.0;
+            minWidth = 0.05;
+        }
+
+        // theta-like variables (deg)
+        // (Skip if it's cos(theta), since that's handled above)
+        if (b.find("theta") != std::string::npos && b.find("cos") == std::string::npos) {
+            hardMin = 0.0;
+            hardMax = 180.0;
+            minWidth = 1.0;
+        }
+
+        // Robust quantile ranges for truth and reco, then take a shared union range
+        auto tr = quantile_range(vtrue, /*qlo=*/0.01, /*qhi=*/0.99, /*padFrac=*/0.10,
+                                hardMin, hardMax, minWidth);
+        auto pr = quantile_range(vreco, /*qlo=*/0.01, /*qhi=*/0.99, /*padFrac=*/0.10,
+                                hardMin, hardMax, minWidth);
+
+        double xmin = std::min(tr.first, pr.first);
+        double xmax = std::max(tr.second, pr.second);
+
+        // Final safety
+        xmin = std::max(xmin, hardMin);
+        xmax = std::min(xmax, hardMax);
+        if (!(xmax > xmin)) { xmin -= 1.0; xmax += 1.0; }
+
 
     // Build histogram (x = truth, y = reco)
     std::string hname = "h2_" + base + "_reco_vs_true";
@@ -489,12 +650,14 @@ void drawLargestContourAtLevel(TH2D* h, double level, int lineColor, int lineWid
 /// === Main Function ===
 void eval_model(
     const char* filename,
+    bool beam_mode=false,
+    double wandb_runtime_hours=-1.0,
     const char* output_dir = ".",
     const char* png_path = "",
     int png_width = 0,
     int png_height = 0,
     const char* root_output_name = "combined_output.root"
-) {
+    ) {
 
      // Put ROOT into batch mode so canvases are not shown on screen
     Bool_t oldBatch = gROOT->IsBatch();
@@ -542,6 +705,10 @@ void eval_model(
         colIndex[key] = col++;
     }
 
+    // --- Flags: does the CSV explicitly contain CosTheta columns? ---
+    const bool CSV_HAS_PRED_COS = (colIndex.find("pred_Nu_CosTheta") != colIndex.end());
+    const bool CSV_HAS_TRUE_COS = (colIndex.find("true_Nu_CosTheta") != colIndex.end());
+
     // === Extract directory name from last column header ===
     // Example: "GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MSE_E_Px_Py_Pz_EID"
     std::string dirName = headers.empty()
@@ -579,9 +746,9 @@ void eval_model(
     }
 
     if (!outfile || outfile->IsZombie()) {
-        std::cerr << "Error opening " << root_output_path << std::endl;
-        gSystem->ChangeDirectory(original_dir.c_str());
-        gROOT->SetBatch(oldBatch);
+         std::cerr << "Error opening " << root_output_path << std::endl;
+         gSystem->ChangeDirectory(original_dir.c_str());
+         gROOT->SetBatch(oldBatch);
         return;
     }
 
@@ -608,10 +775,19 @@ void eval_model(
     // === Prepare containers ===
     std::map<std::string, std::vector<double>> data;
 
+    //lambda that allows for multiple variations of Nu_CosTheta headers
+    auto firstExistingKey = [&](const std::vector<std::string>& keys) -> std::string {
+        for (const auto& k : keys) {
+            if (data.find(k) != data.end()) return k;
+        }
+        return "";
+    };
+
     std::vector<double> Cos_Theta_nu_pred, Theta_nu_pred;
     std::vector<double> Cos_Theta_nu_true, Theta_nu_true;
     std::vector<double> pred_Mass_squared, true_Mass_squared;
     std::vector<double> pred_baseline, true_baseline;
+    std::vector<double> pred_beam_Mass_squared, true_beam_Mass_squared;
 
     // === Read data rows ===
     static int line_num = 1;
@@ -651,18 +827,63 @@ void eval_model(
             double px = row[colIndex["pred_Nu_Mom_X"]];
             double py = row[colIndex["pred_Nu_Mom_Y"]];
             double pz = row[colIndex["pred_Nu_Mom_Z"]];
-            Cos_Theta_nu_pred.push_back(calcCosTheta(px, py, pz));
-            Theta_nu_pred.push_back(calcTheta(px, py, pz));
+
+            double c = calcCosTheta(px, py, pz);
+            double t = calcTheta(px, py, pz);
+
+            Cos_Theta_nu_pred.push_back(c);
+            Theta_nu_pred.push_back(t);
             pred_baseline.push_back(calc_baseline(px, py, pz));
+
+            // --- IMPORTANT: only fill derived pred_Nu_CosTheta into `data` if the CSV does NOT already have it ---
+            if (!CSV_HAS_PRED_COS) {
+                data["pred_Nu_CosTheta"].push_back(c);
+            }
+        } else {
+            // Keep derived column aligned row-by-row if we are synthesizing it
+            if (!CSV_HAS_PRED_COS) {
+                data["pred_Nu_CosTheta"].push_back(NAN);
+            }
         }
 
         if (has("true_Nu_Mom_X") && has("true_Nu_Mom_Y") && has("true_Nu_Mom_Z")) {
             double tx = row[colIndex["true_Nu_Mom_X"]];
             double ty = row[colIndex["true_Nu_Mom_Y"]];
             double tz = row[colIndex["true_Nu_Mom_Z"]];
-            Cos_Theta_nu_true.push_back(calcCosTheta(tx, ty, tz));
-            Theta_nu_true.push_back(calcTheta(tx, ty, tz));
+
+            double c = calcCosTheta(tx, ty, tz);
+            double t = calcTheta(tx, ty, tz);
+
+            Cos_Theta_nu_true.push_back(c);
+            Theta_nu_true.push_back(t);
             true_baseline.push_back(calc_baseline(tx, ty, tz));
+
+            // --- IMPORTANT: only fill derived true_Nu_CosTheta into `data` if the CSV does NOT already have it ---
+            if (!CSV_HAS_TRUE_COS) {
+                data["true_Nu_CosTheta"].push_back(c);
+            }
+        } else {
+            if (!CSV_HAS_TRUE_COS) {
+                data["true_Nu_CosTheta"].push_back(NAN);
+            }
+        }
+
+        // If cos(theta) is provided directly in the CSV, fill derived vectors from it too ---
+        // Only use explicit cosine columns to fill the standalone vectors if momentum columns are absent.
+        if (!has("pred_Nu_Mom_X") && !has("pred_Nu_Mom_Y") && !has("pred_Nu_Mom_Z") && has("pred_Nu_CosTheta")) {
+            double c = row[colIndex["pred_Nu_CosTheta"]];
+            if (std::isfinite(c)) {
+                Cos_Theta_nu_pred.push_back(c);
+                Theta_nu_pred.push_back(thetaFromCos(c)); // uses helper: acos(clamp(c)) in degrees
+            }
+        }
+
+        if (!has("true_Nu_Mom_X") && !has("true_Nu_Mom_Y") && !has("true_Nu_Mom_Z") && has("true_Nu_CosTheta")) {
+            double c = row[colIndex["true_Nu_CosTheta"]];
+            if (std::isfinite(c)) {
+                Cos_Theta_nu_true.push_back(c);
+                Theta_nu_true.push_back(thetaFromCos(c)); // uses helper: acos(clamp(c)) in degrees
+            }
         }
 
         if (has("true_Nu_Energy") && has("true_Nu_Mom_X") && has("true_Nu_Mom_Y") && has("true_Nu_Mom_Z")) {
@@ -682,6 +903,171 @@ void eval_model(
         }
     }
     infile.close();
+
+    // === Derive Energy from momentum if Energy columns are missing ===
+    // Only do this when Px/Py/Pz exist and Energy is absent.
+    bool has_trueE_col = (data.find("true_Nu_Energy") != data.end());
+    bool has_predE_col = (data.find("pred_Nu_Energy") != data.end());
+
+    bool has_trueMomCols = (data.find("true_Nu_Mom_X") != data.end() &&
+                            data.find("true_Nu_Mom_Y") != data.end() &&
+                            data.find("true_Nu_Mom_Z") != data.end());
+
+    bool has_predMomCols = (data.find("pred_Nu_Mom_X") != data.end() &&
+                            data.find("pred_Nu_Mom_Y") != data.end() &&
+                            data.find("pred_Nu_Mom_Z") != data.end());
+
+    // Build derived vectors (only for the missing ones)
+    if (!has_trueE_col && has_trueMomCols) {
+        const auto& tx = data["true_Nu_Mom_X"];
+        const auto& ty = data["true_Nu_Mom_Y"];
+        const auto& tz = data["true_Nu_Mom_Z"];
+        size_t N = std::min({tx.size(), ty.size(), tz.size()});
+
+        std::vector<double> Etrue;
+        Etrue.reserve(N);
+        for (size_t i = 0; i < N; ++i) {
+            Etrue.push_back(calcEnergyFromP(tx[i], ty[i], tz[i]));
+        }
+
+        data["true_Nu_Energy"] = std::move(Etrue);
+        std::cout << "[INFO] Derived true_Nu_Energy from true_Nu_Mom_X/Y/Z (massless approx).\n";
+    }
+
+    if (!has_predE_col && has_predMomCols) {
+        const auto& px = data["pred_Nu_Mom_X"];
+        const auto& py = data["pred_Nu_Mom_Y"];
+        const auto& pz = data["pred_Nu_Mom_Z"];
+        size_t N = std::min({px.size(), py.size(), pz.size()});
+
+        std::vector<double> Epred;
+        Epred.reserve(N);
+        for (size_t i = 0; i < N; ++i) {
+            Epred.push_back(calcEnergyFromP(px[i], py[i], pz[i]));
+        }
+
+        data["pred_Nu_Energy"] = std::move(Epred);
+        std::cout << "[INFO] Derived pred_Nu_Energy from pred_Nu_Mom_X/Y/Z (massless approx).\n";
+    }
+
+    // === Beam-only Mass^2 from E and (Theta or CosTheta) when no momentum is present ===
+    // m^2 = (E)^2 * (1 - Cos^2(90 - Theta))
+    //
+    // If CosTheta is available, this simplifies numerically to:
+    // Cos(90-Theta) = sin(Theta) => 1 - sin^2(Theta) = cos^2(Theta) => m^2 = E^2 * CosTheta^2
+    {
+        auto pickKey = [&](const std::initializer_list<std::string>& candidates) -> std::string {
+            for (const auto& k : candidates) {
+                if (data.find(k) != data.end()) return k;
+            }
+            return "";
+        };
+
+        // Energy keys (your CSV uses these exact names)
+        const bool has_trueE = (data.find("true_Nu_Energy") != data.end());
+        const bool has_predE = (data.find("pred_Nu_Energy") != data.end());
+
+        // Momentum presence (must be absent for this beam-only definition)
+        const bool has_trueMom = (data.find("true_Nu_Mom_X") != data.end() &&
+                                data.find("true_Nu_Mom_Y") != data.end() &&
+                                data.find("true_Nu_Mom_Z") != data.end());
+        const bool has_predMom = (data.find("pred_Nu_Mom_X") != data.end() &&
+                                data.find("pred_Nu_Mom_Y") != data.end() &&
+                                data.find("pred_Nu_Mom_Z") != data.end());
+
+        // Theta / CosTheta keys (support a couple naming variants)
+        const std::string trueThetaKey = pickKey({"true_Nu_Theta", "true_Theta"});
+        const std::string predThetaKey = pickKey({"pred_Nu_Theta", "pred_Theta"});
+
+        const std::string trueCosKey   = pickKey({"true_Nu_CosTheta", "true_CosTheta"});
+        const std::string predCosKey   = pickKey({"pred_Nu_CosTheta", "pred_CosTheta"});
+
+        const bool has_trueTheta = !trueThetaKey.empty();
+        const bool has_predTheta = !predThetaKey.empty();
+        const bool has_trueCos   = !trueCosKey.empty();
+        const bool has_predCos   = !predCosKey.empty();
+
+        // Only do this for beam-mode trainings with E and Theta/CosTheta but without momentum xyz.
+        if (beam_mode && has_trueE && has_predE && !has_trueMom && !has_predMom &&
+            ( (has_trueTheta || has_trueCos) && (has_predTheta || has_predCos) ))
+        {
+            const auto& Etrue = data["true_Nu_Energy"];
+            const auto& Epred = data["pred_Nu_Energy"];
+
+            // Compute TRUE beam mass^2
+            {
+                size_t N = Etrue.size();
+                if (has_trueTheta) N = std::min(N, data[trueThetaKey].size());
+                if (has_trueCos)   N = std::min(N, data[trueCosKey].size());
+
+                true_beam_Mass_squared.clear();
+                true_beam_Mass_squared.reserve(N);
+
+                const double kDeg = M_PI / 180.0;
+
+                for (size_t i = 0; i < N; ++i) {
+                    double E = Etrue[i];
+                    if (!std::isfinite(E)) continue;
+
+                    double m2 = NAN;
+
+                    if (has_trueCos) {
+                        double c = data[trueCosKey][i];   // cos(theta)
+                        if (std::isfinite(c)) {
+                            // m^2 = E^2 * cos^2(theta)  (equivalent to requested formula)
+                            m2 = E*E * (c*c);
+                        }
+                    } else if (has_trueTheta) {
+                        double th = data[trueThetaKey][i]; // degrees
+                        if (std::isfinite(th)) {
+                            double ca = std::cos((90.0 - th) * kDeg); // cos(90-theta)
+                            m2 = E*E * (1.0 - ca*ca);
+                        }
+                    }
+
+                    if (std::isfinite(m2)) true_beam_Mass_squared.push_back(m2);
+                }
+            }
+
+            // Compute PRED beam mass^2
+            {
+                size_t N = Epred.size();
+                if (has_predTheta) N = std::min(N, data[predThetaKey].size());
+                if (has_predCos)   N = std::min(N, data[predCosKey].size());
+
+                pred_beam_Mass_squared.clear();
+                pred_beam_Mass_squared.reserve(N);
+
+                const double kDeg = M_PI / 180.0;
+
+                for (size_t i = 0; i < N; ++i) {
+                    double E = Epred[i];
+                    if (!std::isfinite(E)) continue;
+
+                    double m2 = NAN;
+
+                    if (has_predCos) {
+                        double c = data[predCosKey][i];   // cos(theta)
+                        if (std::isfinite(c)) {
+                            m2 = E*E * (c*c);
+                        }
+                    } else if (has_predTheta) {
+                        double th = data[predThetaKey][i]; // degrees
+                        if (std::isfinite(th)) {
+                            double ca = std::cos((90.0 - th) * kDeg); // cos(90-theta)
+                            m2 = E*E * (1.0 - ca*ca);
+                        }
+                    }
+
+                    if (std::isfinite(m2)) pred_beam_Mass_squared.push_back(m2);
+                }
+            }
+
+            std::cout << "[INFO] Computed beam mass^2 from E and Theta/CosTheta (no momentum columns): "
+                    << "true=" << true_beam_Mass_squared.size()
+                    << ", pred=" << pred_beam_Mass_squared.size() << "\n";
+        }
+    }
 
     // === Create 1D histograms ===
 auto make_hist = [&](const std::string& name, const std::vector<double>& d, double xmin, double xmax) {
@@ -740,12 +1126,24 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         make_hist(trueName, true_vals, r.first, r.second);
     }
 
+    // Calculated neutrino mass squared for trainings with 4-momentum 
+     if (!true_Mass_squared.empty() || !pred_Mass_squared.empty()) {
+    auto r = find_range(pred_Mass_squared);
+    make_hist("true_Mass_squared", true_Mass_squared, r.first, r.second);
+    make_hist("pred_Mass_squared", pred_Mass_squared, r.first, r.second);
+     }
+
+    // Beam-only E+Theta/CosTheta neutrino mass squared (no momentum)
+    if (!true_beam_Mass_squared.empty() || !pred_beam_Mass_squared.empty()) {
+        auto r = find_range(pred_beam_Mass_squared);
+        make_hist("true_beam_Mass_squared", true_beam_Mass_squared, r.first, r.second);
+        make_hist("pred_beam_Mass_squared", pred_beam_Mass_squared, r.first, r.second);
+    }
+
     make_hist("Cos_Theta_nu_pred", Cos_Theta_nu_pred, -1, 1);
     make_hist("Theta_nu_pred", Theta_nu_pred, 0, 180);
     make_hist("Cos_Theta_nu_true", Cos_Theta_nu_true, -1, 1);
     make_hist("Theta_nu_true", Theta_nu_true, 0, 180);
-    make_hist("true_Mass_squared", true_Mass_squared, -2, 2);
-    make_hist("pred_Mass_squared", pred_Mass_squared, -2, 2);
     make_hist("pred_baseline", pred_baseline, 0, 20000);
     make_hist("true_baseline", true_baseline, 0, 20000);
 
@@ -760,29 +1158,54 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         std::vector<double> pred_vals = data.at(predName);
         std::vector<double> res;
 
+        const bool cosMode = isCosThetaVar(base);
+
         for (size_t i = 0; i < true_vals.size(); ++i) {
-            if (!std::isnan(true_vals[i]) && !std::isnan(pred_vals[i])) {
-                if (true_vals[i] != 0)
-                    res.push_back(100.0 * (pred_vals[i] - true_vals[i]) / true_vals[i]);
-                else
+            double t = true_vals[i];
+            double p = pred_vals[i];
+            if (!std::isfinite(t) || !std::isfinite(p)) continue;
+
+            if (cosMode) {
+                // For cos(theta), use absolute residual: Δcosθ = pred - true
+                res.push_back(p - t);
+            } else {
+                // Default behavior: percent resolution
+                if (t != 0.0) {
+                    res.push_back(100.0 * (p - t) / t);
+                } else {
                     std::cout << "Divide by zero at " << kv.first << " index " << i << std::endl;
+                }
             }
         }
 
-        // 1D histogram of percent resolution for this variable ---
+
+        // 1D histogram of resolution / residual for this variable ---
         if (!res.empty()) {
             auto r = find_range(res);
-            auto cr = clamp_res_range(r.first, r.second);
 
             std::string hname  = "h1_res_" + base;
-            std::string htitle = base + " percent resolution;Percent resolution (%);Counts";
+            std::string htitle;
+            if (cosMode) {
+                htitle = base + " residual (pred - true);#Delta cos(#theta);Counts";
 
-            TH1D* hres = new TH1D(hname.c_str(), htitle.c_str(),
-                                200, cr.first, cr.second); // 200 bins, auto range
-            hres->SetDirectory(0); // keep hist independent of current gDirectory
+                // Clamp residual range for readability
+                double ymin = std::max(r.first, -0.5);
+                double ymax = std::min(r.second,  0.5);
+                if (ymin == ymax) { ymin -= 0.01; ymax += 0.01; }
+                r = {ymin, ymax};
+
+            } else {
+                htitle = base + " percent resolution;Percent resolution (%);Counts";
+
+                // Clamp percent range to ±200% (your existing behavior)
+                r = clamp_res_range(r.first, r.second);
+            }
+
+            TH1D* hres = new TH1D(hname.c_str(), htitle.c_str(), 200, r.first, r.second);
+            hres->SetDirectory(0);
 
             for (double v : res) {
-                if (!std::isnan(v)) hres->Fill(v);
+                if (std::isfinite(v)) hres->Fill(v);
             }
 
             if (plotDir) plotDir->cd();
@@ -792,8 +1215,9 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         }
 
         // 2D resolution plots with rms or std error bars
-        graph_resolution_stat(base, true_vals, res, "rms", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir);
-        graph_resolution_stat(base, true_vals, res, "std", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir);
+        graph_resolution_stat(base, true_vals, res, "rms", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
+        graph_resolution_stat(base, true_vals, res, "std", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
+
 
         std::cout << "Writing graph to: " << gDirectory->GetPath() << std::endl;
     }
@@ -827,6 +1251,10 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     std::vector<double> energy_res_percent;
     std::vector<double> theta_diff_signed;
 
+    // store the corresponding truth coordinates for additional 2D plots
+    std::vector<double> true_theta_deg;   // true neutrino theta (deg)
+    std::vector<double> true_energy_gev;  // true neutrino energy (GeV)
+
     bool has_trueE = data.find("true_Nu_Energy") != data.end();
     bool has_predE = data.find("pred_Nu_Energy") != data.end();
     bool has_trueMom = (data.find("true_Nu_Mom_X") != data.end()
@@ -835,11 +1263,32 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     bool has_predMom = (data.find("pred_Nu_Mom_X") != data.end()
                         && data.find("pred_Nu_Mom_Y") != data.end()
                         && data.find("pred_Nu_Mom_Z") != data.end());
+
+    // Accept a few common cosine-theta column name conventions.
+    // Add/adjust strings here to match your actual result.csv headers.
+    std::string trueCosKey = firstExistingKey({
+        "true_Nu_CosTheta",
+        "true_Nu_Cos_Theta",
+        "true_Cos_Theta_nu",
+        "true_Cos_Theta_Nu",
+        "true_CosTheta"
+    });
+
+    std::string predCosKey = firstExistingKey({
+        "pred_Nu_CosTheta",
+        "pred_Nu_Cos_Theta",
+        "pred_Cos_Theta_nu",
+        "pred_Cos_Theta_Nu",
+        "pred_CosTheta"
+    });
+
+    bool has_costheta = (!trueCosKey.empty() && !predCosKey.empty());
+
     bool has_theta = (data.find("true_Nu_Theta") != data.end()
                   && data.find("pred_Nu_Theta") != data.end());
 
 
-    if (has_trueE && has_predE && ((has_trueMom && has_predMom) || has_theta)) {
+    if (has_trueE && has_predE && ((has_trueMom && has_predMom) || has_theta || has_costheta)) {
         // Base sizes from energy columns
         size_t NtrueE  = data["true_Nu_Energy"].size();
         size_t NpredE  = data["pred_Nu_Energy"].size();
@@ -859,6 +1308,13 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
             Nmin = std::min({Nmin, NtrueTheta, NpredTheta});
         }
 
+        // Also constrain by cos(theta) sizes if using cosine columns
+        if (has_costheta) {
+            size_t NtrueCos = data[trueCosKey].size();
+            size_t NpredCos = data[predCosKey].size();
+            Nmin = std::min({Nmin, NtrueCos, NpredCos});
+        }
+
         for (size_t i = 0; i < Nmin; ++i) {
             double Etrue = data["true_Nu_Energy"][i];
             double Epred = data["pred_Nu_Energy"][i];
@@ -866,13 +1322,14 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
             if (std::isnan(Etrue) || std::isnan(Epred)) continue;
             if (Etrue == 0) continue; // avoid divide by zero
 
-            double thet_true = 0.0;
-            double thet_pred = 0.0;
+            double thet_true = NAN;
+            double thet_pred = NAN;
 
             if (has_theta) {
                 // Use explicit theta columns if present
                 thet_true = data["true_Nu_Theta"][i];
                 thet_pred = data["pred_Nu_Theta"][i];
+
             } else if (has_trueMom && has_predMom) {
                 // Fall back to momentum-based computation
                 double tx = data["true_Nu_Mom_X"][i];
@@ -884,23 +1341,79 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
                 thet_true = calcTheta(tx, ty, tz);
                 thet_pred = calcTheta(px, py, pz);
+
+            } else if (has_costheta) {
+                // Compute theta from cos(theta) columns
+                double ctrue = data[trueCosKey][i];
+                double cpred = data[predCosKey][i];
+
+                thet_true = thetaFromCos(ctrue);
+                thet_pred = thetaFromCos(cpred);
+
             } else {
-                // Should not happen given the guards, but be safe
+                // Should not happen given the guards
                 continue;
             }
 
             double eres = 100.0 * (Epred - Etrue) / Etrue;
             double tdiff = thet_pred - thet_true;
 
-            if (!std::isnan(eres) && !std::isnan(tdiff)) {
+            if (std::isfinite(eres) && std::isfinite(tdiff) && std::isfinite(thet_true) && std::isfinite(Etrue)) {
                 energy_res_percent.push_back(eres);
                 theta_diff_signed.push_back(tdiff);
+
+                // truth coordinates for additional plots
+                true_theta_deg.push_back(thet_true);
+                true_energy_gev.push_back(Etrue);
             }
         }
+    } else {
+    std::cout << "Skipping 2D energy/theta plot: missing columns (need true_Nu_Energy, pred_Nu_Energy, and one of true/pred_Nu_Mom_*, true/pred_Nu_Theta, true/pred_Nu_CosTheta)." << std::endl;
+    }
 
-   } else {
-    std::cout << "Skipping 2D energy/theta plot: missing columns (need true_Nu_Energy, pred_Nu_Energy, and either true/pred_Nu_Mom_* or true/pred_Nu_Theta)." << std::endl;
-}
+    auto draw2DWithContours = [&](const std::string& cname,
+                                const std::string& hname,
+                                const std::string& title,
+                                const std::vector<double>& x,
+                                const std::vector<double>& y,
+                                int nbx, double xmin, double xmax,
+                                int nby, double ymin, double ymax)
+    {
+        if (x.empty() || y.empty() || x.size() != y.size()) return;
+
+        TCanvas* c = new TCanvas(cname.c_str(), cname.c_str(), 900, 800);
+        gStyle->SetOptStat(0);
+
+        TH2D* h2 = new TH2D(hname.c_str(), title.c_str(), nbx, xmin, xmax, nby, ymin, ymax);
+        h2->SetDirectory(0);
+
+        for (size_t i = 0; i < x.size(); ++i) {
+            if (std::isfinite(x[i]) && std::isfinite(y[i])) h2->Fill(x[i], y[i]);
+        }
+
+        c->cd();
+        h2->Draw("COLZ");
+
+        // Coarsen + smooth for stable contours (same approach as main plot)
+        TH2D* hcont = (TH2D*)h2->Clone((std::string("hcont_") + hname).c_str());
+        hcont->SetDirectory(0);
+        hcont->Rebin2D(2, 2);
+        hcont->Smooth(1);
+
+        std::vector<double> levels = calcLevels(hcont, {0.95, 0.90, 0.68});
+        if (levels.size() == 3) {
+            drawLargestContourAtLevel(hcont, levels[0], kRed+1,    3);
+            drawLargestContourAtLevel(hcont, levels[1], kOrange+7, 3);
+            drawLargestContourAtLevel(hcont, levels[2], kGreen+2,  3);
+        } else {
+            for (size_t i = 0; i < levels.size(); ++i)
+                drawLargestContourAtLevel(hcont, levels[i], kRed + (int)i, 3);
+        }
+
+        if (plotDir) plotDir->cd();
+        c->Write((cname + "_canvas").c_str());
+        h2->Write(hname.c_str());
+    };
 
     // If we have entries for 2D, make the 2D histogram, draw contours and ellipse, compute fraction
     if (!energy_res_percent.empty() && !theta_diff_signed.empty()) {
@@ -915,8 +1428,8 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         xmin = cr.first;
         xmax = cr.second;
         
-        double ymin = -180.0; 
-        double ymax =  180.0;
+        double ymin = beam_mode ? -0.5 : -180.0;
+        double ymax = beam_mode ?  0.5 :  180.0;
 
         // Expand slightly for nicer plotting
         double xpad = 0.05 * std::max(1.0, std::fabs(xmax - xmin));
@@ -958,11 +1471,14 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         }
 
 
-        // Draw an ellipse centered at (0,0) with x semi-axis = 10 (%), y semi-axis = 30 (deg)
-        // The requested ellipse: x-axis of 20% (±10%) and y-axis of 60 degrees (±30 degrees) =>
-        // semi-axes a = 10, b = 30
+        // Draw ellipse centered at (0,0) with:
+        // x: Energy resolution (%) semi-axis (±10% -> a=10)
+        // y: Delta-theta (deg) semi-axis:
+        //   - normal mode: ±30 deg -> b=30
+        //   - beam_mode:   ±1  deg -> b=1
         double ell_a = 10.0;
-        double ell_b = 30.0;
+        double ell_b = beam_mode ? 0.1 : 30.0;
+
         TEllipse* ell = new TEllipse(0.0, 0.0, ell_a, ell_b);
         ell->SetFillStyle(0);
         ell->SetLineColor(kBlue+2);
@@ -977,7 +1493,7 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         std::string modelName = dirName;
 
         // Update ellipse_fraction.csv (create if needed, append a row otherwise)
-        updateEllipseCSV(modelName, ell_a, ell_b, frac);
+        updateEllipseCSV(modelName, ell_a, ell_b, frac, wandb_runtime_hours);
 
         // Write canvas and histogram to the selected directory
         if (plotDir) plotDir->cd();
@@ -990,6 +1506,146 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
             c2->SaveAs(png_path);
         }
         h2->Write("h2_energy_theta");
+
+        // ============================================================
+        // Secondary "zoomed" plot (dynamic range) for detailed contours
+        // Does NOT compute ellipse fraction / does NOT update CSV
+        // ============================================================
+        {
+            // Robust ranges using quantiles (ignore extreme tails)
+            // Energy resolution: keep your ±200% hard clamp, but zoom to the core
+            auto xr = quantile_range(energy_res_percent,
+                                    /*qlo=*/0.01, /*qhi=*/0.99,
+                                    /*padFrac=*/0.10,
+                                    /*hardMin=*/-200.0, /*hardMax=*/200.0,
+                                    /*minWidth=*/5.0);
+
+            // Theta difference: zoom based on the actual distribution
+            // For beam trainings, this will often shrink far below ±0.5 deg.
+            auto yr = quantile_range(theta_diff_signed,
+                                    /*qlo=*/0.01, /*qhi=*/0.99,
+                                    /*padFrac=*/0.10,
+                                    /*hardMin=*/-180.0, /*hardMax=*/180.0,
+                                    /*minWidth=*/0.02);
+
+            // Make Δθ symmetric about 0 for nicer interpretation
+            auto ys = symmetric_about_zero(yr.first, yr.second,
+                                        /*minHalfWidth=*/(beam_mode ? 0.01 : 1.0));
+            double ymin_zoom = ys.first;
+            double ymax_zoom = ys.second;
+
+            double xmin_zoom = xr.first;
+            double xmax_zoom = xr.second;
+
+            TCanvas* c2z = new TCanvas("energy_theta_2d_zoom", "Energy% vs DeltaTheta (zoom)", 900, 800);
+            gStyle->SetOptStat(0);
+
+            TH2D* h2z = new TH2D("h2_energy_theta_zoom",
+                                "Energy Resolution (%) vs #Delta#theta (deg) [zoomed];Energy Resolution (%);#Delta#theta (deg)",
+                                300, xmin_zoom, xmax_zoom,
+                                300, ymin_zoom, ymax_zoom);
+            h2z->SetDirectory(0);
+
+            for (size_t i = 0; i < energy_res_percent.size(); ++i) {
+                h2z->Fill(energy_res_percent[i], theta_diff_signed[i]);
+            }
+
+            c2z->cd();
+            h2z->Draw("COLZ");
+
+            // Same contour workflow as main plot
+            TH2D* hcontz = (TH2D*)h2z->Clone("hcont_energy_theta_zoom");
+            hcontz->SetDirectory(0);
+            hcontz->Rebin2D(2, 2);
+            hcontz->Smooth(1);
+
+            std::vector<double> levelsZ = calcLevels(hcontz, {0.95, 0.90, 0.68});
+
+            // Draw largest closed loop for each level (reuse your helper)
+            // NOTE: choose distinct colors/widths if you want; here I mirror your main logic structure.
+            drawLargestContourAtLevel(hcontz, levelsZ[0], kBlue+1, 2);
+            drawLargestContourAtLevel(hcontz, levelsZ[1], kGreen+2, 2);
+            drawLargestContourAtLevel(hcontz, levelsZ[2], kRed+1, 2);
+
+            // Write zoom products to the same TDirectory
+            if (plotDir) plotDir->cd();
+            c2z->Write("energy_theta_2d_zoom_canvas");
+            h2z->Write("h2_energy_theta_zoom");
+
+            // Clean up heap objects you created here (optional in ROOT macro, but good hygiene)
+            delete hcontz;
+            delete h2z;
+            delete c2z;
+        }
+
+        // =======================
+        // additional 2D plots
+        // =======================
+
+        // Common Y ranges (match conventions used in main plot)
+        double tdiff_ymin = beam_mode ? -0.5 : -180.0;
+        double tdiff_ymax = beam_mode ?  0.5 :  180.0;
+
+        // Energy resolution range (use your existing clamp_res_range)
+        double eres_ymin = *std::min_element(energy_res_percent.begin(), energy_res_percent.end());
+        double eres_ymax = *std::max_element(energy_res_percent.begin(), energy_res_percent.end());
+        auto eres_rng = clamp_res_range(eres_ymin, eres_ymax);
+        eres_ymin = eres_rng.first;
+        eres_ymax = eres_rng.second;
+
+        // True energy X range from data with padding
+        double E_xmin = *std::min_element(true_energy_gev.begin(), true_energy_gev.end());
+        double E_xmax = *std::max_element(true_energy_gev.begin(), true_energy_gev.end());
+        double E_xpad = 0.05 * std::max(1.0, std::fabs(E_xmax - E_xmin));
+        E_xmin -= E_xpad;
+        E_xmax += E_xpad;
+        if (E_xmin == E_xmax) { E_xmin -= 1; E_xmax += 1; }
+
+        // True theta X range is physically bounded
+        double Th_xmin = 0.0;
+        double Th_xmax = 180.0;
+
+        // (1) theta difference vs true neutrino theta
+        draw2DWithContours(
+            "thetaDiff_vs_trueTheta",
+            "h2_thetaDiff_vs_trueTheta",
+            "#Delta#theta (deg) vs true #theta_{#nu};true #theta_{#nu} (deg);#Delta#theta (deg)",
+            true_theta_deg, theta_diff_signed,
+            200, Th_xmin, Th_xmax,
+            200, tdiff_ymin, tdiff_ymax
+        );
+
+        // (2) energy resolution vs true neutrino theta
+        draw2DWithContours(
+            "energyRes_vs_trueTheta",
+            "h2_energyRes_vs_trueTheta",
+            "Energy resolution (%) vs true #theta_{#nu};true #theta_{#nu} (deg);Energy resolution (%)",
+            true_theta_deg, energy_res_percent,
+            200, Th_xmin, Th_xmax,
+            200, eres_ymin, eres_ymax
+        );
+
+        // (3) theta difference vs true neutrino energy
+        draw2DWithContours(
+            "thetaDiff_vs_trueEnergy",
+            "h2_thetaDiff_vs_trueEnergy",
+            "#Delta#theta (deg) vs true E_{#nu};true E_{#nu} (GeV);#Delta#theta (deg)",
+            true_energy_gev, theta_diff_signed,
+            200, E_xmin, E_xmax,
+            200, tdiff_ymin, tdiff_ymax
+        );
+
+        // (4) energy resolution vs true neutrino energy
+        draw2DWithContours(
+            "energyRes_vs_trueEnergy",
+            "h2_energyRes_vs_trueEnergy",
+            "Energy resolution (%) vs true E_{#nu};true E_{#nu} (GeV);Energy resolution (%)",
+            true_energy_gev, energy_res_percent,
+            200, E_xmin, E_xmax,
+            200, eres_ymin, eres_ymax
+        );
+
+
     } else {
         std::cout << "No 2D entries available; energy/theta 2D histogram not created." << std::endl;
     }
@@ -997,11 +1653,10 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     // Finish writing output file (preserve existing behavior)
     outfile->cd();
     outfile->Close();
-    std::cout << "All outputs written to " << root_output_path << " in directory: "
+    std::cout << "All outputs written to " << root_output_path << " in directory: " 
               << dirName << std::endl;
     
     // Restore previous batch mode
     gROOT->SetBatch(oldBatch);
-    gSystem->ChangeDirectory(original_dir.c_str());
 
 }
