@@ -219,6 +219,7 @@ Fixes:
 - locate the export directory and confirm it contains both `input.json` and `best_model.zip`
 - if necessary, switch from `training_name` resolution to explicit `path` resolution in the config
 - the `batch_inference.py` now supports output for a `models_not_found.txt` which can be saved to the area wherever we output the finished inference samples, allowing for us to go back and retrain if need be if we are somehow missing the `best_model.zip` files storing the model weights. Why this has happened isn't exactly clear, but it can and has happened sadly.
+- if you pass `--missing-models-file` (to skip training names that were already reported missing), the run writes `models_missing_previously.txt` alongside the outputs so you still have a record of which training names were skipped. This keeps `models_not_found.txt` focused on *new* missing exports discovered in the current run.
 
 ### “We got multiple models for one training_name because we accidentally ran over each others training ranges...”
 
