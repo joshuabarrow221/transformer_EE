@@ -5,7 +5,6 @@ Transformer Encoder based energy estimator models (backward-compatible, extended
 import torch
 from torch import nn
 from torch.nn import functional as F
-import time
 
 
 def _choose_d_model(nvec: int, nhead: int, min_head_dim: int = 8, base_multiple: int = 4) -> int:
