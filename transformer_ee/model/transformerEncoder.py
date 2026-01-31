@@ -5,6 +5,7 @@ Transformer Encoder based energy estimator models (backward-compatible, extended
 import torch
 from torch import nn
 from torch.nn import functional as F
+import time
 
 
 def _choose_d_model(nvec: int, nhead: int, min_head_dim: int = 8, base_multiple: int = 4) -> int:
@@ -90,6 +91,8 @@ class Transformer_EE_MV(nn.Module):
         self.d_model = d_model
 
         # --- input projections (only used if widening)
+        # NOTE: Attributes such as self.vec_proj must exist regardless of conditionals.
+        # Otherwise, torchscript will throw Runtime errors when compiling the forward() function.
         self.use_vec_proj = (self.d_model != self.nvec)
         if self.use_vec_proj:
             self.vec_proj = nn.Sequential(
@@ -97,6 +100,8 @@ class Transformer_EE_MV(nn.Module):
                 nn.GELU(),
                 nn.LayerNorm(self.d_model),
             )
+        else:
+            self.vec_proj = nn.Identity()
 
         # If we may use a scalar token, define its projection. We'll keep the legacy
         # scalar MLP too so you can mix & match heads without breaking.
@@ -106,6 +111,8 @@ class Transformer_EE_MV(nn.Module):
                 nn.GELU(),
                 nn.LayerNorm(self.d_model),
             )
+        else: 
+            self.sca_proj = nn.Identity()
 
         # --- transformer encoder (keep the legacy attribute name!)
         encoder_layer = nn.TransformerEncoderLayer(
@@ -138,6 +145,8 @@ class Transformer_EE_MV(nn.Module):
                 nn.GELU(),
                 nn.Linear(self.d_model, self.ntgt),
             )
+        else:
+            self.new_head = nn.Identity()
 
     def forward(self, x, y, mask):
         """
@@ -150,10 +159,7 @@ class Transformer_EE_MV(nn.Module):
             raise ValueError(f"Expected x feature size {self.nvec}, got {nfeat}")
     
         # (1) Project vectors to d_model if widened; else pass through
-        if self.use_vec_proj:
-            v = self.vec_proj(x)               # (B, L, d_model)
-        else:
-            v = x                              # (B, L, d_model==nvec)
+        v = self.vec_proj(x)               # (B, L, d_model); d_model==nvec if not widened.
     
         # (2) Build sequence (optionally with scalar-as-token)
         if self.scalar_as_token:
