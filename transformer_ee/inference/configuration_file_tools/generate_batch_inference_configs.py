@@ -11,10 +11,8 @@ Only standard-library Python is used.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 import os
-import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -61,9 +59,6 @@ SAMPLES = {
     ],
 }
 
-def _slug(s: str) -> str:
-    return re.sub(r"[^A-Za-z0-9]+", "_", s).strip("_")
-
 def _model_kind(training_name: str) -> str:
     tn = training_name.lower()
     if "vector" in tn:
@@ -72,19 +67,11 @@ def _model_kind(training_name: str) -> str:
         return "Scalar"
     return "Unknown"
 
-def _make_model_name(training_name: str) -> str:
-    """Create a stable, unique, *short-ish* name for the config's 'models[].name'."""
-    kind = _model_kind(training_name)
-    tag = "DUNEAtmo" if "DUNEAtmo" in training_name else ("DUNEBeam" if "DUNEBeam" in training_name else "Model")
-    h = hashlib.sha1(training_name.encode("utf-8")).hexdigest()[:10]
+def _user_code_from_path(path: Path) -> str:
+    user = path.stem.split("_")[-1].lower()
+    return {"jbarrow": "J", "cborden": "C", "rrichi": "R"}.get(user, "U")
 
-    toks = training_name.split("_")
-    tail = "_".join(toks[-8:])  # keep the last few loss tokens + Topology_MAE, etc
-    human = _slug(tail)[:50]
-    name = f"{tag}_{kind}_{human}_{h}"
-    return name[:160]
-
-def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[str]:
+def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[Tuple[str, str]]:
     """
     Extract training names from the text documents.
 
@@ -94,8 +81,9 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
       - contain "_Topology_" (to avoid grabbing raw datasets / csv/root filenames)
       - do NOT end in .csv/.root/.json/.txt
     """
-    out = set()
+    out = []
     for p in paths:
+        user_code = _user_code_from_path(p)
         for raw in p.read_text(errors="replace").splitlines():
             s = raw.strip()
             if not s:
@@ -108,8 +96,8 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
                 continue
             if "_Topology_" not in s:
                 continue
-            out.add(s)
-    return sorted(out)
+            out.append((s, user_code))
+    return out
 
 def _backup_if_exists(path: Path) -> None:
     if not path.exists():
@@ -118,20 +106,22 @@ def _backup_if_exists(path: Path) -> None:
     bak = path.with_suffix(path.suffix + f".bak{ts}")
     path.rename(bak)
 
-def _build_config(training_names: List[str], samples: List[Tuple[str, str, str]], model_search_roots: List[str]) -> Dict:
+def _build_config(
+    training_names: List[Tuple[str, str]],
+    samples: List[Tuple[str, str, str]],
+    model_search_roots: List[str],
+) -> Dict:
     model_objs = []
     pairs = []
 
     sample_objs = [{"name": name, "path": path} for (_kind, name, path) in samples]
     sample_by_kind = {kind: name for (kind, name, _path) in samples}
 
-    used_names = set()
-    for tn in training_names:
-        mn = _make_model_name(tn)
-        if mn in used_names:
-            # should never happen, but keep it bulletproof
-            mn = f"{mn}_{hashlib.sha1((tn+'x').encode('utf-8')).hexdigest()[:14]}"
-        used_names.add(mn)
+    name_counts: Dict[Tuple[str, str], int] = {}
+    for tn, user_code in training_names:
+        count_key = (user_code, tn)
+        name_counts[count_key] = name_counts.get(count_key, 0) + 1
+        mn = f"{tn}_{user_code}{name_counts[count_key]}"
         model_objs.append({"name": mn, "training_name": tn})
 
         k = _model_kind(tn)
