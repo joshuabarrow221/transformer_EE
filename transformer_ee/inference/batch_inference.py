@@ -554,11 +554,13 @@ def run_eval_model(
         (
             f"{eval_macro_path}("
             f"\"{csv_path}\","
+            f"false,"
+            f"-1.0,"
             f"\"{eval_output_dir}\","
             f"\"{png_path}\","
             f"{width},"
-            f"{height}"
-            f",\"combined_inference_output.root\""
+            f"{height},"
+            f"\"combined_inference_output.root\""
             f")"
         ),
     ]
