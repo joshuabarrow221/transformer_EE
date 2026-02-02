@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -71,6 +70,9 @@ def _user_code_from_path(path: Path) -> str:
     user = path.stem.split("_")[-1].lower()
     return {"jbarrow": "J", "cborden": "C", "rrichi": "R"}.get(user, "U")
 
+def _user_from_code(user_code: str) -> str:
+    return {"J": "jbarrow", "C": "cborden", "R": "rrichi"}.get(user_code, "")
+
 def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[Tuple[str, str]]:
     """
     Extract training names from the text documents.
@@ -82,6 +84,7 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
       - do NOT end in .csv/.root/.json/.txt
     """
     out = []
+    seen = set()
     for p in paths:
         user_code = _user_code_from_path(p)
         for raw in p.read_text(errors="replace").splitlines():
@@ -96,8 +99,29 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
                 continue
             if "_Topology_" not in s:
                 continue
+            key = (s, user_code)
+            if key in seen:
+                continue
+            seen.add(key)
             out.append((s, user_code))
     return out
+
+def _resolve_model_dirs(
+    training_name: str,
+    user_code: str,
+    model_search_roots: List[str],
+) -> List[Path]:
+    user = _user_from_code(user_code)
+    candidates: List[Path] = []
+    for root in (Path(p) for p in model_search_roots):
+        if user and user not in root.parts:
+            continue
+        if not root.exists():
+            continue
+        for path in root.rglob("input.json"):
+            if training_name in path.parts and (path.parent / "best_model.zip").exists():
+                candidates.append(path.parent.resolve())
+    return sorted({path.resolve() for path in candidates}, key=lambda p: str(p))
 
 def _backup_if_exists(path: Path) -> None:
     if not path.exists():
@@ -117,17 +141,21 @@ def _build_config(
     sample_objs = [{"name": name, "path": path} for (_kind, name, path) in samples]
     sample_by_kind = {kind: name for (kind, name, _path) in samples}
 
-    name_counts: Dict[Tuple[str, str], int] = {}
     for tn, user_code in training_names:
-        count_key = (user_code, tn)
-        name_counts[count_key] = name_counts.get(count_key, 0) + 1
-        mn = f"{tn}_{user_code}{name_counts[count_key]}"
-        model_objs.append({"name": mn, "training_name": tn})
+        resolved_dirs = _resolve_model_dirs(tn, user_code, model_search_roots)
+        if not resolved_dirs:
+            resolved_dirs = [None]
+        for idx, model_dir in enumerate(resolved_dirs, start=1):
+            mn = f"{tn}_{user_code}{idx}"
+            if model_dir is None:
+                model_objs.append({"name": mn, "training_name": tn})
+            else:
+                model_objs.append({"name": mn, "path": str(model_dir)})
 
-        k = _model_kind(tn)
-        if k not in sample_by_kind:
-            continue
-        pairs.append({"model": mn, "sample": sample_by_kind[k]})
+            k = _model_kind(tn)
+            if k not in sample_by_kind:
+                continue
+            pairs.append({"model": mn, "sample": sample_by_kind[k]})
 
     return {
         "model_search_roots": model_search_roots,
