@@ -558,6 +558,8 @@ def run_eval_model(
             "returncode": None,
             "ellipse_fraction": None,
             "model_label": model_label,
+            "stdout": None,
+            "stderr": None,
             "error": f"eval macro not found at {eval_macro_path}",
         }
     png_path = ""
