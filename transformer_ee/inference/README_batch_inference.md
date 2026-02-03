@@ -116,7 +116,7 @@ Outputs include:
 
 You can optionally run the ROOT macro `graph_eval/eval_model.C` for each generated
 CSV to produce `combined_inference_output.root` and `ellipse_fraction.csv`, and to
-save the energy/theta 2D canvas as a PNG.
+save the energy/theta 2D canvas as a PNG alongside each per-model output CSV.
 
 Example:
 
@@ -132,5 +132,7 @@ python transformer_ee/inference/batch_inference.py \
 ```
 
 When enabled, the `summary.json` entries include an `eval_model` section with the
-macro path, output directory, optional PNG path, and any matching row from
-`ellipse_fraction.csv` (matched against the per-task model label).
+macro path, output directory, optional PNG path, `stdout`/`stderr` from the macro,
+and any matching row from `ellipse_fraction.csv` (matched against the per-task
+model label). If ROOT fails to execute the macro, `eval_model.error` will explain
+why.
