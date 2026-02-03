@@ -550,10 +550,22 @@ def run_eval_model(
     eval_png_size: Optional[Tuple[int, int]],
 ) -> Dict[str, object]:
     eval_output_dir.mkdir(parents=True, exist_ok=True)
+    if not eval_macro_path.exists():
+        return {
+            "macro_path": str(eval_macro_path),
+            "output_dir": str(eval_output_dir),
+            "png_path": None,
+            "returncode": None,
+            "ellipse_fraction": None,
+            "model_label": model_label,
+            "stdout": None,
+            "stderr": None,
+            "error": f"eval macro not found at {eval_macro_path}",
+        }
     png_path = ""
     if eval_save_png:
         png_base = f"{safe_name(model_name)}__{safe_name(csv_path.stem)}__energy_theta_2d.png"
-        png_path = str((eval_output_dir / png_base).resolve())
+        png_path = str((csv_path.parent / png_base).resolve())
     width, height = eval_png_size or (0, 0)
     cmd = [
         "root",
@@ -580,6 +592,8 @@ def run_eval_model(
         "returncode": None,
         "ellipse_fraction": None,
         "model_label": model_label,
+        "stdout": None,
+        "stderr": None,
     }
     try:
         completed = subprocess.run(
@@ -592,8 +606,10 @@ def run_eval_model(
         result["error"] = "root command not found on PATH"
         return result
     result["returncode"] = completed.returncode
+    result["stdout"] = completed.stdout.strip()
+    result["stderr"] = completed.stderr.strip()
     if completed.returncode != 0:
-        result["error"] = completed.stderr.strip() or completed.stdout.strip()
+        result["error"] = result["stderr"] or result["stdout"]
         return result
 
     ellipse_path = eval_output_dir / "ellipse_fraction.csv"
@@ -688,6 +704,7 @@ def run_task(
         print(f"[INFO] Saved predictions to {npz_path}")
     eval_meta: Dict[str, object] = {}
     if eval_macro_path is not None:
+        print(f"[INFO] Running eval macro for {csv_path}")
         eval_meta = run_eval_model(
             csv_path=csv_path,
             model_name=task.model_name,
@@ -697,6 +714,11 @@ def run_task(
             eval_save_png=eval_save_png,
             eval_png_size=eval_png_size,
         )
+        if eval_meta.get("error"):
+            print(
+                "[WARN] eval_model failed for "
+                f"{csv_path}: {eval_meta.get('error')}"
+            )
     total_time = 0.0
     if batch_times:
         total_time = record_batch_timings(
