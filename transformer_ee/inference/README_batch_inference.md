@@ -20,6 +20,7 @@ Edit the `model_search_roots`, `models`, `samples`, and `pairs` sections to matc
 python transformer_ee/inference/batch_inference.py \
   --pair-config ./batch_inference_config.json \
   --output-dir ./InferenceTests/Results \
+  --output-format both \
   --device cuda:0
 ```
 
@@ -106,7 +107,8 @@ older predictor implementations.
 
 Outputs include:
 
-- CSV/NPZ outputs per model + sample pair in `--output-dir`.
+- CSV/NPZ outputs per model + sample pair in `--output-dir`. Use `--output-format csv`
+  to write only CSV, or `--output-format npz` for legacy NPZ-only output.
 - `timings.csv` for per-batch timing.
 - `summary.json` with metadata for each task.
 
