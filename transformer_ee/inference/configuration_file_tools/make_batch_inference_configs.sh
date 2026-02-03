@@ -11,7 +11,7 @@ ATM_FILES=(
 )
 
 BEAM_FILES=(
-  "Train_DUNEBeam_Flat_Models_rrich.txt"
+  "Train_DUNEBeam_Flat_Models_rrichi.txt"
   "Train_DUNEBeam_Flat_Models_jbarrow.txt"
   "Train_DUNEBeam_Flat_Models_cborden.txt"
 )
