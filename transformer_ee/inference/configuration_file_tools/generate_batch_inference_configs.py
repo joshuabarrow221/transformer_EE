@@ -11,10 +11,7 @@ Only standard-library Python is used.
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
-import os
-import re
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -61,9 +58,6 @@ SAMPLES = {
     ],
 }
 
-def _slug(s: str) -> str:
-    return re.sub(r"[^A-Za-z0-9]+", "_", s).strip("_")
-
 def _model_kind(training_name: str) -> str:
     tn = training_name.lower()
     if "vector" in tn:
@@ -72,19 +66,14 @@ def _model_kind(training_name: str) -> str:
         return "Scalar"
     return "Unknown"
 
-def _make_model_name(training_name: str) -> str:
-    """Create a stable, unique, *short-ish* name for the config's 'models[].name'."""
-    kind = _model_kind(training_name)
-    tag = "DUNEAtmo" if "DUNEAtmo" in training_name else ("DUNEBeam" if "DUNEBeam" in training_name else "Model")
-    h = hashlib.sha1(training_name.encode("utf-8")).hexdigest()[:10]
+def _user_code_from_path(path: Path) -> str:
+    user = path.stem.split("_")[-1].lower()
+    return {"jbarrow": "J", "cborden": "C", "rrichi": "R"}.get(user, "U")
 
-    toks = training_name.split("_")
-    tail = "_".join(toks[-8:])  # keep the last few loss tokens + Topology_MAE, etc
-    human = _slug(tail)[:50]
-    name = f"{tag}_{kind}_{human}_{h}"
-    return name[:160]
+def _user_from_code(user_code: str) -> str:
+    return {"J": "jbarrow", "C": "cborden", "R": "rrichi"}.get(user_code, "")
 
-def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[str]:
+def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[Tuple[str, str]]:
     """
     Extract training names from the text documents.
 
@@ -94,8 +83,10 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
       - contain "_Topology_" (to avoid grabbing raw datasets / csv/root filenames)
       - do NOT end in .csv/.root/.json/.txt
     """
-    out = set()
+    out = []
+    seen = set()
     for p in paths:
+        user_code = _user_code_from_path(p)
         for raw in p.read_text(errors="replace").splitlines():
             s = raw.strip()
             if not s:
@@ -108,8 +99,29 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
                 continue
             if "_Topology_" not in s:
                 continue
-            out.add(s)
-    return sorted(out)
+            key = (s, user_code)
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append((s, user_code))
+    return out
+
+def _resolve_model_dirs(
+    training_name: str,
+    user_code: str,
+    model_search_roots: List[str],
+) -> List[Path]:
+    user = _user_from_code(user_code)
+    candidates: List[Path] = []
+    for root in (Path(p) for p in model_search_roots):
+        if user and user not in root.parts:
+            continue
+        if not root.exists():
+            continue
+        for path in root.rglob("input.json"):
+            if training_name in path.parts and (path.parent / "best_model.zip").exists():
+                candidates.append(path.parent.resolve())
+    return sorted({path.resolve() for path in candidates}, key=lambda p: str(p))
 
 def _backup_if_exists(path: Path) -> None:
     if not path.exists():
@@ -118,26 +130,32 @@ def _backup_if_exists(path: Path) -> None:
     bak = path.with_suffix(path.suffix + f".bak{ts}")
     path.rename(bak)
 
-def _build_config(training_names: List[str], samples: List[Tuple[str, str, str]], model_search_roots: List[str]) -> Dict:
+def _build_config(
+    training_names: List[Tuple[str, str]],
+    samples: List[Tuple[str, str, str]],
+    model_search_roots: List[str],
+) -> Dict:
     model_objs = []
     pairs = []
 
     sample_objs = [{"name": name, "path": path} for (_kind, name, path) in samples]
     sample_by_kind = {kind: name for (kind, name, _path) in samples}
 
-    used_names = set()
-    for tn in training_names:
-        mn = _make_model_name(tn)
-        if mn in used_names:
-            # should never happen, but keep it bulletproof
-            mn = f"{mn}_{hashlib.sha1((tn+'x').encode('utf-8')).hexdigest()[:14]}"
-        used_names.add(mn)
-        model_objs.append({"name": mn, "training_name": tn})
+    for tn, user_code in training_names:
+        resolved_dirs = _resolve_model_dirs(tn, user_code, model_search_roots)
+        if not resolved_dirs:
+            resolved_dirs = [None]
+        for idx, model_dir in enumerate(resolved_dirs, start=1):
+            mn = f"{tn}_{user_code}{idx}"
+            if model_dir is None:
+                model_objs.append({"name": mn, "training_name": tn})
+            else:
+                model_objs.append({"name": mn, "path": str(model_dir)})
 
-        k = _model_kind(tn)
-        if k not in sample_by_kind:
-            continue
-        pairs.append({"model": mn, "sample": sample_by_kind[k]})
+            k = _model_kind(tn)
+            if k not in sample_by_kind:
+                continue
+            pairs.append({"model": mn, "sample": sample_by_kind[k]})
 
     return {
         "model_search_roots": model_search_roots,
