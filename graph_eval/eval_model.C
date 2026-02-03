@@ -1102,10 +1102,12 @@ void eval_model(
     // === Create 1D histograms ===
 auto make_hist = [&](const std::string& name, const std::vector<double>& d, double xmin, double xmax) {
     if (d.empty()) return;
+    bool has_finite = std::any_of(d.begin(), d.end(), [](double v) { return std::isfinite(v); });
+    if (!has_finite) return;
     TH1D* h = new TH1D(name.c_str(), name.c_str(), 500, xmin, xmax);
     h->SetDirectory(0);  // prevent ROOT from auto-managing this hist
     for (double val : d) {
-        if (!std::isnan(val)) h->Fill(val);
+        if (std::isfinite(val)) h->Fill(val);
     }
     if (plotDir) plotDir->cd();
     h->Write();
@@ -1113,9 +1115,18 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 };
 
     auto find_range = [](const std::vector<double>& d) {
-        auto [minIt, maxIt] = std::minmax_element(d.begin(), d.end());
-        double margin = 0.05 * std::max(std::abs(*minIt), std::abs(*maxIt));
-        return std::make_pair(*minIt - margin, *maxIt + margin);
+        double minVal = std::numeric_limits<double>::infinity();
+        double maxVal = -std::numeric_limits<double>::infinity();
+        for (double v : d) {
+            if (!std::isfinite(v)) continue;
+            minVal = std::min(minVal, v);
+            maxVal = std::max(maxVal, v);
+        }
+        if (!std::isfinite(minVal) || !std::isfinite(maxVal)) {
+            return std::make_pair(0.0, 1.0);
+        }
+        double margin = 0.05 * std::max(std::abs(minVal), std::abs(maxVal));
+        return std::make_pair(minVal - margin, maxVal + margin);
     };
 
     // 1D histograms for all non true_/pred_ variables (auto range)
