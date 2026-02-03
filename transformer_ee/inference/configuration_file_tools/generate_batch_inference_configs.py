@@ -155,7 +155,7 @@ def main(argv: List[str]) -> int:
         "Train_Atmospheric_Flat_Models_cborden.txt",
     ], help="Atmospheric flat model list text files")
     ap.add_argument("--beam-files", nargs="+", default=[
-        "Train_DUNEBeam_Flat_Models_rrich.txt",
+        "Train_DUNEBeam_Flat_Models_rrichi.txt",
         "Train_DUNEBeam_Flat_Models_jbarrow.txt",
         "Train_DUNEBeam_Flat_Models_cborden.txt",
     ], help="Beam flat model list text files")
