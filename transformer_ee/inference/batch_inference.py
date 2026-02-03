@@ -75,6 +75,15 @@ def parse_args() -> argparse.Namespace:
         help="Where to store inference outputs (default: %(default)s)",
     )
     parser.add_argument(
+        "--output-format",
+        choices=["both", "csv", "npz"],
+        default="both",
+        help=(
+            "Which artifacts to save per inference: both CSV and NPZ, only CSV, "
+            "or only NPZ (default: %(default)s)."
+        ),
+    )
+    parser.add_argument(
         "--device",
         type=str,
         default=None,
@@ -605,6 +614,7 @@ def run_task(
     device: Optional[str],
     num_workers: Optional[int],
     max_rows: Optional[int],
+    output_format: str,
     eval_macro_path: Optional[Path] = None,
     eval_output_dir: Optional[Path] = None,
     eval_save_png: bool = False,
@@ -656,15 +666,26 @@ def run_task(
     base_name = safe_output_base(task.sample_name)
     csv_path = model_bucket / f"{base_name}.csv"
     npz_path = model_bucket / f"{base_name}.npz"
-    result_df.to_csv(csv_path, index=False)
-    np.savez(
-        npz_path,
-        trueval=truth_vals,
-        prediction=predictions,
-        target_names=np.array(target_names),
-        sample_row_index=raw_truth_df.index.to_numpy(),
-    )
-    print(f"[INFO] Saved predictions to {csv_path} and {npz_path}")
+    save_csv = output_format in {"both", "csv"}
+    save_npz = output_format in {"both", "npz"}
+    if eval_macro_path is not None and not save_csv:
+        raise ValueError("--eval-macro-path requires CSV output. Use --output-format csv or both.")
+    if save_csv:
+        result_df.to_csv(csv_path, index=False)
+    if save_npz:
+        np.savez(
+            npz_path,
+            trueval=truth_vals,
+            prediction=predictions,
+            target_names=np.array(target_names),
+            sample_row_index=raw_truth_df.index.to_numpy(),
+        )
+    if save_csv and save_npz:
+        print(f"[INFO] Saved predictions to {csv_path} and {npz_path}")
+    elif save_csv:
+        print(f"[INFO] Saved predictions to {csv_path}")
+    elif save_npz:
+        print(f"[INFO] Saved predictions to {npz_path}")
     eval_meta: Dict[str, object] = {}
     if eval_macro_path is not None:
         eval_meta = run_eval_model(
@@ -691,8 +712,8 @@ def run_task(
         "sample_name": task.sample_name,
         "sample_path": str(task.sample_path),
         "output_bucket": bucket_label,
-        "output_csv": str(csv_path),
-        "output_npz": str(npz_path),
+        "output_csv": str(csv_path) if save_csv else None,
+        "output_npz": str(npz_path) if save_npz else None,
         "num_rows": len(result_df),
         "num_outputs": len(target_names),
         "truth_available": truth_available,
@@ -790,6 +811,7 @@ def main():
                 device=args.device,
                 num_workers=args.num_workers,
                 max_rows=args.max_samples,
+                output_format=args.output_format,
                 eval_macro_path=Path(args.eval_macro_path).expanduser().resolve()
                 if args.eval_macro_path
                 else None,
