@@ -30,6 +30,7 @@
 #include "TGraph.h"
 #include "TPad.h"
 #include "TSystem.h"
+#include "TTree.h"
 
 /// === Configurable parameters ===
 const int NUM_BINS = 50;
@@ -818,89 +819,6 @@ void eval_model(
         for (size_t i = 0; i < headers.size(); ++i)
             data[headers[i]].push_back(row[i]);
 
-        // fill derived vectors when momentum columns are present
-        auto has = [&](const std::string& key) {
-            return colIndex.find(key) != colIndex.end();
-        };
-
-        if (has("pred_Nu_Mom_X") && has("pred_Nu_Mom_Y") && has("pred_Nu_Mom_Z")) {
-            double px = row[colIndex["pred_Nu_Mom_X"]];
-            double py = row[colIndex["pred_Nu_Mom_Y"]];
-            double pz = row[colIndex["pred_Nu_Mom_Z"]];
-
-            double c = calcCosTheta(px, py, pz);
-            double t = calcTheta(px, py, pz);
-
-            Cos_Theta_nu_pred.push_back(c);
-            Theta_nu_pred.push_back(t);
-            pred_baseline.push_back(calc_baseline(px, py, pz));
-
-            // --- IMPORTANT: only fill derived pred_Nu_CosTheta into `data` if the CSV does NOT already have it ---
-            if (!CSV_HAS_PRED_COS) {
-                data["pred_Nu_CosTheta"].push_back(c);
-            }
-        } else {
-            // Keep derived column aligned row-by-row if we are synthesizing it
-            if (!CSV_HAS_PRED_COS) {
-                data["pred_Nu_CosTheta"].push_back(NAN);
-            }
-        }
-
-        if (has("true_Nu_Mom_X") && has("true_Nu_Mom_Y") && has("true_Nu_Mom_Z")) {
-            double tx = row[colIndex["true_Nu_Mom_X"]];
-            double ty = row[colIndex["true_Nu_Mom_Y"]];
-            double tz = row[colIndex["true_Nu_Mom_Z"]];
-
-            double c = calcCosTheta(tx, ty, tz);
-            double t = calcTheta(tx, ty, tz);
-
-            Cos_Theta_nu_true.push_back(c);
-            Theta_nu_true.push_back(t);
-            true_baseline.push_back(calc_baseline(tx, ty, tz));
-
-            // --- IMPORTANT: only fill derived true_Nu_CosTheta into `data` if the CSV does NOT already have it ---
-            if (!CSV_HAS_TRUE_COS) {
-                data["true_Nu_CosTheta"].push_back(c);
-            }
-        } else {
-            if (!CSV_HAS_TRUE_COS) {
-                data["true_Nu_CosTheta"].push_back(NAN);
-            }
-        }
-
-        // If cos(theta) is provided directly in the CSV, fill derived vectors from it too ---
-        // Only use explicit cosine columns to fill the standalone vectors if momentum columns are absent.
-        if (!has("pred_Nu_Mom_X") && !has("pred_Nu_Mom_Y") && !has("pred_Nu_Mom_Z") && has("pred_Nu_CosTheta")) {
-            double c = row[colIndex["pred_Nu_CosTheta"]];
-            if (std::isfinite(c)) {
-                Cos_Theta_nu_pred.push_back(c);
-                Theta_nu_pred.push_back(thetaFromCos(c)); // uses helper: acos(clamp(c)) in degrees
-            }
-        }
-
-        if (!has("true_Nu_Mom_X") && !has("true_Nu_Mom_Y") && !has("true_Nu_Mom_Z") && has("true_Nu_CosTheta")) {
-            double c = row[colIndex["true_Nu_CosTheta"]];
-            if (std::isfinite(c)) {
-                Cos_Theta_nu_true.push_back(c);
-                Theta_nu_true.push_back(thetaFromCos(c)); // uses helper: acos(clamp(c)) in degrees
-            }
-        }
-
-        if (has("true_Nu_Energy") && has("true_Nu_Mom_X") && has("true_Nu_Mom_Y") && has("true_Nu_Mom_Z")) {
-            double E = row[colIndex["true_Nu_Energy"]];
-            double px = row[colIndex["true_Nu_Mom_X"]];
-            double py = row[colIndex["true_Nu_Mom_Y"]];
-            double pz = row[colIndex["true_Nu_Mom_Z"]];
-            true_Mass_squared.push_back(E*E - (px*px + py*py + pz*pz));
-        }
-
-        if (has("pred_Nu_Energy") && has("pred_Nu_Mom_X") && has("pred_Nu_Mom_Y") && has("pred_Nu_Mom_Z")) {
-            double E = row[colIndex["pred_Nu_Energy"]];
-            double px = row[colIndex["pred_Nu_Mom_X"]];
-            double py = row[colIndex["pred_Nu_Mom_Y"]];
-            double pz = row[colIndex["pred_Nu_Mom_Z"]];
-            pred_Mass_squared.push_back(E*E - (px*px + py*py + pz*pz));
-        }
     }
     infile.close();
 
@@ -950,6 +868,100 @@ void eval_model(
         std::cout << "[INFO] Derived pred_Nu_Energy from pred_Nu_Mom_X/Y/Z (massless approx).\n";
     }
 
+    // === Align data vectors and compute derived kinematic quantities ===
+    auto hasKey = [&](const std::string& key) {
+        return data.find(key) != data.end();
+    };
+
+    size_t n_rows = 0;
+    for (const auto& kv : data) {
+        n_rows = std::max(n_rows, kv.second.size());
+    }
+
+    auto ensure_size = [&](std::vector<double>& v, size_t n) {
+        if (v.size() < n) v.resize(n, NAN);
+    };
+
+    for (auto& kv : data) {
+        ensure_size(kv.second, n_rows);
+    }
+
+    Cos_Theta_nu_pred.assign(n_rows, NAN);
+    Theta_nu_pred.assign(n_rows, NAN);
+    Cos_Theta_nu_true.assign(n_rows, NAN);
+    Theta_nu_true.assign(n_rows, NAN);
+    pred_baseline.assign(n_rows, NAN);
+    true_baseline.assign(n_rows, NAN);
+    pred_Mass_squared.assign(n_rows, NAN);
+    true_Mass_squared.assign(n_rows, NAN);
+    pred_beam_Mass_squared.assign(n_rows, NAN);
+    true_beam_Mass_squared.assign(n_rows, NAN);
+
+    const bool has_predMom = hasKey("pred_Nu_Mom_X") && hasKey("pred_Nu_Mom_Y") && hasKey("pred_Nu_Mom_Z");
+    const bool has_trueMom = hasKey("true_Nu_Mom_X") && hasKey("true_Nu_Mom_Y") && hasKey("true_Nu_Mom_Z");
+    const bool has_predCos = hasKey("pred_Nu_CosTheta");
+    const bool has_trueCos = hasKey("true_Nu_CosTheta");
+
+    for (size_t i = 0; i < n_rows; ++i) {
+        if (has_predMom) {
+            double px = data["pred_Nu_Mom_X"][i];
+            double py = data["pred_Nu_Mom_Y"][i];
+            double pz = data["pred_Nu_Mom_Z"][i];
+            Cos_Theta_nu_pred[i] = calcCosTheta(px, py, pz);
+            Theta_nu_pred[i] = calcTheta(px, py, pz);
+            pred_baseline[i] = calc_baseline(px, py, pz);
+        } else if (has_predCos) {
+            double c = data["pred_Nu_CosTheta"][i];
+            if (std::isfinite(c)) {
+                Cos_Theta_nu_pred[i] = c;
+                Theta_nu_pred[i] = thetaFromCos(c);
+            }
+        }
+
+        if (has_trueMom) {
+            double tx = data["true_Nu_Mom_X"][i];
+            double ty = data["true_Nu_Mom_Y"][i];
+            double tz = data["true_Nu_Mom_Z"][i];
+            Cos_Theta_nu_true[i] = calcCosTheta(tx, ty, tz);
+            Theta_nu_true[i] = calcTheta(tx, ty, tz);
+            true_baseline[i] = calc_baseline(tx, ty, tz);
+        } else if (has_trueCos) {
+            double c = data["true_Nu_CosTheta"][i];
+            if (std::isfinite(c)) {
+                Cos_Theta_nu_true[i] = c;
+                Theta_nu_true[i] = thetaFromCos(c);
+            }
+        }
+
+        if (hasKey("true_Nu_Energy") && has_trueMom) {
+            double E = data["true_Nu_Energy"][i];
+            double px = data["true_Nu_Mom_X"][i];
+            double py = data["true_Nu_Mom_Y"][i];
+            double pz = data["true_Nu_Mom_Z"][i];
+            if (std::isfinite(E) && std::isfinite(px) && std::isfinite(py) && std::isfinite(pz)) {
+                true_Mass_squared[i] = E*E - (px*px + py*py + pz*pz);
+            }
+        }
+
+        if (hasKey("pred_Nu_Energy") && has_predMom) {
+            double E = data["pred_Nu_Energy"][i];
+            double px = data["pred_Nu_Mom_X"][i];
+            double py = data["pred_Nu_Mom_Y"][i];
+            double pz = data["pred_Nu_Mom_Z"][i];
+            if (std::isfinite(E) && std::isfinite(px) && std::isfinite(py) && std::isfinite(pz)) {
+                pred_Mass_squared[i] = E*E - (px*px + py*py + pz*pz);
+            }
+        }
+    }
+
+    // Ensure derived cos(theta) columns exist in data when the CSV omits them
+    if (!CSV_HAS_PRED_COS) {
+        data["pred_Nu_CosTheta"] = Cos_Theta_nu_pred;
+    }
+    if (!CSV_HAS_TRUE_COS) {
+        data["true_Nu_CosTheta"] = Cos_Theta_nu_true;
+    }
+
     // === Beam-only Mass^2 from E and (Theta or CosTheta) when no momentum is present ===
     // m^2 = (E)^2 * (1 - Cos^2(90 - Theta))
     //
@@ -993,81 +1005,99 @@ void eval_model(
         {
             const auto& Etrue = data["true_Nu_Energy"];
             const auto& Epred = data["pred_Nu_Energy"];
+            const double kDeg = M_PI / 180.0;
 
-            // Compute TRUE beam mass^2
-            {
-                size_t N = Etrue.size();
-                if (has_trueTheta) N = std::min(N, data[trueThetaKey].size());
-                if (has_trueCos)   N = std::min(N, data[trueCosKey].size());
+            for (size_t i = 0; i < n_rows; ++i) {
+                double m2_true = NAN;
+                double m2_pred = NAN;
 
-                true_beam_Mass_squared.clear();
-                true_beam_Mass_squared.reserve(N);
-
-                const double kDeg = M_PI / 180.0;
-
-                for (size_t i = 0; i < N; ++i) {
+                if (i < Etrue.size()) {
                     double E = Etrue[i];
-                    if (!std::isfinite(E)) continue;
-
-                    double m2 = NAN;
-
-                    if (has_trueCos) {
-                        double c = data[trueCosKey][i];   // cos(theta)
-                        if (std::isfinite(c)) {
-                            // m^2 = E^2 * cos^2(theta)  (equivalent to requested formula)
-                            m2 = E*E * (c*c);
-                        }
-                    } else if (has_trueTheta) {
-                        double th = data[trueThetaKey][i]; // degrees
-                        if (std::isfinite(th)) {
-                            double ca = std::cos((90.0 - th) * kDeg); // cos(90-theta)
-                            m2 = E*E * (1.0 - ca*ca);
+                    if (std::isfinite(E)) {
+                        if (has_trueCos && i < data[trueCosKey].size()) {
+                            double c = data[trueCosKey][i];
+                            if (std::isfinite(c)) m2_true = E*E * (c*c);
+                        } else if (has_trueTheta && i < data[trueThetaKey].size()) {
+                            double th = data[trueThetaKey][i];
+                            if (std::isfinite(th)) {
+                                double ca = std::cos((90.0 - th) * kDeg);
+                                m2_true = E*E * (1.0 - ca*ca);
+                            }
                         }
                     }
-
-                    if (std::isfinite(m2)) true_beam_Mass_squared.push_back(m2);
                 }
-            }
 
-            // Compute PRED beam mass^2
-            {
-                size_t N = Epred.size();
-                if (has_predTheta) N = std::min(N, data[predThetaKey].size());
-                if (has_predCos)   N = std::min(N, data[predCosKey].size());
-
-                pred_beam_Mass_squared.clear();
-                pred_beam_Mass_squared.reserve(N);
-
-                const double kDeg = M_PI / 180.0;
-
-                for (size_t i = 0; i < N; ++i) {
+                if (i < Epred.size()) {
                     double E = Epred[i];
-                    if (!std::isfinite(E)) continue;
-
-                    double m2 = NAN;
-
-                    if (has_predCos) {
-                        double c = data[predCosKey][i];   // cos(theta)
-                        if (std::isfinite(c)) {
-                            m2 = E*E * (c*c);
-                        }
-                    } else if (has_predTheta) {
-                        double th = data[predThetaKey][i]; // degrees
-                        if (std::isfinite(th)) {
-                            double ca = std::cos((90.0 - th) * kDeg); // cos(90-theta)
-                            m2 = E*E * (1.0 - ca*ca);
+                    if (std::isfinite(E)) {
+                        if (has_predCos && i < data[predCosKey].size()) {
+                            double c = data[predCosKey][i];
+                            if (std::isfinite(c)) m2_pred = E*E * (c*c);
+                        } else if (has_predTheta && i < data[predThetaKey].size()) {
+                            double th = data[predThetaKey][i];
+                            if (std::isfinite(th)) {
+                                double ca = std::cos((90.0 - th) * kDeg);
+                                m2_pred = E*E * (1.0 - ca*ca);
+                            }
                         }
                     }
-
-                    if (std::isfinite(m2)) pred_beam_Mass_squared.push_back(m2);
                 }
+
+                true_beam_Mass_squared[i] = m2_true;
+                pred_beam_Mass_squared[i] = m2_pred;
             }
 
-            std::cout << "[INFO] Computed beam mass^2 from E and Theta/CosTheta (no momentum columns): "
-                    << "true=" << true_beam_Mass_squared.size()
-                    << ", pred=" << pred_beam_Mass_squared.size() << "\n";
+            std::cout << "[INFO] Computed beam mass^2 from E and Theta/CosTheta (no momentum columns).\n";
         }
     }
+
+    // === Unbinned TTree (outside plot directories) ===
+    outfile->cd();
+    TTree* unbinnedTree = dynamic_cast<TTree*>(outfile->Get("unbinned_kinematics"));
+    if (!unbinnedTree) {
+        unbinnedTree = new TTree("unbinned_kinematics", "Unbinned kinematic quantities per event");
+    }
+
+    std::string model_name = dirName;
+    if (!unbinnedTree->GetBranch("model_name")) {
+        unbinnedTree->Branch("model_name", &model_name);
+    } else {
+        unbinnedTree->SetBranchAddress("model_name", &model_name);
+    }
+
+    std::map<std::string, std::vector<double>> unbinned_data = data;
+    unbinned_data["Cos_Theta_nu_pred"] = Cos_Theta_nu_pred;
+    unbinned_data["Theta_nu_pred"] = Theta_nu_pred;
+    unbinned_data["Cos_Theta_nu_true"] = Cos_Theta_nu_true;
+    unbinned_data["Theta_nu_true"] = Theta_nu_true;
+    unbinned_data["pred_baseline"] = pred_baseline;
+    unbinned_data["true_baseline"] = true_baseline;
+    unbinned_data["pred_Mass_squared"] = pred_Mass_squared;
+    unbinned_data["true_Mass_squared"] = true_Mass_squared;
+    unbinned_data["pred_beam_Mass_squared"] = pred_beam_Mass_squared;
+    unbinned_data["true_beam_Mass_squared"] = true_beam_Mass_squared;
+
+    std::map<std::string, double> branch_values;
+    for (auto& kv : unbinned_data) {
+        ensure_size(kv.second, n_rows);
+        if (!unbinnedTree->GetBranch(kv.first.c_str())) {
+            unbinnedTree->Branch(kv.first.c_str(), &branch_values[kv.first]);
+        } else {
+            unbinnedTree->SetBranchAddress(kv.first.c_str(), &branch_values[kv.first]);
+        }
+    }
+
+    for (size_t i = 0; i < n_rows; ++i) {
+        model_name = dirName;
+        for (const auto& kv : unbinned_data) {
+            const auto& vec = kv.second;
+            double val = (i < vec.size()) ? vec[i] : NAN;
+            branch_values[kv.first] = val;
+        }
+        unbinnedTree->Fill();
+    }
+
+    unbinnedTree->Write("", TObject::kOverwrite);
 
     // === Create 1D histograms ===
 auto make_hist = [&](const std::string& name, const std::vector<double>& d, double xmin, double xmax) {
