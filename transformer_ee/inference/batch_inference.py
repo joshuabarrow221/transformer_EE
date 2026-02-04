@@ -108,6 +108,15 @@ def parse_args() -> argparse.Namespace:
         help="Optional ROOT macro (eval_model.C) to run on each output CSV.",
     )
     parser.add_argument(
+        "--beam-mode",
+        choices=["true", "false"],
+        default="false",
+        help=(
+            "Toggle eval_model beam_mode (true uses narrowed beam plots, "
+            "false uses atmospheric ranges). Default: %(default)s."
+        ),
+    )
+    parser.add_argument(
         "--eval-output-dir",
         type=str,
         default=None,
@@ -548,6 +557,7 @@ def run_eval_model(
     eval_output_dir: Path,
     eval_save_png: bool,
     eval_png_size: Optional[Tuple[int, int]],
+    beam_mode: bool,
 ) -> Dict[str, object]:
     eval_output_dir.mkdir(parents=True, exist_ok=True)
     if not eval_macro_path.exists():
@@ -575,7 +585,7 @@ def run_eval_model(
         (
             f"{eval_macro_path}("
             f"\"{csv_path}\","
-            f"false,"
+            f"{str(beam_mode).lower()},"
             f"-1.0,"
             f"\"{eval_output_dir}\","
             f"\"{png_path}\","
@@ -635,6 +645,7 @@ def run_task(
     eval_output_dir: Optional[Path] = None,
     eval_save_png: bool = False,
     eval_png_size: Optional[Tuple[int, int]] = None,
+    beam_mode: bool = False,
 ) -> Dict[str, str]:
     print(
         f"[INFO] Running model '{task.model_name}' on sample '{task.sample_name}' "
@@ -713,6 +724,7 @@ def run_task(
             eval_output_dir=eval_output_dir or output_dir,
             eval_save_png=eval_save_png,
             eval_png_size=eval_png_size,
+            beam_mode=beam_mode,
         )
         if eval_meta.get("error"):
             print(
@@ -746,6 +758,7 @@ def run_task(
 
 def main():
     args = parse_args()
+    beam_mode = args.beam_mode.lower() == "true"
     model_root = Path(args.model_root).resolve() if args.model_root else None
     sample_root = Path(args.sample_root).resolve() if args.sample_root else None
     output_dir = Path(args.output_dir).expanduser().resolve()
@@ -844,6 +857,7 @@ def main():
                 eval_png_size=(args.eval_png_width, args.eval_png_height)
                 if args.eval_save_png
                 else None,
+                beam_mode=beam_mode,
             )
             summary.append(meta)
         except Exception as exc:

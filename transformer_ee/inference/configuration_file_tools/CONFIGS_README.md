@@ -188,8 +188,11 @@ python3 transformer_ee/inference/batch_inference.py   --pair-config batch_infere
 If we want a ROOT-based plotting + ellipse (basic 2D performance metric) evaluation per output:
 
 ```bash
-python3 transformer_ee/inference/batch_inference.py   --pair-config batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json   --output-dir /exp/dune/data/users/$USER/MLProject/Inference_Samples/HondaDUNEOsc/Results   --device cuda:0   --eval-macro-path ./graph_eval/eval_model.C   --eval-output-dir /exp/dune/data/users/$USER/MLProject/Inference_Samples/HondaDUNEOsc/Results   --eval-save-png   --eval-png-width 3000   --eval-png-height 2000
+python3 transformer_ee/inference/batch_inference.py   --pair-config batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json   --output-dir /exp/dune/data/users/$USER/MLProject/Inference_Samples/HondaDUNEOsc/Results   --device cuda:0   --eval-macro-path ./graph_eval/eval_model.C   --eval-output-dir /exp/dune/data/users/$USER/MLProject/Inference_Samples/HondaDUNEOsc/Results   --beam-mode false   --eval-save-png   --eval-png-width 3000   --eval-png-height 2000
 ```
+
+For beam-neutrino inference, pass `--beam-mode true` to apply the narrowed
+plotting ranges in `eval_model.C`.
 
 ---
 

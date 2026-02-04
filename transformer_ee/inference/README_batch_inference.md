@@ -126,6 +126,7 @@ python transformer_ee/inference/batch_inference.py \
   --output-dir ./InferenceTests/Results \
   --eval-macro-path ./graph_eval/eval_model.C \
   --eval-output-dir ./InferenceTests/Results \
+  --beam-mode true \
   --eval-save-png \
   --eval-png-width 3000 \
   --eval-png-height 2000
@@ -136,3 +137,6 @@ macro path, output directory, optional PNG path, `stdout`/`stderr` from the macr
 and any matching row from `ellipse_fraction.csv` (matched against the per-task
 model label). If ROOT fails to execute the macro, `eval_model.error` will explain
 why.
+
+Use `--beam-mode true` for beam-neutrino plots with narrowed ranges, or
+`--beam-mode false` (the default) for atmospheric-style ranges.
