@@ -30,6 +30,7 @@
 #include "TGraph.h"
 #include "TPad.h"
 #include "TSystem.h"
+#include "TBranch.h"
 #include "TTree.h"
 
 /// === Configurable parameters ===
@@ -1051,20 +1052,6 @@ void eval_model(
         }
     }
 
-    // === Unbinned TTree (outside plot directories) ===
-    outfile->cd();
-    TTree* unbinnedTree = dynamic_cast<TTree*>(outfile->Get("unbinned_kinematics"));
-    if (!unbinnedTree) {
-        unbinnedTree = new TTree("unbinned_kinematics", "Unbinned kinematic quantities per event");
-    }
-
-    std::string model_name = dirName;
-    if (!unbinnedTree->GetBranch("model_name")) {
-        unbinnedTree->Branch("model_name", &model_name);
-    } else {
-        unbinnedTree->SetBranchAddress("model_name", &model_name);
-    }
-
     std::map<std::string, std::vector<double>> unbinned_data = data;
     unbinned_data["Cos_Theta_nu_pred"] = Cos_Theta_nu_pred;
     unbinned_data["Theta_nu_pred"] = Theta_nu_pred;
@@ -1076,6 +1063,42 @@ void eval_model(
     unbinned_data["true_Mass_squared"] = true_Mass_squared;
     unbinned_data["pred_beam_Mass_squared"] = pred_beam_Mass_squared;
     unbinned_data["true_beam_Mass_squared"] = true_beam_Mass_squared;
+
+    // === Unbinned TTree (outside plot directories) ===
+    outfile->cd();
+    std::set<std::string> desired_branches;
+    desired_branches.insert("model_name");
+    for (const auto& kv : unbinned_data) {
+        desired_branches.insert(kv.first);
+    }
+
+    TTree* unbinnedTree = dynamic_cast<TTree*>(outfile->Get("unbinned_kinematics"));
+    if (unbinnedTree) {
+        std::set<std::string> existing_branches;
+        TObjArray* branches = unbinnedTree->GetListOfBranches();
+        for (int i = 0; i < branches->GetEntries(); ++i) {
+            if (auto* br = dynamic_cast<TBranch*>(branches->At(i))) {
+                existing_branches.insert(br->GetName());
+            }
+        }
+        if (existing_branches != desired_branches) {
+            outfile->Delete("unbinned_kinematics;*");
+            unbinnedTree = nullptr;
+        } else {
+            unbinnedTree->Reset();
+        }
+    }
+
+    if (!unbinnedTree) {
+        unbinnedTree = new TTree("unbinned_kinematics", "Unbinned kinematic quantities per event");
+    }
+
+    std::string model_name = dirName;
+    if (!unbinnedTree->GetBranch("model_name")) {
+        unbinnedTree->Branch("model_name", &model_name);
+    } else {
+        unbinnedTree->SetBranchAddress("model_name", &model_name);
+    }
 
     std::map<std::string, double> branch_values;
     for (auto& kv : unbinned_data) {
