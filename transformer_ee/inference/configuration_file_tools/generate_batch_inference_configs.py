@@ -56,6 +56,30 @@ SAMPLES = {
         ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar",
          "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
     ],
+
+    # 5) DUNEBeamNat-to-DUNEFDBeamOsc
+    "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": [
+        ("Vector", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector",
+         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+        ("Scalar", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar",
+         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    ],
+
+    # 6) DUNEBeamNat-to-DUNEND39mOffAxisBeamNat
+    "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": [
+        ("Vector", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector",
+         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+        ("Scalar", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar",
+         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    ],
+
+    # 7) NOvABeamNat-to-NOvAFDBeamOsc
+    "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": [
+        ("Vector", "NOvABeam_Nat_OnAxisFDOsc_p1to6_NpNpi_Vector",
+         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/Numu_CC_Train_DUNEBeam_Natural_NOvAFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+        ("Scalar", "NOvABeam_Nat_OnAxisFDOsc_p1to6_NpNpi_Scalar",
+         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/Numu_CC_Train_DUNEBeam_Natural_NOvAFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    ],
 }
 
 def _model_kind(training_name: str) -> str:
@@ -201,6 +225,9 @@ def main(argv: List[str]) -> int:
         "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": beam_models,
         "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": beam_models,
         "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": beam_models,
+        "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": beam_models,
+        "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": beam_models,
+        "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": beam_models,
     }
 
     for outname, models in specs.items():
