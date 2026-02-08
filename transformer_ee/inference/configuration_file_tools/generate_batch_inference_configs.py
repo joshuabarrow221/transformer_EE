@@ -97,18 +97,22 @@ def _user_code_from_path(path: Path) -> str:
 def _user_from_code(user_code: str) -> str:
     return {"J": "jbarrow", "C": "cborden", "R": "rrichi"}.get(user_code, "")
 
-def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[Tuple[str, str]]:
+def _extract_training_names(
+    paths: Iterable[Path],
+    require_substrs: Iterable[str] | None = None,
+) -> List[Tuple[str, str]]:
     """
     Extract training names from the text documents.
 
     Heuristic: keep lines that
       - start with "Numu_CC_Train_"
-      - contain require_substr (e.g. "DUNEAtmo_Flat" or "DUNEBeam_Flat")
+      - contain all required substrings (if provided)
       - contain "_Topology_" (to avoid grabbing raw datasets / csv/root filenames)
       - do NOT end in .csv/.root/.json/.txt
     """
     out = []
     seen = set()
+    required = [s for s in (require_substrs or []) if s]
     for p in paths:
         user_code = _user_code_from_path(p)
         for raw in p.read_text(errors="replace").splitlines():
@@ -117,7 +121,7 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
                 continue
             if not s.startswith("Numu_CC_Train_"):
                 continue
-            if require_substr not in s:
+            if required and not all(req in s for req in required):
                 continue
             if s.endswith((".csv", ".root", ".json", ".txt")):
                 continue
@@ -128,6 +132,37 @@ def _extract_training_names(paths: Iterable[Path], require_substr: str) -> List[
                 continue
             seen.add(key)
             out.append((s, user_code))
+    return out
+
+def _spectrum_kind(training_name: str) -> str:
+    tn = training_name.lower()
+    if "flat" in tn:
+        return "flat"
+    if "natural" in tn or "nat" in tn:
+        return "natural"
+    return "unknown"
+
+def _beam_family(training_name: str) -> str:
+    tn = training_name.lower()
+    if "nova" in tn:
+        return "nova"
+    if "dunebeam" in tn or ("dune" in tn and "beam" in tn):
+        return "dune"
+    return "unknown"
+
+def _filter_models(
+    training_names: List[Tuple[str, str]],
+    *,
+    spectrum_kind: str | None = None,
+    beam_family: str | None = None,
+) -> List[Tuple[str, str]]:
+    out = []
+    for tn, user_code in training_names:
+        if spectrum_kind and _spectrum_kind(tn) != spectrum_kind:
+            continue
+        if beam_family and _beam_family(tn) != beam_family:
+            continue
+        out.append((tn, user_code))
     return out
 
 def _resolve_model_dirs(
@@ -200,7 +235,17 @@ def main(argv: List[str]) -> int:
         "Train_DUNEBeam_Flat_Models_rrichi.txt",
         "Train_DUNEBeam_Flat_Models_jbarrow.txt",
         "Train_DUNEBeam_Flat_Models_cborden.txt",
-    ], help="Beam flat model list text files")
+        "Train_DUNEBeam_Nat_Models_rrichi.txt",
+        "Train_DUNEBeam_Nat_Models_jbarrow.txt",
+        "Train_DUNEBeam_Nat_Models_cborden.txt",
+        "Train_NOvABeam_Nat_Models_rrichi.txt",
+        "Train_NOvABeam_Nat_Models_jbarrow.txt",
+        "Train_NOvABeam_Nat_Models_cborden.txt",
+    ], help="Beam model list text files (flat + natural, DUNE/NOvA)")
+    ap.add_argument("--atm-require-substrs", nargs="*", default=[],
+                    help="Optional substrings required in atmospheric training names")
+    ap.add_argument("--beam-require-substrs", nargs="*", default=[],
+                    help="Optional substrings required in beam training names")
     ap.add_argument("--model-search-roots", nargs="+", default=DEFAULT_MODEL_SEARCH_ROOTS)
     ap.add_argument("--no-backup", action="store_true", help="Do not create .bak* backups when output exists")
     args = ap.parse_args(argv)
@@ -216,18 +261,32 @@ def main(argv: List[str]) -> int:
         print("ERROR: missing input files:", *missing, sep="\n  - ", file=sys.stderr)
         return 2
 
-    atm_models = _extract_training_names(atm_paths, require_substr="DUNEAtmo_Flat")
-    beam_models = _extract_training_names(beam_paths, require_substr="DUNEBeam_Flat")
+    atm_models = _extract_training_names(atm_paths, require_substrs=args.atm_require_substrs)
+    beam_models = _extract_training_names(beam_paths, require_substrs=args.beam_require_substrs)
+
+    beam_flat_models = _filter_models(beam_models, spectrum_kind="flat", beam_family="dune")
+    beam_nat_dune_models = _filter_models(beam_models, spectrum_kind="natural", beam_family="dune")
+    beam_nat_nova_models = _filter_models(beam_models, spectrum_kind="natural", beam_family="nova")
+
+    if not beam_flat_models and beam_models:
+        print("WARNING: no DUNE flat beam models detected; check beam file contents or "
+              "--beam-require-substrs filters.", file=sys.stderr)
+    if not beam_nat_dune_models and beam_models:
+        print("WARNING: no DUNE natural beam models detected; check beam file contents or "
+              "--beam-require-substrs filters.", file=sys.stderr)
+    if not beam_nat_nova_models and beam_models:
+        print("WARNING: no NOvA natural beam models detected; check beam file contents or "
+              "--beam-require-substrs filters.", file=sys.stderr)
 
     # Build + write all configs
     specs = {
         "batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json": atm_models,
-        "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": beam_models,
-        "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": beam_models,
-        "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": beam_models,
-        "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": beam_models,
-        "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": beam_models,
-        "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": beam_models,
+        "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": beam_flat_models,
+        "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": beam_flat_models,
+        "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": beam_flat_models,
+        "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": beam_nat_dune_models,
+        "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": beam_nat_dune_models,
+        "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": beam_nat_nova_models,
     }
 
     for outname, models in specs.items():

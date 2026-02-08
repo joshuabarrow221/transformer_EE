@@ -20,10 +20,16 @@ We provide lists like:
 - `Train_DUNEBeam_Flat_Models_rrich.txt`
 - `Train_DUNEBeam_Flat_Models_cborden.txt`
 - `Train_DUNEBeam_Flat_Models_jbarrow.txt`
+- `Train_DUNEBeam_Nat_Models_rrichi.txt`
+- `Train_DUNEBeam_Nat_Models_cborden.txt`
+- `Train_DUNEBeam_Nat_Models_jbarrow.txt`
+- `Train_NOvABeam_Nat_Models_rrichi.txt`
+- `Train_NOvABeam_Nat_Models_cborden.txt`
+- `Train_NOvABeam_Nat_Models_jbarrow.txt`
 
-Each file contains many lines/model names returned from a simple `ls` command; the generator extracts the *trained model training names* (strings starting at the moment with `Numu_CC_Train_...`) and filters to **Flat-trained** subsets:
-- Current atmospheric configs: require `DUNEAtmo_Flat`
-- Current beam configs: require `DUNEBeam_Flat`
+Each file contains many lines/model names returned from a simple `ls` command; the generator extracts the *trained model training names* (strings starting at the moment with `Numu_CC_Train_...`) and then filters/splits as needed:
+- Atmospheric configs are filtered by optional substring lists (see `--atm-require-substrs`)
+- Beam configs are separated into flat vs natural (and DUNE vs NOvA) based on training-name tokens
 
 The tool then deduplicates across all provided lists.
 
@@ -40,6 +46,9 @@ The generator currently writes out configuration files pertinent to flat atmosph
 2. `batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json`
 3. `batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json`
 4. `batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json`
+5. `batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json`
+6. `batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json`
+7. `batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json`
 
 ---
 
@@ -107,6 +116,9 @@ The current inference sample paths in that file correspond to:
 4. DUNE-like Beam Natural Spectra, OnAxis ND and so unoscillated (p1to6 = 0.1 - 6 GeV of incoming neutrino energy):
 - Vector + Scalar in `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/`
 
+5. NOvA-like Beam Natural Spectra, OnAxis FD Oscillated:
+- Vector + Scalar in `/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/`
+
 Note that some/all of these are under Richi's `Training_Samples` area -- while it is true they were used for training, because they are statistically independent than the flat spectra, we can use them for inference purposes without issue, while also guaranteeing that we have high statistics for inference-related performance plots.
 
 If we move samples or want different ones, edit only the paths in this dictionary—no other logic changes needed.
@@ -153,7 +165,7 @@ If they are not in the current working directory, either:
 ./make_batch_inference_configs.sh
 ```
 
-This writes the (currently four) JSON files into the current directory (or the configured output dir).
+This writes the (currently seven) JSON files into the current directory (or the configured output dir).
 
 ### Re-running behavior (backups)
 
