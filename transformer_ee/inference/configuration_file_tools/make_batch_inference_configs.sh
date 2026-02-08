@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# This wrapper assumes the 6 input text files are in the current directory.
+# This wrapper assumes the expected input text files are in the current directory.
 # Edit the arrays below if your filenames/locations differ.
 
 ATM_FILES=(
@@ -28,9 +28,15 @@ NOVA_BEAM_NAT_FILES=(
   "Train_NOvABeam_Nat_Models_cborden.txt"
 )
 
+BEAM_FILES=(
+  "${DUNE_BEAM_FLAT_FILES[@]}"
+  "${DUNE_BEAM_NAT_FILES[@]}"
+  "${NOVA_BEAM_NAT_FILES[@]}"
+)
+
 OUTDIR="."
 
 python3 generate_batch_inference_configs.py \
-#  --outdir "${OUTDIR}" \
-#  --atm-files "${ATM_FILES[@]}" \
-  --beam-files "${DUNE_BEAM_NAT_FILES[@]}"
+  --outdir "${OUTDIR}" \
+  --atm-files "${ATM_FILES[@]}" \
+  --beam-files "${BEAM_FILES[@]}"
