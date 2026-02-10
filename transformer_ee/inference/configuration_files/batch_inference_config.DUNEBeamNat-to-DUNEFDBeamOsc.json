@@ -1,0 +1,2429 @@
+{
+  "model_search_roots": [
+    "/exp/dune/data/users/cborden/MLProject/Training_Samples",
+    "/exp/dune/data/users/rrichi/MLProject/Training_Samples",
+    "/exp/dune/data/users/jbarrow/MLProject/Training_Samples"
+  ],
+  "models": [
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_b8b1035bc42d806fc8cab3345fbde2b1"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE/model_ef83dcfdcd1930d795c0380097c86dc2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_8da10f119154713865088ae71267d3e8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAE_Topology_MAE/model_ad34e48a913af2f69a8e1749177be7d5"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MACE_Topology_MAE/model_d4b351ed0cd603e45b122e48ee518350"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAE_Topology_MAE/model_5b593c6f70a4fdf9d2e8b8cfbe45b879"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAPE_Topology_MAE/model_7c2388cae6857a641f47187f63cad1af"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MSE_Topology_MAE/model_1a98dd69d529cb44ba70c85dd41dfe11"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE/model_3b5da0fbb1812077184e7d2ea446e6c2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE/model_f5623300eedd239a0fcbece8853df422"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE/model_2f403331e602e41e95ce41c92d98d618"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE/model_7038769ed1160835afca4d26673aa985"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R2",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE/model_9fb35e92b234b8cf6a980c3619e9fe51"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MACE_Topology_MAE/model_d40ef641c68e68ecde7bb9a792935b88"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAE_Topology_MAE/model_8e883dd4c1cd6e3ea91370c3e8bca54d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAPE_Topology_MAE/model_02e0aec8bd1d060dcbe89583fe27b06c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MSE_Topology_MAE/model_9153c8e4a54fbedfb1884c632af376f8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MACE_Topology_MAE/model_ef3c46296cfb764bbcb469e41841cac2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAPE_Topology_MAE/model_c2d5fe4b18dedc3cff36134195265fe1"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Topology_MAE/model_b74dd029dc1af3ad66ae41500c3fadda"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MACE_Topology_MAE/model_d09782b731fae67ab377eb7ca589fd87"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAPE_Topology_MAE/model_2118b06fe59551061bd26e9f73c297b6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MSE_Topology_MAE/model_eada28b72ef76679a38aa0a07645ce84"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MACE_Topology_MAE/model_3be89e309093de158a8be89816437c72"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAE_Topology_MAE/model_33bc49c37a287ac2a1e35a8fc63355f7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAPE_Topology_MAE/model_47c5571457558763de8fa9486ef88750"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Topology_MAE/model_22c53bf891fa36b3cd30690f15ef2a06"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAE_Topology_MAE/model_87bc55f8e3ab65956e6c2cd95cd427ab"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAPE_Topology_MAE/model_78a7bd1dbc06aec4a8d14d34889fa729"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE/model_1d685278e22d5ec642158724f6d5031b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE/model_45cce26f41344c25d52169a2a2ecc4f8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE/model_ae088bdf5dc51dd9887576932e4d6b86"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE/model_aa944718c6fd2f1b6bfbe360d8780dcf"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MACE_Topology_MAE/model_a2cdc8ef5037c1bc700aa32a77a9609c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE/model_1f5dc0be1dcc2d49cdd8806ef20b3795"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MSE_Topology_MAE/model_dd26e5202351f56b1e06938ea84e3946"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Topology_MAE/model_42940d8c2c1ab153aaa55655f615e9d2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MACE_Topology_MAE/model_4bdf19013baa2648f022f9a117bea6e2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MSE_Topology_MAE/model_689c08b639b0ce3b390b06df939a5670"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MACE_Topology_MAE/model_813bb9e515266e86b11478abff9408c8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAE_Topology_MAE/model_84f67c7ec03d1b7c6f090f0d88cbc1e6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAPE_Topology_MAE/model_ce51b951d8cd7704f59c883af2c8d545"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Topology_MAE/model_2bd0a51091dc496c59ae9b375ef55d5c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MACE_Topology_MAE/model_d4590dd63016fcd54a75ed1e5e15521f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Topology_MAE/model_506cd92cb42fa23e8a19d3a86b640df6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Topology_MAE/model_ea31fd32823657e6f07cf24f5d982243"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MACE_Topology_MAE/model_34e405366fa65238b9aa00a025cf30d9"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAE_Topology_MAE/model_85f6fdb222d2837a242b8c771a9a97f2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE/model_02926c839373c3bf266db88c2cbf1768"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE/model_129caa6f570d5c35e28dc6f1be25b75b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MACE_Topology_MAE/model_048542d3e2f696566df1d27af71d776d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAE_Topology_MAE/model_c2cc343557d782a645180450e5fe7653"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAPE_Topology_MAE/model_0407d8ef1b8a18b79e4253318607bc39"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Topology_MAE/model_17a9396ddbe866b60f881392ec544168"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MACE_Topology_MAE/model_5fe7f27b8b73465b942d1df3123e6ff9"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Topology_MAE/model_b58ded170bbd5892511e9e58c4685d76"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAPE_Topology_MAE/model_7a32e12df0890a68b011cb5914cb3b12"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MSE_Topology_MAE/model_e1b0b6277cdd8702459382e29d05eecc"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MSE_Topology_MAE/model_9e28d93154b2546de6ea8898a4f43a61"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Topology_MAE/model_de6447148ea0f2cfbecccf12177a2a29"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Topology_MAE/model_145043a2605fa189e620a1f94d4c612c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE/model_49967d4d22b92eb9d353b0415bbbacda"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE/model_851158dd8171ffc5e26c922a2f6eb6fe"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAE_Topology_MAE/model_680fb3b820be43e7c60b3641ae611be7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MACE_Topology_MAE/model_d01ad3b29e8884b6779c7d9bea667049"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE/model_2924f88b71fb98606d772750416ea241"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE/model_18089e154991c9c404fe68fc7fdda92d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_R2",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE/model_47e8733f6e98bedade92b51124d4798f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_R3",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE/model_d35b5da5bec815210fa31395c06f0c8e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MSE_Topology_MAE/model_b3d0d29adbd1850a52c2b86a4a27d2c3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MACE_Topology_MAE/model_e9708d199d05f7d045637ea3e3f50b15"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAE_Topology_MAE/model_2937bccf02878f5a10bc0a662a3c8d3b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAPE_Topology_MAE/model_1a2877e1ec80aa0566ffa84fb4d54d61"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MSE_Topology_MAE/model_57acf97836d2a62d7d342be2f9123e64"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MACE_Topology_MAE/model_e0b594bfb68ce9c1191da4e5515519ce"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAE_Topology_MAE/model_f83fe729ef35a3824a6163ee9f0773b1"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MSE_Topology_MAE/model_af37795a34fa161ab0f97794202a637f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE/model_a490161f27783e2788171ea29f1c907e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Topology_MAE/model_109707d578016a9040490c406cf840ed"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE/model_5264faecea9717a1828eb98b4e22018c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Topology_MAE/model_a5c2bd80a5d59f4945b9e48cc34a9be6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE/model_56965bae52b6ff857069eeae620599cf"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE/model_2e859292c16d4ebf2eedef1a6de5a97c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE/model_ee1fed3aea19f118630718d012385148"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MSE_Topology_MAE/model_c00353a80cfac8583b3f2d72eb96d286"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MACE_Topology_MAE/model_c2b9be5fd1ea7a8b8505400e00cbe523"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAPE_Topology_MAE/model_dbf91b63ee5ea74ee9f8f40e2651a28c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MSE_Topology_MAE/model_4dec1c976d8c1623b32217fb2ee20673"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE/model_9d4d336119380bde0b9ffa823218b51e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE_R2",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE/model_ad83cc45fadbfe1b113e435ff571b191"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAE_Topology_MAE/model_224eb8ab5392cb8b14fa70ff01e11381"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAPE_Topology_MAE/model_9a14695cfa6b14cebf2162210fadb85e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAE_Topology_MAE/model_7ea2d9639f836ca2da4c9b5532b0d8ee"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAPE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAPE_Topology_MAE/model_af171e0b87fb943457edddaec7b3eb6d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MSE_Topology_MAE_R1",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MSE_Topology_MAE/model_f52936b8b0083ceb2129382a058fdf3d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MACE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MACE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE/model_f6d7dc6871466d893e96e2ad4d31d879"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_d2b6bda30c0b576fea21f7a56f82ae23"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE/model_0a06ba2dc2daf9c64ee473c724646127"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE/model_819780c251e2feedc54d57d575658945"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE/model_f95d83ba08bcd96563ea4b12e6285309"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Topology_MAE/model_ffa28e085c4e6564bad36d90ee7f34d8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_5d809b3bd28901ea05e263fa7c64de6a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE/model_8db580913ca6491510c2cf8e6953a8fd"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_b6d11d2ff9103c87c498006f51ede8eb"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Topology_MAE/model_26f75de251c96610aedabb5c8c83aa93"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE/model_9b18de2f3c81da1bef473032527085b0"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Topology_MAE/model_7e646e39dfea400d53004e97fb1b05c6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE/model_8257872edca0a90b70be694f7b0ef0ba"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_0198aec918afbaacf0371bba026f5145"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE/model_ab9b88dd3c8661546cb2359fbf2e8aa6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Topology_MAE/model_238dd16796b719b666168f78e79226e0"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE/model_a50cfc4948f20f993deb3994b24ff295"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Topology_MAE/model_330c546f86df703825bbcc8441f0911b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAE_Topology_MAE/model_bda30a553bbf2e0527fdc5d7983d556f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_d4d6ce56ddd40f30c56ab2ee0e661fa2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MSE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MSE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE/model_8902e31e93a370f69c142fc130923f20"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE/model_f761293a921a2c69551f2f16807b079f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MSE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MSE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE/model_1f661acec71603a4fa479c5d99ec7119"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE/model_d18602933daf6dbd3ed80a93f306861d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Topology_MAE/model_926db9ef017bf6044863f8bd015adb8a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE/model_52c5dc011ea87e28593e23a592181c62"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Topology_MAE/model_a29f5a2183880de90652ceb7ed8abf78"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Topology_MAE/model_64371426ed15f0c81ea3a6b49da29cc2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE/model_e3d55f91b16a6c3a13e281707457c2ec"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Topology_MAE/model_dfaa8bd18634098eddfedb943512ed19"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE/model_fcd26a922a148c635124b16978be8632"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_88c7d974f123284bd5cd82741deb6a66"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAE_Topology_MAE/model_36fa0defdca602f7d67633751857f5bf"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MSE_Topology_MAE/model_7d7131a6f3e815fe58acc04b9a6b13b7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE/model_9f988fdbab9e5403ceff6919cb4f5148"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE/model_1a6516f7e391587a2f0efed0adbea02a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE/model_6563077e05f9b6f8253506a9e2e61889"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE/model_b8189a865ea9dcc08d5d9f7436cbaa12"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MACE_Topology_MAE/model_b143ee72482d09d18bd5173acf0cabd7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAPE_Topology_MAE/model_3cfba8f14c0ccbe4f2b8230413b7f843"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MSE_Topology_MAE/model_a7ff4eb501d75d059c060bbc21c0a491"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Topology_MAE/model_a8dee11479df627ea135ade41306c19f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAE_Topology_MAE/model_69a4755c7f198e65c74c3bd129b9b5e3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MSE_Topology_MAE/model_351d996f1a070be031d1847c2209793d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAE_Topology_MAE/model_83fcc1116b45a6b3b446c052cce77633"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Topology_MAE/model_b513bb9e6fb662eb473bf27694704adb"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MSE_Topology_MAE/model_9f7cb2cdd4750078c5c41ea195d74fed"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Topology_MAE/model_7b01136596db776579b8cd381085506d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MACE_Topology_MAE/model_cf88bfa29877603e0a90fea70301796c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MSE_Topology_MAE/model_15eca1a943c3185f405522a9e6ba93b8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE/model_5d73c3141ce928625946bffca503d998"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_J2",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE/model_f61fea42fb92087164ea00b4757dacdd"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAPE_Topology_MAE/model_425e6bfed23d8105c3a3ff6cff9a15a4"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAE_Topology_MAE/model_3de64a2d7b87690bcafd4804303c5792"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAPE_Topology_MAE/model_2687a7a2275feb9868084cb0ec67b95b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE/model_03765505e484b6ea650974fad63fa512"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE_J2",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE/model_2131db7f5633bdd89f9955373bf43c47"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MSE_Topology_MAE/model_7d6dc751983d95af12b108e64d299fe6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAE_Topology_MAE/model_be6da9f428b9672b207f0b4dd9560cbb"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAPE_Topology_MAE/model_e79635debabe80b9d2d885f906f0d62b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MSE_Topology_MAE/model_a13acf8898e7d5550dc417b6f30f3db2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAPE_Topology_MAE/model_079d0340b667a42c6f25db7778be2571"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MSE_Topology_MAE/model_d2afa2ecccecbc63180120d9100b52a7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE/model_1ed0d25e895bf4a979ed6018d6bd341c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_J2",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE/model_abeb28b63a548539e09038f3323439d4"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE/model_d2bd190eb7f61f6acf0dbc4b4ef11ae9"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MSE_Topology_MAE/model_1c741c7ea06f32d555cc5451eb94f25f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAE_Topology_MAE/model_ff293813060b487598541b4233be24d2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAPE_Topology_MAE/model_64964ba395ec0e6c523504709c25171f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MSE_Topology_MAE/model_7ddb4210e1fbb8c248f07181fe27f2cd"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MACE_Topology_MAE/model_669378b8e10bfc758a308edccb56b8fe"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAE_Topology_MAE/model_090ab177e8f563cf55db45d86efd9630"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Topology_MAE/model_6f95ad3dc8ea596d7cb5627524ef340d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MACE_Topology_MAE/model_a81a8eea7629b90b0023d578c8af3751"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAE_Topology_MAE/model_62683d9c5c5ab3b6dba92919b1e7a505"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAPE_Topology_MAE/model_4a4572dccacb1bb62a2e0cefd68ee461"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MACE_Topology_MAE/model_c1401b598c0df5d6b5be749abb88c240"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAE_Topology_MAE/model_1924566835ab1243d3fba5f46f09df05"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAPE_Topology_MAE/model_5e2c7f3a26d73bacd3439f8434626652"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MSE_Topology_MAE/model_c694995c0ada18efce574876ed76b75f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE/model_a999cdba40aa3d7fa4a6f8b192d56fdb"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE/model_8cd32b7434cfcc0878935d91c28e631d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MACE_Topology_MAE/model_4277c02d6c24594797d9599a29d092db"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAPE_Topology_MAE/model_77a5a2abca5c0272e59cb7b6a71218bb"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MSE_Topology_MAE/model_72f67215bf961568d65116dcb2d84a88"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Topology_MAE/model_6c762de494eeb0ff46c18299ba4b33af"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE/model_00e974b668fa9979f140b296e59b324e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_J2",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE/model_7e5c22c75c9683c0a6504dad78260a0a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_J1",
+      "training_name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Topology_MAE/model_74298c36567c24a26f75c190e99ae6c3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Topology_MAE/model_f1d7804fcd65b5afaa1815e959af9a17"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAPE_Topology_MAE/model_21fec7e3242f3bc9676cc06807d96eae"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Topology_MAE/model_63a9162e915c991434747b43c4f23029"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Topology_MAE/model_1596cb816f573062c574bffa2b25a5eb"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Topology_MAE/model_4c3284b2f8e067f9121f5196cd6f2b41"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE/model_4eaea555def60f3ebde190c3a1dfb7a9"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_J2",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE/model_c3ec40c8b18ca50506df3521d391a00d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MACE_Topology_MAE/model_cc338de305983f467a0f58afd7f1f571"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAE_Topology_MAE/model_315d058584ae1b5889e5be1e5c0f8bd3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAPE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAPE_Topology_MAE/model_5c02a8fedeb8a20169f5c8787b9fedd1"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAE_Topology_MAE/model_50ffd61a358d65ecd64f58550bcf7cab"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MSE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MSE_Topology_MAE/model_0e3918c180bce759dc4cc9f851bea901"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MACE_Topology_MAE_J1",
+      "path": "/exp/dune/data/users/jbarrow/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MACE_Topology_MAE/model_ae2f1454a43eecc82b8aa6fd644996fa"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MACE_Topology_MAE/model_88d7c928ae28ad5373cc0df8214c4b8a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAE_Topology_MAE/model_398c21482a6b337da38ed4684109a44f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAPE_Topology_MAE/model_2c667929c0186a13c7c375378b3d4e01"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE/model_09bb7aaf3f22e6130162bc1ceed1bc36"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MACE_Topology_MAE/model_00141f74c7de464b8451f6b9d932f939"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE/model_afb6d5a46f92092c8fdaee02f6e3d403"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE/model_32e002af015cf6c27c13b21e9f3e9ac7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MSE_Topology_MAE/model_a52bfde27f7212b6d0989da12b1d3ec6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MACE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MACE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_92030b3a392ea56334824cfeb6b18595"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE/model_b17d0a7fcfd5c267a11d9772b51f2496"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE/model_4846bfb1aba102708c5b678a66f75a25"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MACE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MACE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE/model_dbbc7d621206087f3b6e7d765e892e73"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE/model_c562f0b12b90063c6d22ea0c129525e1"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MACE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MACE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE/model_625b323067f856096a1ba3389d8f99d4"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_bad010862fa9d71f98cd04c91245b2cc"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE/model_003a8dcf8ff864de0b72a56ee079602e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE/model_d040aba46a1b5fce2b90ab4048b57d38"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE/model_a933a5190642e3c73ece0cb2e9cd0da9"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Topology_MAE/model_6e5a3f6b732ce0e1ba197c1c9d784bbe"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE/model_f8afd270de0d87c0e9af7dc5af79548a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE/model_61232694cdd1855151459b6c85e1edca"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE/model_ffcfa254b29084f134d2666ce2f72987"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE/model_9ae96b588f3bff33dbe29e777ca9c2c9"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAE_Topology_MAE/model_ff56474813f4fe8cb457a2e2786ecf77"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAPE_Topology_MAE/model_204c3bf8686087257c2cd644c39737af"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE/model_5feb74836a8325de336aadabf964bd54"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE/model_4fda3c3deb32fe5ea081ab39689c2980"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE/model_1ba34a5556abed3752f3bbecffc42b86"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE/model_da805e2b718ce3346c36de0d18ba8f7d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE/model_bbd9ad388b37b514fd496f0b7addf942"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE/model_7a5d1d5de1823b056318bd7c384be2ad"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_0b87718d1176e9ac884f1c90de170681"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE/model_97284b23241d05e9eb06b14fdd9f4bbd"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Topology_MAE/model_7c55dd68b41d36c1dfa13220912f894a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE/model_ad689af5c9fc2f4368dc31a6b3af9c13"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE/model_ca424fe90d6378381a9eb7534cb4bc94"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE/model_fb5344c83280efe6481310727f571eec"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Topology_MAE/model_2ab1f701f17a64d67c1499c094f36dfa"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MACE_Topology_MAE/model_574203d91cc453c9b6030977429d788f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAE_Topology_MAE/model_6bf7f326b0b762b9953504468614ce3c"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAPE_Topology_MAE/model_ca62a9b318719fce40de44e76044cb03"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MSE_Topology_MAE/model_f504ec1951df1f2483f938f0c539e958"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE/model_3cfad6ea6531611fb10b8094e5052841"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE/model_91c9e65d6a25c24f970206c83664c8e8"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAPE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAPE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE/model_087f397aec62b8247b9f72b2934bacfa"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE/model_4a30c7460958a4a196fd6371f33fb70b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAPE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAPE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE/model_84a792dafd3b8310cf218c30d8387a1b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE/model_5f58b57a80b02ebb3b86ddd365733c55"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAPE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAPE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE/model_632e25c28c113e50855b08bd7b4221ee"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_a03bbd8c987df115b812f507cc9a4c4d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE/model_0059eb3bcf5d514c85d8ff9c6a4e3cc3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Topology_MAE/model_40ab8c6a655cc39e8876641331d5ceac"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE/model_cdb18023f1907ec7260ea27b346e1d58"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Topology_MAE/model_4683732ebbd1601b3f650e25f740ce31"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE/model_49cb89de840245f4e3b3fbb684712079"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Topology_MAE/model_f4eb3fa61951e473b94b196a2ff61cc3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MACE_Topology_MAE/model_ee96a56227c661c7016b581ff0214d9e"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAPE_Topology_MAE/model_a3ccaf2f0b9b833ea2457168902fe9e3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE/model_394b1c765539f496f161e0dafd41e339"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE/model_c61ee94d86ea577f87d479469a0b7250"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MSE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MSE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE/model_3445218415e3fede775714437965a5ec"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE/model_88cd57e5cc6a524c9655675228014911"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE/model_cb4b1812e0b0ba4e7d6e5bf7f857fbdc"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE/model_599d54c26c9d6ed86c94e5d37123acf3"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Topology_MAE/model_3e1d8d9545d622ce33d9445086a85c3f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE/model_3d2399309199b406c9723212dc691aa7"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Topology_MAE/model_2bddff201cc7baa25b00645805f692aa"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Topology_MAE/model_c9b9b17ac94ea012a593969e8c6f097d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE/model_64ace39b8d21c020a07b67aa2572d891"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE/model_00ff003adc94f255084c4f8f420ba507"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Topology_MAE/model_eade7ba76c38e71e5f7182da2e2a810b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Topology_MAE/model_60ea109134bd305c75aec774bb351024"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE/model_743456fa8c313aa8c312e7aadbf8626f"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAPE_Topology_MAE/model_76d174fa1d08be350d864b1b8e008b73"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE/model_1c1aa3297517165a1ce36771a2f56864"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE/model_82f3b403198ad007a75ee1af9f609c2d"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAPE_Topology_MAE/model_6b9640c7574707056c28a85e564ba50b"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MSE_Topology_MAE/model_97aecf0732a493fd921f719e8021f68a"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE/model_b0266fd8ca6f583f6f99e615b8c90977"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE/model_66ff4f41301a8cc893077c366174cc18"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE/model_eb7c64ec8fed8bb5fbbc69b5dfab3aa2"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE/model_96495a53949f63e014a337c7175d1fd6"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MACE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MACE_Topology_MAE/model_082055508d1d16066cc738f7a49bec21"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE/model_7d121fef002f254d8091500783392839"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAPE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAPE_Topology_MAE/model_f9f5ecf9c8653fe2b9e0791aed029525"
+    },
+    {
+      "name": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE_C1",
+      "path": "/exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE/model_cd21db4bf38b0ca7e8f7658ced1bc979"
+    }
+  ],
+  "samples": [
+    {
+      "name": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"
+    },
+    {
+      "name": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar",
+      "path": "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"
+    }
+  ],
+  "pairs": [
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_CosTheta_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_R2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_R3",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Mom_Y_MSE_Mom_Z_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MACE_Topology_MAE_R2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MAPE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MSE_Topology_MAE_R1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MACE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MSE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MSE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MSE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MACE_Theta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAE_Topology_MAE_J2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MACE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAE_Topology_MAE_J2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MAPE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAE_Theta_MSE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAE_Mom_Y_MAE_Mom_Z_MAE_Topology_MAE_J2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MACE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MAPE_Theta_MSE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_CosTheta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MACE_Mom_Y_MACE_Mom_Z_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Mom_X_MAPE_Mom_Y_MAPE_Mom_Z_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAE_Topology_MAE_J2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Phi_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Theta_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Energy_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_X_MSE_Topology_MAE_J2",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Y_MAPE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Mom_Z_MAE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Phi_MSE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_VectorLeptwNC_eventnum_All_NpNpi_Theta_MACE_Topology_MAE_J1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MACE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MACE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MACE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MAE_Nu_Phi_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Nu_Theta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Lept_Energy_MAPE_Lept_MomX_MACE_Lept_MomY_MACE_Lept_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Lept_Energy_MAPE_Lept_MomX_MAE_Lept_MomY_MAE_Lept_MomZ_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MAPE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Lept_Energy_MAPE_Lept_MomX_MSE_Lept_MomY_MSE_Lept_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Nu_Phi_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MAPE_Nu_Theta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_CosTheta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MACE_Nu_MomY_MACE_Nu_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Lept_Energy_MSE_Lept_MomX_MAPE_Lept_MomY_MAPE_Lept_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_MomX_MSE_Nu_MomY_MSE_Nu_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Nu_Phi_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Nu_Phi_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Energy_MSE_Nu_Theta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAE_Nu_MomY_MAE_Nu_MomZ_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Nu_MomY_MAPE_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomX_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomY_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_MomZ_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Phi_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MACE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MAPE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    },
+    {
+      "model": "Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to10_ScalarLeptwNC_eventnum_All_NpNpi_Nu_Theta_MSE_Topology_MAE_C1",
+      "sample": "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar"
+    }
+  ]
+}
