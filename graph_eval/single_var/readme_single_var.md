@@ -134,3 +134,14 @@ This helps distinguish between:
 
 
 For 2-variable Energy+angular outputs, filename tokens now match the selected variable: `Th`, `CosTheta`, or `Phi` (instead of always using `Th`).
+
+For directory names ending with run labels like `_J1`, `_R1`, `_C1`: these suffixes are treated as **immaterial** for matching. The scanner keys each candidate by `(group, variable, loss)` and then keeps whichever CSV has the newest modification time for that key.
+
+`group` (shown as `GROUP_KEY` in logs) is simply the shared prefix before `_NpNpi_<VAR>_<LOSS>_Topology...` and is used to ensure only compatible single-variable outputs are merged together.
+
+Output subdirectories are now named with a human-readable tag (shown as `GROUP_TAG`), for example:
+
+- `DUNEAtmoFlat_Infer_Vector_NpNpi_SV`
+
+If multiple distinct groups map to the same tag, the script appends `__dupN` to keep output paths unique.
+

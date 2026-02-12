@@ -80,6 +80,34 @@ sanitize_name() {
   echo "$x"
 }
 
+# Human-friendly alias for output directory names.
+# Suffixes like _J1/_R1/_C1 are intentionally ignored here because they are
+# run-instance labels; selection is done by newest CSV mtime for the same
+# (group,var,loss) key.
+derive_group_label() {
+  local group="$1"
+  local flavor=""
+  local sample=""
+
+  if [[ "$group" =~ _Train_([^_]+)_([^_]+)_ ]]; then
+    flavor="${BASH_REMATCH[1]}${BASH_REMATCH[2]}"
+  fi
+
+  if [[ "$group" =~ _p[0-9]+to[0-9]+_([^_]+) ]]; then
+    sample="${BASH_REMATCH[1]}"
+  elif [[ "$group" =~ _p[0-9]+_([^_]+) ]]; then
+    sample="${BASH_REMATCH[1]}"
+  fi
+
+  if [[ -n "$flavor" && -n "$sample" ]]; then
+    echo "${flavor}_Infer_${sample}_NpNpi_SV"
+  elif [[ -n "$flavor" ]]; then
+    echo "${flavor}_Infer_NpNpi_SV"
+  else
+    echo "$group"
+  fi
+}
+
 declare -A CSV_BY_KEY MTIME_BY_KEY
 
 newest_csv_in_dir() {
@@ -164,20 +192,41 @@ fi
 mkdir -p "$OUT_ROOT"
 
 # unique group list
-GROUPS=()
+INFER_GROUPS=()
 while IFS= read -r g; do
   [[ -n "$g" ]] || continue
-  GROUPS+=("$g")
+  INFER_GROUPS+=("$g")
 done < <(
   for k in "${!CSV_BY_KEY[@]}"; do
     echo "${k%%|*}"
   done | sort -u
 )
 
-echo "[$(ts)] Found ${#GROUPS[@]} inference group(s)."
+echo "[$(ts)] Found ${#INFER_GROUPS[@]} inference group(s)."
 
-for group in "${GROUPS[@]}"; do
-  out_dir="${OUT_ROOT%/}/$(sanitize_name "$group")"
+declare -A GROUP_LABEL_COUNT
+
+resolve_key_csv() {
+  local group="$1"
+  local var="$2"
+  local loss="$3"
+  echo "${CSV_BY_KEY[${group}|${var}|${loss}]:-}"
+}
+
+for group in "${INFER_GROUPS[@]}"; do
+  group_label="$(derive_group_label "$group")"
+  group_label_safe="$(sanitize_name "$group_label")"
+  label_count="${GROUP_LABEL_COUNT[$group_label_safe]:-0}"
+  ((label_count+=1))
+  GROUP_LABEL_COUNT["$group_label_safe"]="$label_count"
+
+  if (( label_count > 1 )); then
+    group_dir_name="${group_label_safe}__dup${label_count}"
+  else
+    group_dir_name="$group_label_safe"
+  fi
+
+  out_dir="${OUT_ROOT%/}/${group_dir_name}"
   mkdir -p "$out_dir"
 
   log="${out_dir}/build_combined_inference.log"
@@ -186,8 +235,9 @@ for group in "${GROUPS[@]}"; do
 
   {
     echo "============================================================"
-    echo "[$(ts)] GROUP    = $group"
-    echo "[$(ts)] OUT_DIR  = $out_dir"
+    echo "[$(ts)] GROUP_KEY = $group"
+    echo "[$(ts)] GROUP_TAG = $group_label"
+    echo "[$(ts)] OUT_DIR   = $out_dir"
     echo "============================================================"
   } | tee -a "$log"
 
@@ -232,6 +282,20 @@ for group in "${GROUPS[@]}"; do
     fi
   done
 
+  {
+    echo "[$(ts)] Selected CSVs by (var,loss):"
+    for loss in "${LOSSES[@]}"; do
+      echo "  loss=${loss}"
+      printf '    %-10s %s\n' "Energy" "$(resolve_key_csv "$group" "Energy" "$loss")"
+      printf '    %-10s %s\n' "Mom_X"  "$(resolve_key_csv "$group" "Mom_X" "$loss")"
+      printf '    %-10s %s\n' "Mom_Y"  "$(resolve_key_csv "$group" "Mom_Y" "$loss")"
+      printf '    %-10s %s\n' "Mom_Z"  "$(resolve_key_csv "$group" "Mom_Z" "$loss")"
+      printf '    %-10s %s\n' "Theta"  "$(resolve_key_csv "$group" "Theta" "$loss")"
+      printf '    %-10s %s\n' "CosTheta" "$(resolve_key_csv "$group" "CosTheta" "$loss")"
+      printf '    %-10s %s\n' "Phi"    "$(resolve_key_csv "$group" "Phi" "$loss")"
+    done
+  } >>"$log"
+
   # Energy + Theta/CosTheta + Phi combos
   for eLoss in "${LOSSES[@]}"; do
     for thLoss in "${LOSSES[@]}"; do
@@ -261,7 +325,12 @@ for group in "${GROUPS[@]}"; do
   for eLoss in "${LOSSES[@]}"; do
     for pLoss in "${LOSSES[@]}"; do
       if [[ -z "${CSV_E[$eLoss]}" || -z "${CSV_MX[$pLoss]}" || -z "${CSV_MY[$pLoss]}" || -z "${CSV_MZ[$pLoss]}" ]]; then
-        echo "[$(ts)] [SKIP] E-${eLoss} + P-${pLoss}: missing one or more required CSVs" | tee -a "$log"
+        missing=()
+        [[ -n "${CSV_E[$eLoss]}" ]] || missing+=("Energy:${eLoss}")
+        [[ -n "${CSV_MX[$pLoss]}" ]] || missing+=("Mom_X:${pLoss}")
+        [[ -n "${CSV_MY[$pLoss]}" ]] || missing+=("Mom_Y:${pLoss}")
+        [[ -n "${CSV_MZ[$pLoss]}" ]] || missing+=("Mom_Z:${pLoss}")
+        echo "[$(ts)] [SKIP] E-${eLoss} + P-${pLoss}: missing required CSV(s): ${missing[*]}" | tee -a "$log"
         continue
       fi
 
