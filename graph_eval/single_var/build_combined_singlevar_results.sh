@@ -109,6 +109,24 @@ get_result_csv_for_var_loss() {
   echo "$csv"
 }
 
+# Resolve optional result.csv for (var, loss) under base_dir; empty output if not found.
+get_optional_result_csv_for_var_loss() {
+  local base_dir="$1"
+  local var="$2"
+  local loss="$3"
+
+  local train_dir
+  train_dir="$(find_training_dir_for_var_loss "$base_dir" "$var" "$loss" || true)"
+  if [[ -z "$train_dir" ]]; then
+    echo ""
+    return 0
+  fi
+
+  local csv
+  csv="$(newest_result_csv_in_training_dir "$train_dir" || true)"
+  echo "$csv"
+}
+
 # Call ROOT macro helper
 root_merge_two() {
   local in_combined="$1"   # "" for bootstrap
@@ -144,11 +162,13 @@ for type in "${TYPES[@]}"; do
   } | tee -a "$log"
 
   # Pre-resolve all needed CSVs into associative arrays for speed / determinism
-  declare -A CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH
+  declare -A CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH CSV_CTH CSV_PH
 
   for loss in "${LOSSES[@]}"; do
     CSV_E["$loss"]="$(get_result_csv_for_var_loss "$base_dir" "Energy" "$loss")"
-    CSV_TH["$loss"]="$(get_result_csv_for_var_loss "$base_dir" "Theta"  "$loss")"
+    CSV_TH["$loss"]="$(get_optional_result_csv_for_var_loss "$base_dir" "Theta"  "$loss")"
+    CSV_CTH["$loss"]="$(get_optional_result_csv_for_var_loss "$base_dir" "CosTheta" "$loss")"
+    CSV_PH["$loss"]="$(get_optional_result_csv_for_var_loss "$base_dir" "Phi" "$loss")"
     CSV_MX["$loss"]="$(get_result_csv_for_var_loss "$base_dir" "Mom_X"  "$loss")"
     CSV_MY["$loss"]="$(get_result_csv_for_var_loss "$base_dir" "Mom_Y"  "$loss")"
     CSV_MZ["$loss"]="$(get_result_csv_for_var_loss "$base_dir" "Mom_Z"  "$loss")"
@@ -171,18 +191,59 @@ for type in "${TYPES[@]}"; do
     done
   done
 
-  # ---- 16 Energy + Theta combos ----
+  # ---- 16 Energy + angular combos (Theta preferred, then CosTheta, then Phi) ----
   for eLoss in "${LOSSES[@]}"; do
     for tLoss in "${LOSSES[@]}"; do
+      ang_csv=""
+      ang_kind=""
+
+      if [[ -n "${CSV_TH[$tLoss]}" ]]; then
+        ang_csv="${CSV_TH[$tLoss]}"
+        ang_kind="Theta"
+      elif [[ -n "${CSV_CTH[$tLoss]}" ]]; then
+        ang_csv="${CSV_CTH[$tLoss]}"
+        ang_kind="CosTheta"
+      elif [[ -n "${CSV_PH[$tLoss]}" ]]; then
+        ang_csv="${CSV_PH[$tLoss]}"
+        ang_kind="Phi"
+      fi
+
+      if [[ -z "$ang_csv" || -z "$ang_kind" ]]; then
+        echo "[$(ts)] [SKIP] E-${eLoss} + Th-${tLoss}: missing angular CSV" | tee -a "$log"
+        continue
+      fi
+
       out="${out_dir}/combined_result__E-${eLoss}__Th-${tLoss}.csv"
 
-      echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+      echo "[$(ts)] [BUILD] $(basename "$out") [angular=${ang_kind}]" | tee -a "$log"
 
-      # Bootstrap with Energy
       root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
+      root_merge_two "$out" "$ang_csv" "$out" "$ang_kind"  "${ang_kind}_${tLoss}" "$warn_file" >>"$log" 2>&1
+    done
+  done
 
-      # Append Theta
-      root_merge_two "$out" "${CSV_TH[$tLoss]}" "$out" "Theta"  "Theta_${tLoss}" "$warn_file" >>"$log" 2>&1
+  # ---- Energy + Theta/CosTheta + Phi combos (when CSVs are available) ----
+  for eLoss in "${LOSSES[@]}"; do
+    for thLoss in "${LOSSES[@]}"; do
+      for phLoss in "${LOSSES[@]}"; do
+        if [[ -n "${CSV_TH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
+          out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Ph-${phLoss}.csv"
+          echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+
+          root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_TH[$thLoss]}" "$out" "Theta" "Theta_${thLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_PH[$phLoss]}" "$out" "Phi" "Phi_${phLoss}" "$warn_file" >>"$log" 2>&1
+        fi
+
+        if [[ -n "${CSV_CTH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
+          out="${out_dir}/combined_result__E-${eLoss}__CTh-${thLoss}__Ph-${phLoss}.csv"
+          echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+
+          root_merge_two ""   "${CSV_E[$eLoss]}"   "$out" "Energy"   "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_CTH[$thLoss]}" "$out" "CosTheta" "CosTheta_${thLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_PH[$phLoss]}"  "$out" "Phi"      "Phi_${phLoss}" "$warn_file" >>"$log" 2>&1
+        fi
+      done
     done
   done
 
@@ -197,7 +258,7 @@ for type in "${TYPES[@]}"; do
   fi
 
   # cleanup assoc arrays (bash requires unset to avoid cross-type contamination)
-  unset CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH
+  unset CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH CSV_CTH CSV_PH
 done
 
 echo "[$(ts)] All done. Outputs under: $OUT_ROOT/<TYPE>/combined_result__*.csv"

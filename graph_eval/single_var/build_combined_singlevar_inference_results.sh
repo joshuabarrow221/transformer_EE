@@ -80,6 +80,25 @@ sanitize_name() {
 
 declare -A CSV_BY_KEY MTIME_BY_KEY
 
+newest_csv_in_dir() {
+  local dir="$1"
+  local newest_csv=""
+  local newest_mt=0
+  local csv mt
+
+  while IFS= read -r csv; do
+    [[ -f "$csv" ]] || continue
+    mt="$(stat -c %Y "$csv" 2>/dev/null || echo 0)"
+    if (( mt >= newest_mt )); then
+      newest_mt="$mt"
+      newest_csv="$csv"
+    fi
+  done < <(find "$dir" -maxdepth 1 -type f -name "*.csv" -print)
+
+  [[ -n "$newest_csv" ]] || return 1
+  echo "$newest_csv"
+}
+
 echo "[$(ts)] Scanning inference directories under: $INFER_BASE"
 
 while IFS= read -r d; do
@@ -98,7 +117,7 @@ while IFS= read -r d; do
     continue
   fi
 
-  csv="$(find "$d" -maxdepth 1 -type f -name "*.csv" -print | sort | tail -n 1)"
+  csv="$(newest_csv_in_dir "$d" || true)"
   if [[ -z "$csv" || ! -f "$csv" ]]; then
     continue
   fi
@@ -144,7 +163,7 @@ for group in "${GROUPS[@]}"; do
     echo "============================================================"
   } | tee -a "$log"
 
-  declare -A CSV_E CSV_MX CSV_MY CSV_MZ CSV_ANG ANG_KIND
+  declare -A CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH CSV_CTH CSV_PH CSV_ANG ANG_KIND
 
   for loss in "${LOSSES[@]}"; do
     CSV_E["$loss"]="${CSV_BY_KEY[${group}|Energy|${loss}]:-}"
@@ -153,18 +172,61 @@ for group in "${GROUPS[@]}"; do
     CSV_MZ["$loss"]="${CSV_BY_KEY[${group}|Mom_Z|${loss}]:-}"
 
     if [[ -n "${CSV_BY_KEY[${group}|Theta|${loss}]:-}" ]]; then
+      CSV_TH["$loss"]="${CSV_BY_KEY[${group}|Theta|${loss}]}"
+    else
+      CSV_TH["$loss"]=""
+    fi
+
+    if [[ -n "${CSV_BY_KEY[${group}|CosTheta|${loss}]:-}" ]]; then
+      CSV_CTH["$loss"]="${CSV_BY_KEY[${group}|CosTheta|${loss}]}"
+    else
+      CSV_CTH["$loss"]=""
+    fi
+
+    if [[ -n "${CSV_BY_KEY[${group}|Phi|${loss}]:-}" ]]; then
+      CSV_PH["$loss"]="${CSV_BY_KEY[${group}|Phi|${loss}]}"
+    else
+      CSV_PH["$loss"]=""
+    fi
+
+    if [[ -n "${CSV_TH[$loss]}" ]]; then
       CSV_ANG["$loss"]="${CSV_BY_KEY[${group}|Theta|${loss}]}"
       ANG_KIND["$loss"]="Theta"
-    elif [[ -n "${CSV_BY_KEY[${group}|CosTheta|${loss}]:-}" ]]; then
-      CSV_ANG["$loss"]="${CSV_BY_KEY[${group}|CosTheta|${loss}]}"
+    elif [[ -n "${CSV_CTH[$loss]}" ]]; then
+      CSV_ANG["$loss"]="${CSV_CTH[$loss]}"
       ANG_KIND["$loss"]="CosTheta"
-    elif [[ -n "${CSV_BY_KEY[${group}|Phi|${loss}]:-}" ]]; then
-      CSV_ANG["$loss"]="${CSV_BY_KEY[${group}|Phi|${loss}]}"
+    elif [[ -n "${CSV_PH[$loss]}" ]]; then
+      CSV_ANG["$loss"]="${CSV_PH[$loss]}"
       ANG_KIND["$loss"]="Phi"
     else
       CSV_ANG["$loss"]=""
       ANG_KIND["$loss"]=""
     fi
+  done
+
+  # Energy + Theta/CosTheta + Phi combos
+  for eLoss in "${LOSSES[@]}"; do
+    for thLoss in "${LOSSES[@]}"; do
+      for phLoss in "${LOSSES[@]}"; do
+        if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_TH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
+          out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Ph-${phLoss}.csv"
+          echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+
+          root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_TH[$thLoss]}" "$out" "Theta" "Theta_${thLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_PH[$phLoss]}" "$out" "Phi" "Phi_${phLoss}" "$warn_file" >>"$log" 2>&1
+        fi
+
+        if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_CTH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
+          out="${out_dir}/combined_result__E-${eLoss}__CTh-${thLoss}__Ph-${phLoss}.csv"
+          echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+
+          root_merge_two ""   "${CSV_E[$eLoss]}"   "$out" "Energy"   "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_CTH[$thLoss]}" "$out" "CosTheta" "CosTheta_${thLoss}" "$warn_file" >>"$log" 2>&1
+          root_merge_two "$out" "${CSV_PH[$phLoss]}"  "$out" "Phi"      "Phi_${phLoss}" "$warn_file" >>"$log" 2>&1
+        fi
+      done
+    done
   done
 
   # Energy + Momentum combos
@@ -221,7 +283,7 @@ for group in "${GROUPS[@]}"; do
     echo "[$(ts)] [WARN] Warnings were emitted; see $warn_file" | tee -a "$log"
   fi
 
-  unset CSV_E CSV_MX CSV_MY CSV_MZ CSV_ANG ANG_KIND
+  unset CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH CSV_CTH CSV_PH CSV_ANG ANG_KIND
 
 done
 
