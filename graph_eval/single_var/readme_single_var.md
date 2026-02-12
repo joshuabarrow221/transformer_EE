@@ -91,10 +91,10 @@ combination grid as the training combiner:
 
 - `combined_result__E-<LOSS>__P-<LOSS>.csv` (Energy + Mom_X + Mom_Y + Mom_Z)
 - `combined_result__E-<LOSS>__Th-<LOSS>.csv` (Energy + angular variable)
-- `combined_result__E-<LOSS>__Th-<LOSS>__Ph-<LOSS>.csv` (Energy + Theta + Phi)
-- `combined_result__E-<LOSS>__CTh-<LOSS>__Ph-<LOSS>.csv` (Energy + CosTheta + Phi)
+- `combined_result__E-<LOSS>__Th-<LOSS>__Phi-<LOSS>.csv` (Energy + Theta + Phi)
+- `combined_result__E-<LOSS>__CosTheta-<LOSS>__Phi-<LOSS>.csv` (Energy + CosTheta + Phi)
 
-Angular variables are resolved in priority order per loss for the 2-variable `E+Th` output:
+Angular variables are resolved in priority order per loss for 2-variable Energy+angular outputs (the filename token becomes `Th`, `CosTheta`, or `Phi` to match what was selected):
 
 1. `Theta`
 2. `Nu_CosTheta`
@@ -119,3 +119,18 @@ chmod +x build_combined_singlevar_inference_results.sh
 ```
 
 If the 4th argument is omitted, the script only builds the combined CSVs.
+
+
+### Troubleshooting scanner appears to stop after "Scanning inference directories..."
+
+If your filesystem has unreadable subdirectories (common on shared storage), older versions of the script could exit early during recursive `find`. The scanner now ignores unreadable branches and prints a summary like:
+
+- `candidate_dirs=<N>, matched_dirs_with_csv=<M>, unique_keys=<K>`
+
+This helps distinguish between:
+- no matching directory names,
+- matching names but no CSV files,
+- or successful discovery with deduplication to unique `(group,var,loss)` keys.
+
+
+For 2-variable Energy+angular outputs, filename tokens now match the selected variable: `Th`, `CosTheta`, or `Phi` (instead of always using `Th`).

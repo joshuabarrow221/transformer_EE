@@ -181,11 +181,18 @@ find_singlevar_training_dir_for_token() {
             pats+=("*Mom_Z*")
             ;;
 
-        CosTheta|Cos_Theta|cosTheta)
+        CTh|CosTheta|Cos_Theta|cosTheta)
             pats+=("*Nu_CosTheta_${metric}*")
             pats+=("*CosTheta_${metric}*")
             pats+=("*Nu_CosTheta*")
             pats+=("*CosTheta*")
+            ;;
+
+        Phi|Ph)
+            pats+=("*Nu_Phi_${metric}*")
+            pats+=("*Phi_${metric}*")
+            pats+=("*Nu_Phi*")
+            pats+=("*Phi*")
             ;;
 
         *)
