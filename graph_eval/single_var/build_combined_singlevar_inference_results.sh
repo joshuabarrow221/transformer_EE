@@ -231,7 +231,7 @@ for group in "${GROUPS[@]}"; do
     for thLoss in "${LOSSES[@]}"; do
       for phLoss in "${LOSSES[@]}"; do
         if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_TH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
-          out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Ph-${phLoss}.csv"
+          out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Phi-${phLoss}.csv"
           echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
 
           root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
@@ -240,7 +240,7 @@ for group in "${GROUPS[@]}"; do
         fi
 
         if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_CTH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
-          out="${out_dir}/combined_result__E-${eLoss}__CTh-${thLoss}__Ph-${phLoss}.csv"
+          out="${out_dir}/combined_result__E-${eLoss}__CosTheta-${thLoss}__Phi-${phLoss}.csv"
           echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
 
           root_merge_two ""   "${CSV_E[$eLoss]}"   "$out" "Energy"   "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
@@ -280,7 +280,14 @@ for group in "${GROUPS[@]}"; do
         continue
       fi
 
-      out="${out_dir}/combined_result__E-${eLoss}__Th-${aLoss}.csv"
+      ang_token=""
+      case "$ang_kind" in
+        Theta) ang_token="Th" ;;
+        CosTheta) ang_token="CosTheta" ;;
+        Phi) ang_token="Phi" ;;
+      esac
+
+      out="${out_dir}/combined_result__E-${eLoss}__${ang_token}-${aLoss}.csv"
       echo "[$(ts)] [BUILD] $(basename "$out") [angular=${ang_kind}]" | tee -a "$log"
 
       root_merge_two ""   "${CSV_E[$eLoss]}" "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
