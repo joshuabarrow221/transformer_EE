@@ -73,3 +73,46 @@ The script should create directories like
   WARNINGS.txt
 
 Each combined_result__*.csv is ready to be passed directly to evaluation macros.
+
+---
+
+## Inference-mode combiner
+
+For inference outputs produced by `transformer_ee/inference/batch_inference.py`, use:
+
+- `build_combined_singlevar_inference_results.sh`
+
+This script scans recursively for directories named like:
+
+- `..._NpNpi_<VAR>_<LOSS>_Topology_<SUFFIX>/`
+
+and for each such directory finds the single inference CSV (e.g. `..._Vector.csv` or
+`..._Scalar.csv`). It then builds pseudo-multivariate combined CSVs using the same
+combination grid as the training combiner:
+
+- `combined_result__E-<LOSS>__P-<LOSS>.csv` (Energy + Mom_X + Mom_Y + Mom_Z)
+- `combined_result__E-<LOSS>__Th-<LOSS>.csv` (Energy + angular variable)
+
+Angular variables are resolved in priority order per loss:
+
+1. `Theta`
+2. `Nu_CosTheta`
+3. `Phi`
+
+Optional 4th argument: a common eval output directory. If provided, the script runs
+`graph_eval/run_eval_all.sh` on each output group directory while `cd`'d into that
+common directory so existing `ellipse_fraction.csv` is **appended/expanded** rather
+than replaced.
+
+### Usage
+
+```bash
+chmod +x build_combined_singlevar_inference_results.sh
+./build_combined_singlevar_inference_results.sh \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples/Combined_SingleVar \
+  /path/to/transformer_EE/graph_eval/single_var \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples/CommonEval
+```
+
+If the 4th argument is omitted, the script only builds the combined CSVs.
