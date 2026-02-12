@@ -101,16 +101,35 @@ newest_csv_in_dir() {
 
 echo "[$(ts)] Scanning inference directories under: $INFER_BASE"
 
+scan_count=0
+match_count=0
+
 while IFS= read -r d; do
+  ((scan_count+=1))
   bn="$(basename "$d")"
 
-  if [[ ! "$bn" =~ ^(.*)_NpNpi_(.*)_(MAE|MSE|MAPE|MACE)_Topology(_.*)?$ ]]; then
+  # Expect names like:
+  #   <group>_NpNpi_<VAR>_<LOSS>_Topology[_...]
+  # where <VAR> can itself contain underscores (Mom_X, Cos_Theta, ...).
+  if [[ ! "$bn" =~ ^(.*)_NpNpi_(.*)_Topology(_.*)?$ ]]; then
     continue
   fi
 
   group_prefix="${BASH_REMATCH[1]}_NpNpi"
-  raw_var="${BASH_REMATCH[2]}"
-  loss="${BASH_REMATCH[3]}"
+  var_and_loss="${BASH_REMATCH[2]}"
+
+  loss=""
+  raw_var=""
+  for cand_loss in "${LOSSES[@]}"; do
+    if [[ "$var_and_loss" == *"_${cand_loss}" ]]; then
+      raw_var="${var_and_loss%_${cand_loss}}"
+      loss="$cand_loss"
+      break
+    fi
+  done
+  if [[ -z "$loss" || -z "$raw_var" ]]; then
+    continue
+  fi
 
   var="$(canon_var "$raw_var")"
   if [[ -z "$var" ]]; then
@@ -122,6 +141,7 @@ while IFS= read -r d; do
     continue
   fi
 
+  ((match_count+=1))
   mt="$(stat -c %Y "$csv" 2>/dev/null || echo 0)"
   key="${group_prefix}|${var}|${loss}"
   old_mt="${MTIME_BY_KEY[$key]:-0}"
@@ -130,7 +150,9 @@ while IFS= read -r d; do
     MTIME_BY_KEY[$key]="$mt"
     CSV_BY_KEY[$key]="$csv"
   fi
-done < <(find "$INFER_BASE" -type d -print)
+done < <(find "$INFER_BASE" -type d -name "*_NpNpi_*_Topology*" -print 2>/dev/null || true)
+
+echo "[$(ts)] Scan complete: candidate_dirs=${scan_count}, matched_dirs_with_csv=${match_count}, unique_keys=${#CSV_BY_KEY[@]}"
 
 if (( ${#CSV_BY_KEY[@]} == 0 )); then
   echo "[$(ts)] ERROR: No matching single-variable inference directories found."
@@ -209,7 +231,7 @@ for group in "${GROUPS[@]}"; do
     for thLoss in "${LOSSES[@]}"; do
       for phLoss in "${LOSSES[@]}"; do
         if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_TH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
-          out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Ph-${phLoss}.csv"
+          out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Phi-${phLoss}.csv"
           echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
 
           root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
@@ -218,7 +240,7 @@ for group in "${GROUPS[@]}"; do
         fi
 
         if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_CTH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
-          out="${out_dir}/combined_result__E-${eLoss}__CTh-${thLoss}__Ph-${phLoss}.csv"
+          out="${out_dir}/combined_result__E-${eLoss}__CosTheta-${thLoss}__Phi-${phLoss}.csv"
           echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
 
           root_merge_two ""   "${CSV_E[$eLoss]}"   "$out" "Energy"   "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
@@ -258,7 +280,14 @@ for group in "${GROUPS[@]}"; do
         continue
       fi
 
-      out="${out_dir}/combined_result__E-${eLoss}__Th-${aLoss}.csv"
+      ang_token=""
+      case "$ang_kind" in
+        Theta) ang_token="Th" ;;
+        CosTheta) ang_token="CosTheta" ;;
+        Phi) ang_token="Phi" ;;
+      esac
+
+      out="${out_dir}/combined_result__E-${eLoss}__${ang_token}-${aLoss}.csv"
       echo "[$(ts)] [BUILD] $(basename "$out") [angular=${ang_kind}]" | tee -a "$log"
 
       root_merge_two ""   "${CSV_E[$eLoss]}" "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
