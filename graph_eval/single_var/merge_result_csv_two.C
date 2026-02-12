@@ -121,12 +121,28 @@ static size_t require_col(const CSVTable& t, const std::string& name, const std:
 struct VarCols { std::string tcol; std::string pcol; };
 
 static VarCols varcols_for(const std::string& var) {
-  // Adjust Energy mapping if needed for your CSV headers.
-  if (var == "Energy") return {"true_Nu_Energy", "pred_Nu_Energy"};
-  if (var == "Theta")  return {"true_Nu_Theta",  "pred_Nu_Theta"};
-  if (var == "Mom_X")  return {"true_Nu_Mom_X",  "pred_Nu_Mom_X"};
-  if (var == "Mom_Y")  return {"true_Nu_Mom_Y",  "pred_Nu_Mom_Y"};
-  if (var == "Mom_Z")  return {"true_Nu_Mom_Z",  "pred_Nu_Mom_Z"};
+  // Support both legacy training CSVs and newer inference CSVs.
+  if (var == "Energy" || var == "Nu_Energy")
+    return {"true_Nu_Energy", "pred_Nu_Energy"};
+
+  if (var == "Theta" || var == "Nu_Theta")
+    return {"true_Nu_Theta",  "pred_Nu_Theta"};
+
+  if (var == "CosTheta" || var == "Nu_CosTheta" || var == "Cos_Theta")
+    return {"true_Nu_CosTheta", "pred_Nu_CosTheta"};
+
+  if (var == "Phi" || var == "Nu_Phi")
+    return {"true_Nu_Phi", "pred_Nu_Phi"};
+
+  if (var == "Mom_X" || var == "Nu_Mom_X" || var == "Nu_MomX" || var == "MomX")
+    return {"true_Nu_Mom_X",  "pred_Nu_Mom_X"};
+
+  if (var == "Mom_Y" || var == "Nu_Mom_Y" || var == "Nu_MomY" || var == "MomY")
+    return {"true_Nu_Mom_Y",  "pred_Nu_Mom_Y"};
+
+  if (var == "Mom_Z" || var == "Nu_Mom_Z" || var == "Nu_MomZ" || var == "MomZ")
+    return {"true_Nu_Mom_Z",  "pred_Nu_Mom_Z"};
+
   throw std::runtime_error("Unknown var token: " + var);
 }
 
