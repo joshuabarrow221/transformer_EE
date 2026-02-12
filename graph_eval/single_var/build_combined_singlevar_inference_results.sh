@@ -44,7 +44,7 @@ LOSSES=(MAE MSE MAPE MACE)
 
 ts(){ date +"%Y-%m-%d %H:%M:%S"; }
 
-trap 'rc=$?; echo "[$(ts)] ERROR: command failed (exit=${rc}) at line ${BASH_LINENO[0]}: ${BASH_COMMAND}" >&2' ERR
+trap 'rc=$?; line="${BASH_LINENO[0]-$LINENO}"; cmd="${BASH_COMMAND-UNKNOWN}"; echo "[$(ts)] ERROR: command failed (exit=${rc}) at line ${line}: ${cmd}" >&2' ERR
 
 canon_var() {
   local raw="$1"
