@@ -44,6 +44,8 @@ LOSSES=(MAE MSE MAPE MACE)
 
 ts(){ date +"%Y-%m-%d %H:%M:%S"; }
 
+trap 'rc=$?; echo "[$(ts)] ERROR: command failed (exit=${rc}) at line ${BASH_LINENO[0]}: ${BASH_COMMAND}" >&2' ERR
+
 canon_var() {
   local raw="$1"
   case "$raw" in
@@ -162,7 +164,11 @@ fi
 mkdir -p "$OUT_ROOT"
 
 # unique group list
-mapfile -t GROUPS < <(
+GROUPS=()
+while IFS= read -r g; do
+  [[ -n "$g" ]] || continue
+  GROUPS+=("$g")
+done < <(
   for k in "${!CSV_BY_KEY[@]}"; do
     echo "${k%%|*}"
   done | sort -u
