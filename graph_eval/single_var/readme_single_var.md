@@ -86,18 +86,21 @@ This script scans recursively for directories named like:
 
 - `..._NpNpi_<VAR>_<LOSS>_Topology_<SUFFIX>/`
 
-and for each such directory finds the single inference CSV (e.g. `..._Vector.csv` or
-`..._Scalar.csv`). It then builds pseudo-multivariate combined CSVs using the same
+and for each such directory picks the newest CSV by modification time (e.g. when a directory contains multiple batch-inference samples). It then builds pseudo-multivariate combined CSVs using the same
 combination grid as the training combiner:
 
 - `combined_result__E-<LOSS>__P-<LOSS>.csv` (Energy + Mom_X + Mom_Y + Mom_Z)
 - `combined_result__E-<LOSS>__Th-<LOSS>.csv` (Energy + angular variable)
+- `combined_result__E-<LOSS>__Th-<LOSS>__Ph-<LOSS>.csv` (Energy + Theta + Phi)
+- `combined_result__E-<LOSS>__CTh-<LOSS>__Ph-<LOSS>.csv` (Energy + CosTheta + Phi)
 
-Angular variables are resolved in priority order per loss:
+Angular variables are resolved in priority order per loss for the 2-variable `E+Th` output:
 
 1. `Theta`
 2. `Nu_CosTheta`
 3. `Phi`
+
+For 3-variable outputs, `Phi` is required and the script builds whichever of `Theta` and/or `CosTheta` is available for each loss pairing.
 
 Optional 4th argument: a common eval output directory. If provided, the script runs
 `graph_eval/run_eval_all.sh` on each output group directory while `cd`'d into that
@@ -116,3 +119,15 @@ chmod +x build_combined_singlevar_inference_results.sh
 ```
 
 If the 4th argument is omitted, the script only builds the combined CSVs.
+
+
+### Troubleshooting scanner appears to stop after "Scanning inference directories..."
+
+If your filesystem has unreadable subdirectories (common on shared storage), older versions of the script could exit early during recursive `find`. The scanner now ignores unreadable branches and prints a summary like:
+
+- `candidate_dirs=<N>, matched_dirs_with_csv=<M>, unique_keys=<K>`
+
+This helps distinguish between:
+- no matching directory names,
+- matching names but no CSV files,
+- or successful discovery with deduplication to unique `(group,var,loss)` keys.
