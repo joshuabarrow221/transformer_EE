@@ -102,6 +102,8 @@ Angular variables are resolved in priority order per loss for 2-variable Energy+
 
 For 3-variable outputs, `Phi` is required and the script builds whichever of `Theta` and/or `CosTheta` is available for each loss pairing.
 
+If a momentum component is missing for a loss (for example `Mom_X` missing for `MACE`), the script logs an explicit `[ERROR]` line and skips only combinations that require that missing momentum loss. Other valid momentum combinations continue to build.
+
 Optional 4th argument: a common eval output directory. If provided, the script runs
 `graph_eval/run_eval_all.sh` on each output group directory while `cd`'d into that
 common directory so existing `ellipse_fraction.csv` is **appended/expanded** rather
