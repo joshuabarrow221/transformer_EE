@@ -128,3 +128,7 @@ output filename:
 ```bash
 root -l 'eval_model.C("result.csv", "./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
 ```
+or
+```bash
+root -l 'neweval_model.C("result.csv", "false", "-1.0",./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
+```
