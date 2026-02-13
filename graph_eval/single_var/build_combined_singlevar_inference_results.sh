@@ -290,13 +290,24 @@ for group in "${INFER_GROUPS[@]}"; do
     done
   } >>"$log"
 
+  total_builds=0
+  built_triplet_theta=0
+  built_triplet_costh=0
+  built_momentum=0
+  skipped_momentum=0
+  built_angular_2var=0
+  skipped_angular_2var=0
+
   # Energy + Theta/CosTheta + Phi combos
+  echo "[$(ts)] [STAGE] Building E + (Theta|CosTheta) + Phi combinations" | tee -a "$log"
   for eLoss in "${LOSSES[@]}"; do
     for thLoss in "${LOSSES[@]}"; do
       for phLoss in "${LOSSES[@]}"; do
         if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_TH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
           out="${out_dir}/combined_result__E-${eLoss}__Th-${thLoss}__Phi-${phLoss}.csv"
           echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+          ((total_builds+=1))
+          ((built_triplet_theta+=1))
 
           root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
           root_merge_two "$out" "${CSV_TH[$thLoss]}" "$out" "Theta" "Theta_${thLoss}" "$warn_file" >>"$log" 2>&1
@@ -306,6 +317,8 @@ for group in "${INFER_GROUPS[@]}"; do
         if [[ -n "${CSV_E[$eLoss]}" && -n "${CSV_CTH[$thLoss]}" && -n "${CSV_PH[$phLoss]}" ]]; then
           out="${out_dir}/combined_result__E-${eLoss}__CosTheta-${thLoss}__Phi-${phLoss}.csv"
           echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+          ((total_builds+=1))
+          ((built_triplet_costh+=1))
 
           root_merge_two ""   "${CSV_E[$eLoss]}"   "$out" "Energy"   "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
           root_merge_two "$out" "${CSV_CTH[$thLoss]}" "$out" "CosTheta" "CosTheta_${thLoss}" "$warn_file" >>"$log" 2>&1
@@ -316,6 +329,28 @@ for group in "${INFER_GROUPS[@]}"; do
   done
 
   # Energy + Momentum combos
+  echo "[$(ts)] [STAGE] Building E + Mom_X + Mom_Y + Mom_Z combinations (shared momentum loss)" | tee -a "$log"
+
+  complete_p_losses=()
+  available_e_losses=()
+  for loss in "${LOSSES[@]}"; do
+    [[ -n "${CSV_E[$loss]}" ]] && available_e_losses+=("$loss")
+
+    missing_components=()
+    [[ -n "${CSV_MX[$loss]}" ]] || missing_components+=("Mom_X")
+    [[ -n "${CSV_MY[$loss]}" ]] || missing_components+=("Mom_Y")
+    [[ -n "${CSV_MZ[$loss]}" ]] || missing_components+=("Mom_Z")
+
+    if (( ${#missing_components[@]} == 0 )); then
+      complete_p_losses+=("$loss")
+    else
+      echo "[$(ts)] [ERROR] Incomplete momentum set for loss=${loss}: missing ${missing_components[*]} (all E-* + P-${loss} combinations will be skipped)" | tee -a "$log" >&2
+    fi
+  done
+
+  planned_momentum_builds=$(( ${#available_e_losses[@]} * ${#complete_p_losses[@]} ))
+  echo "[$(ts)] [INFO] Momentum build plan: energy_losses=${#available_e_losses[@]}, complete_momentum_losses=${#complete_p_losses[@]}, planned_builds=${planned_momentum_builds}" | tee -a "$log"
+
   for eLoss in "${LOSSES[@]}"; do
     for pLoss in "${LOSSES[@]}"; do
       if [[ -z "${CSV_E[$eLoss]}" || -z "${CSV_MX[$pLoss]}" || -z "${CSV_MY[$pLoss]}" || -z "${CSV_MZ[$pLoss]}" ]]; then
@@ -325,11 +360,14 @@ for group in "${INFER_GROUPS[@]}"; do
         [[ -n "${CSV_MY[$pLoss]}" ]] || missing+=("Mom_Y:${pLoss}")
         [[ -n "${CSV_MZ[$pLoss]}" ]] || missing+=("Mom_Z:${pLoss}")
         echo "[$(ts)] [SKIP] E-${eLoss} + P-${pLoss}: missing required CSV(s): ${missing[*]}" | tee -a "$log"
+        ((skipped_momentum+=1))
         continue
       fi
 
       out="${out_dir}/combined_result__E-${eLoss}__P-${pLoss}.csv"
       echo "[$(ts)] [BUILD] $(basename "$out")" | tee -a "$log"
+      ((total_builds+=1))
+      ((built_momentum+=1))
 
       root_merge_two ""   "${CSV_E[$eLoss]}"  "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
       root_merge_two "$out" "${CSV_MX[$pLoss]}" "$out" "Mom_X" "Mom_X_${pLoss}" "$warn_file" >>"$log" 2>&1
@@ -339,6 +377,7 @@ for group in "${INFER_GROUPS[@]}"; do
   done
 
   # Energy + angular combos (Theta, CosTheta, or Phi)
+  echo "[$(ts)] [STAGE] Building E + angular (2-variable) combinations" | tee -a "$log"
   for eLoss in "${LOSSES[@]}"; do
     for aLoss in "${LOSSES[@]}"; do
       ang_csv="${CSV_ANG[$aLoss]}"
@@ -346,6 +385,7 @@ for group in "${INFER_GROUPS[@]}"; do
 
       if [[ -z "${CSV_E[$eLoss]}" || -z "$ang_csv" || -z "$ang_kind" ]]; then
         echo "[$(ts)] [SKIP] E-${eLoss} + Th-${aLoss}: missing Energy/angular CSV" | tee -a "$log"
+        ((skipped_angular_2var+=1))
         continue
       fi
 
@@ -358,6 +398,8 @@ for group in "${INFER_GROUPS[@]}"; do
 
       out="${out_dir}/combined_result__E-${eLoss}__${ang_token}-${aLoss}.csv"
       echo "[$(ts)] [BUILD] $(basename "$out") [angular=${ang_kind}]" | tee -a "$log"
+      ((total_builds+=1))
+      ((built_angular_2var+=1))
 
       root_merge_two ""   "${CSV_E[$eLoss]}" "$out" "Energy" "Energy_${eLoss}" "$warn_file" >>"$log" 2>&1
       root_merge_two "$out" "$ang_csv" "$out" "$ang_kind" "${ang_kind}_${aLoss}" "$warn_file" >>"$log" 2>&1
@@ -380,6 +422,15 @@ for group in "${INFER_GROUPS[@]}"; do
   if [[ -s "$warn_file" ]]; then
     echo "[$(ts)] [WARN] Warnings were emitted; see $warn_file" | tee -a "$log"
   fi
+
+  {
+    echo "[$(ts)] [SUMMARY] build counts"
+    echo "[$(ts)] [SUMMARY]   total_builds=${total_builds}"
+    echo "[$(ts)] [SUMMARY]   triplet_theta=${built_triplet_theta}"
+    echo "[$(ts)] [SUMMARY]   triplet_costheta=${built_triplet_costh}"
+    echo "[$(ts)] [SUMMARY]   momentum_4var=${built_momentum} (skipped=${skipped_momentum})"
+    echo "[$(ts)] [SUMMARY]   angular_2var=${built_angular_2var} (skipped=${skipped_angular_2var})"
+  } | tee -a "$log"
 
   unset CSV_E CSV_MX CSV_MY CSV_MZ CSV_TH CSV_CTH CSV_PH CSV_ANG ANG_KIND
 
