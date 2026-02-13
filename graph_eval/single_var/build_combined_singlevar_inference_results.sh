@@ -204,8 +204,6 @@ done < <(
 
 echo "[$(ts)] Found ${#INFER_GROUPS[@]} inference group(s)."
 
-declare -A GROUP_LABEL_COUNT
-
 resolve_key_csv() {
   local group="$1"
   local var="$2"
@@ -216,18 +214,14 @@ resolve_key_csv() {
 for group in "${INFER_GROUPS[@]}"; do
   group_label="$(derive_group_label "$group")"
   group_label_safe="$(sanitize_name "$group_label")"
-  label_count="${GROUP_LABEL_COUNT[$group_label_safe]:-0}"
-  ((label_count+=1))
-  GROUP_LABEL_COUNT["$group_label_safe"]="$label_count"
-
-  if (( label_count > 1 )); then
-    group_dir_name="${group_label_safe}__dup${label_count}"
-  else
-    group_dir_name="$group_label_safe"
-  fi
+  group_key_safe="$(sanitize_name "$group")"
+  group_dir_name="${group_label_safe}__grp_${group_key_safe}"
 
   out_dir="${OUT_ROOT%/}/${group_dir_name}"
   mkdir -p "$out_dir"
+
+  # Ensure reruns for the same GROUP_KEY don't keep stale artifacts.
+  find "$out_dir" -maxdepth 1 -type f -name 'combined_result__*.csv' -delete
 
   log="${out_dir}/build_combined_inference.log"
   warn_file="${out_dir}/WARNINGS.txt"
