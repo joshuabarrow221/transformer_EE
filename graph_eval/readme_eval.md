@@ -126,5 +126,5 @@ Optional arguments can set the output directory, PNG export path/size, and the R
 output filename:
 
 ```bash
-root -l 'eval_model.C("result.csv", "false", "-1.0",./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
+root -l 'eval_model.C("result.csv", "false", -1.0, "./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
 ```
