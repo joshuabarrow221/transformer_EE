@@ -67,8 +67,38 @@ class MVtrainer:
         ) = get_train_valid_test_dataloader(input_d)
         self.net = create_model(self.input_d).to(self.gpu_device)
         self.optimizer = create_optimizer(self.input_d, self.net)
-        self.bestscore = 1e9
+        # Tracks the best (minimum) validation loss observed so far.
+        # For minimization objectives, +inf is the correct scale-independent sentinel.
+        self.best_val_loss_sentinel = float("inf")
+        self.best_model_epoch: int | None = None
+        self.best_model_val_loss: float | None = None
+        self.last_model_epoch: int | None = None
+        self.last_model_val_loss: float | None = None
         self.print_interval = self.input_d.get("print_interval", 1)
+
+        # Checkpoint retention policy.
+        # keep_last_n_epoch_checkpoints controls optional rolling files
+        # like last_model_epoch_0010.zip used for long runs and diagnostics.
+        ckpt_cfg = self.input_d.get("checkpointing", {})
+        default_keep_last_n = (
+            int(self.input_d.get("early_stopping", {}).get("window", 5))
+            if self.input_d.get("early_stopping", {}).get("enabled", False)
+            else 0
+        )
+        self.keep_last_n_epoch_checkpoints = max(
+            0, int(ckpt_cfg.get("keep_last_n_epoch_checkpoints", default_keep_last_n))
+        )
+        self._epoch_checkpoint_history: List[str] = []
+
+        # Optional early stopping.
+        # Stops when percent improvement in val loss over a recent window
+        # drops below min_delta_pct.
+        early_cfg = self.input_d.get("early_stopping", {})
+        self.early_stopping_enabled = bool(early_cfg.get("enabled", False))
+        self.early_stopping_window = max(1, int(early_cfg.get("window", 5)))
+        self.early_stopping_min_delta_pct = float(early_cfg.get("min_delta_pct", 0.0))
+        self.early_stop_triggered = False
+        self.early_stop_epoch: int | None = None
 
         # epoch‑wise aggregates (legacy)
         self.train_loss_list_per_epoch: List[float] = []
@@ -276,7 +306,11 @@ class MVtrainer:
                 }, step=int(self.global_step))
 
             # ------------------- bookkeeping & plots -------------------
-            self._checkpoint_and_plot(epoch, scheme="LCL", n_vars=n_vars)
+            should_stop = self._checkpoint_and_plot(epoch, scheme="LCL", n_vars=n_vars)
+            if should_stop:
+                break
+
+        self._finalize_checkpoint_layout()
 
         if self.logger:
             self.logger.close()
@@ -380,7 +414,11 @@ class MVtrainer:
             self.valid_beta_PM_per_epoch.append(bPM_val_sum / n_val_batches)
 
             # ------------------- checkpoint & plots -------------------
-            self._checkpoint_and_plot(epoch, scheme="Hybrid", n_vars=n_vars)
+            should_stop = self._checkpoint_and_plot(epoch, scheme="Hybrid", n_vars=n_vars)
+            if should_stop:
+                break
+
+        self._finalize_checkpoint_layout()
 
         if self.logger:
             self.logger.close()
@@ -389,18 +427,93 @@ class MVtrainer:
     # helper – model checkpoint + plotting
     # ------------------------------------------------------------------
 
-    def _checkpoint_and_plot(self, epoch: int, scheme: str, n_vars: int):
+    def _write_checkpoint_metadata(self):
+        """Persist compact checkpoint/training status metadata for reproducibility."""
+        metadata = {
+            "best_model": {
+                "epoch": self.best_model_epoch,
+                "validation_loss": self.best_model_val_loss,
+                "filename": "best_model.zip",
+            },
+            "last_model": {
+                "epoch": self.last_model_epoch,
+                "validation_loss": self.last_model_val_loss,
+                "filename": "last_model.zip",
+            },
+            "keep_last_n_epoch_checkpoints": self.keep_last_n_epoch_checkpoints,
+            "retained_last_model_epoch_checkpoints": self._epoch_checkpoint_history,
+            "early_stopping": {
+                "enabled": self.early_stopping_enabled,
+                "window": self.early_stopping_window,
+                "min_delta_pct": self.early_stopping_min_delta_pct,
+                "triggered": self.early_stop_triggered,
+                "triggered_epoch": self.early_stop_epoch,
+            },
+        }
+        with open(os.path.join(self.save_path, "checkpoint_metadata.json"), "w", encoding="utf-8") as f:
+            json.dump(metadata, f, indent=4)
+
+    def _finalize_checkpoint_layout(self):
+        """Remove redundant last_model.zip when best model occurred on final epoch."""
+        if self.best_model_epoch is not None and self.last_model_epoch == self.best_model_epoch:
+            last_model_path = os.path.join(self.save_path, "last_model.zip")
+            if os.path.exists(last_model_path):
+                os.remove(last_model_path)
+        self._write_checkpoint_metadata()
+
+    def _should_early_stop(self) -> bool:
+        """
+        Trigger early stopping when validation loss improvement over the recent
+        window is smaller than the configured percentage.
+        """
+        if not self.early_stopping_enabled:
+            return False
+        if len(self.valid_loss_list_per_epoch) < self.early_stopping_window:
+            return False
+
+        recent = [float(x.detach().cpu().item()) for x in self.valid_loss_list_per_epoch[-self.early_stopping_window :]]
+        first = recent[0]
+        best = min(recent)
+        baseline = max(abs(first), 1e-12)
+        improvement_pct = ((first - best) / baseline) * 100.0
+        return improvement_pct < self.early_stopping_min_delta_pct
+
+    def _checkpoint_and_plot(self, epoch: int, scheme: str, n_vars: int) -> bool:
         # stdout
         print(
             f"Epoch: {epoch}, train_loss: {self.train_loss_list_per_epoch[-1]:0.4f}, "
             f"valid_loss: {self.valid_loss_list_per_epoch[-1]:0.4f}"
         )
 
+        current_val_loss = float(self.valid_loss_list_per_epoch[-1].detach().cpu().item())
+
+        # Always write the latest model checkpoint for recovery/resume-style workflows.
+        torch.save(self.net.state_dict(), os.path.join(self.save_path, "last_model.zip"))
+        self.last_model_epoch = epoch
+        self.last_model_val_loss = current_val_loss
+
+        # Optional rolling epoch-specific "last" checkpoints.
+        if self.keep_last_n_epoch_checkpoints > 0:
+            epoch_ckpt_name = f"last_model_epoch_{epoch:04d}.zip"
+            epoch_ckpt_path = os.path.join(self.save_path, epoch_ckpt_name)
+            torch.save(self.net.state_dict(), epoch_ckpt_path)
+            self._epoch_checkpoint_history.append(epoch_ckpt_name)
+            while len(self._epoch_checkpoint_history) > self.keep_last_n_epoch_checkpoints:
+                stale = self._epoch_checkpoint_history.pop(0)
+                stale_path = os.path.join(self.save_path, stale)
+                if os.path.exists(stale_path):
+                    os.remove(stale_path)
+
         # best model tracking
-        if self.valid_loss_list_per_epoch[-1] < self.bestscore:
-            self.bestscore = self.valid_loss_list_per_epoch[-1]
+        if current_val_loss < self.best_val_loss_sentinel:
+            self.best_val_loss_sentinel = current_val_loss
+            self.best_model_epoch = epoch
+            self.best_model_val_loss = current_val_loss
             torch.save(self.net.state_dict(), os.path.join(self.save_path, "best_model.zip"))
-            print(f"model saved with best score: {self.bestscore:0.4f}")
+            print(f"model saved with best validation loss: {self.best_val_loss_sentinel:0.4f}")
+
+        # Keep metadata up to date on every epoch.
+        self._write_checkpoint_metadata()
 
         # prepare metrics dict for plotting
         metrics: Dict[str, List] = {
@@ -430,14 +543,39 @@ class MVtrainer:
         # one canvas – many lines
         plot_loss(metrics, self.save_path)
 
+        if self._should_early_stop():
+            self.early_stop_triggered = True
+            self.early_stop_epoch = epoch
+            print(
+                "Early stopping triggered: validation loss improvement over the "
+                f"last {self.early_stopping_window} epoch(s) is below "
+                f"{self.early_stopping_min_delta_pct:.4f}%"
+            )
+            self._write_checkpoint_metadata()
+            return True
+        return False
+
     # ------------------------------------------------------------------
     # eval (unchanged)
     # ------------------------------------------------------------------
 
     def eval(self):
         self.net.to(self.gpu_device)
+        best_ckpt = os.path.join(self.save_path, "best_model.zip")
+        last_ckpt = os.path.join(self.save_path, "last_model.zip")
+        if os.path.exists(best_ckpt):
+            model_to_load = best_ckpt
+        elif os.path.exists(last_ckpt):
+            print("[WARN] best_model.zip not found; falling back to last_model.zip for evaluation.")
+            model_to_load = last_ckpt
+        else:
+            raise FileNotFoundError(
+                f"No checkpoint available for eval in {self.save_path}. "
+                "Expected best_model.zip or last_model.zip."
+            )
+
         self.net.load_state_dict(
-            torch.load(os.path.join(self.save_path, "best_model.zip"), map_location=torch.device("cpu"))
+            torch.load(model_to_load, map_location=torch.device("cpu"), weights_only=True)
         )
         self.net.eval()
 

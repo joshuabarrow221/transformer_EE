@@ -184,6 +184,24 @@ def build_argparser():
 
     # Training / Optim
     p.add_argument("--epochs", type=int, default=20)
+    p.add_argument(
+        "--early-stop-window",
+        type=int,
+        default=None,
+        help="Enable early stopping with this trailing epoch window size.",
+    )
+    p.add_argument(
+        "--early-stop-min-delta-pct",
+        type=float,
+        default=None,
+        help="Minimum percent validation-loss improvement required across the early-stop window.",
+    )
+    p.add_argument(
+        "--keep-last-n-epoch-checkpoints",
+        type=int,
+        default=None,
+        help="Retain rolling last_model_epoch_<i>.zip checkpoints (0 disables).",
+    )
     p.add_argument("--optimizer", default="sgd", choices=["sgd", "adam", "adamw"])
     p.add_argument("--lr", type=float, default=0.01)
     p.add_argument("--momentum", type=float, default=0.9)  # only for SGD
@@ -241,6 +259,21 @@ def main():
     kset(cfg, "num_workers", args.num_workers)
 
     kset(cfg, "model.epochs", args.epochs)
+
+    # Optional early-stopping/checkpoint policy (CLI-driven).
+    if args.early_stop_window is not None or args.early_stop_min_delta_pct is not None:
+        early_cfg = cfg.get("early_stopping", {})
+        early_cfg["enabled"] = True
+        if args.early_stop_window is not None:
+            early_cfg["window"] = int(args.early_stop_window)
+        if args.early_stop_min_delta_pct is not None:
+            early_cfg["min_delta_pct"] = float(args.early_stop_min_delta_pct)
+        cfg["early_stopping"] = early_cfg
+
+    if args.keep_last_n_epoch_checkpoints is not None:
+        ckpt_cfg = cfg.get("checkpointing", {})
+        ckpt_cfg["keep_last_n_epoch_checkpoints"] = int(args.keep_last_n_epoch_checkpoints)
+        cfg["checkpointing"] = ckpt_cfg
 
     # --- Optional noise configuration (mirrors train_script.py example) ---
     if args.enable_noise:
