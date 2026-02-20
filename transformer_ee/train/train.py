@@ -96,7 +96,15 @@ class MVtrainer:
         early_cfg = self.input_d.get("early_stopping", {})
         self.early_stopping_enabled = bool(early_cfg.get("enabled", False))
         self.early_stopping_window = max(1, int(early_cfg.get("window", 5)))
-        self.early_stopping_min_delta_pct = float(early_cfg.get("min_delta_pct", 0.0))
+        default_min_delta_pct = 0.1
+        self.early_stopping_min_delta_pct = float(
+            early_cfg.get("min_delta_pct", default_min_delta_pct)
+        )
+        if self.early_stopping_enabled and self.early_stopping_min_delta_pct <= 0.0:
+            raise ValueError(
+                "early_stopping.min_delta_pct must be > 0 when early stopping is enabled. "
+                f"Received {self.early_stopping_min_delta_pct}."
+            )
         self.early_stop_triggered = False
         self.early_stop_epoch: int | None = None
 
