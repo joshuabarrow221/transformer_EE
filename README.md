@@ -53,6 +53,37 @@ There is an example script for the NC dataset. To run the code, run the followin
 python3 train_script.py
 ```
 
+For the flexible CLI launcher used in many campaigns:
+```
+python3 train_wide.py --base-config <config.json> --epochs 50
+```
+
+### Checkpoint behavior
+
+Training now writes checkpoint files with clearer semantics:
+
+* `best_model.zip`: lowest validation-loss model observed so far.
+* `last_model.zip`: latest epoch model (removed automatically if it is identical to the best epoch).
+* Optional rolling epoch snapshots: `last_model_epoch_<i>.zip` (configurable retention).
+* `checkpoint_metadata.json`: compact metadata with best/last epoch and validation loss,
+  retained rolling checkpoint names, and early-stopping status.
+
+The best-loss sentinel is initialized scale-independently using `+inf` (instead of a fixed
+numeric threshold), which is robust for large-magnitude losses such as MACE-based objectives.
+
+### Early stopping (train_wide.py)
+
+`train_wide.py` supports optional early stopping based on percentage validation-loss
+improvement over a configurable trailing window:
+
+* `--early-stop-window N`: enable early stopping with a trailing window of `N` epochs (`N >= 2`).
+* `--early-stop-min-delta-pct P`: minimum required percentage improvement over the window (must be > 0 when early stopping is enabled; defaults to `0.1`).
+* `--keep-last-n-epoch-checkpoints K`: keep a rolling set of `K` epoch-specific
+  `last_model_epoch_<i>.zip` checkpoints.
+
+If early stopping is not enabled, training behavior is unchanged apart from richer
+checkpointing metadata and safer eval fallback behavior.
+
 ## Configuring the code
 The config file is a json file. The default config file is located at transformer_ee/config.
 There are two ways to configure the code:

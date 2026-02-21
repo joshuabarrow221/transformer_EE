@@ -9,6 +9,9 @@ python3 train_wide.py \
 --optimizer adamw \
 --lr 3e-4 \
 --weight-decay 0.01 \
+--early-stop-window 8 \
+--early-stop-min-delta-pct 0.15 \
+--keep-last-n-epoch-checkpoints 8 \
 --dropout 0.3 \
 --wandb-id GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MSE_E_Px_Py_Pz_Topology_dmodel256_nh16_wNoise_do0p3 \
 --save-path /exp/dune/data/users/cborden/save_genie-dmodel_TEST/model/test/GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MSE_E_Px_Py_Pz_Topology_dmodel256_nh16_wNoise_do0p3 \
@@ -17,3 +20,8 @@ python3 train_wide.py \
 --base-config /home/cborden/git/josh_transformer_EE/transformer_EE/transformer_ee/config/wEID/input_GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MSE_E_Px_Py_Pz_Topology.json 
 
 The full set of optional arguments and their default values when not called explicitly can be found in train_wide.py
+
+Notes:
+- `--early-stop-window` enables early stopping on trailing-window percent validation-loss improvement and must be set to at least `2`.
+- `--early-stop-min-delta-pct` sets the minimum required improvement percentage (> 0); if omitted while early stopping is enabled, training defaults to `0.1`.
+- `--keep-last-n-epoch-checkpoints` controls how many rolling `last_model_epoch_<i>.zip` files are retained.
