@@ -22,6 +22,6 @@ python3 train_wide.py \
 The full set of optional arguments and their default values when not called explicitly can be found in train_wide.py
 
 Notes:
-- `--early-stop-window` enables early stopping on trailing-window percent validation-loss improvement.
+- `--early-stop-window` enables early stopping on trailing-window percent validation-loss improvement and must be set to at least `2`.
 - `--early-stop-min-delta-pct` sets the minimum required improvement percentage (> 0); if omitted while early stopping is enabled, training defaults to `0.1`.
 - `--keep-last-n-epoch-checkpoints` controls how many rolling `last_model_epoch_<i>.zip` files are retained.

@@ -76,7 +76,7 @@ numeric threshold), which is robust for large-magnitude losses such as MACE-base
 `train_wide.py` supports optional early stopping based on percentage validation-loss
 improvement over a configurable trailing window:
 
-* `--early-stop-window N`: enable early stopping with a trailing window of `N` epochs.
+* `--early-stop-window N`: enable early stopping with a trailing window of `N` epochs (`N >= 2`).
 * `--early-stop-min-delta-pct P`: minimum required percentage improvement over the window (must be > 0 when early stopping is enabled; defaults to `0.1`).
 * `--keep-last-n-epoch-checkpoints K`: keep a rolling set of `K` epoch-specific
   `last_model_epoch_<i>.zip` checkpoints.

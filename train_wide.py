@@ -188,7 +188,7 @@ def build_argparser():
         "--early-stop-window",
         type=int,
         default=None,
-        help="Enable early stopping with this trailing epoch window size.",
+        help="Enable early stopping with this trailing epoch window size (must be >= 2).",
     )
     p.add_argument(
         "--early-stop-min-delta-pct",
@@ -246,7 +246,11 @@ def build_argparser():
 
 
 def main():
-    args = build_argparser().parse_args()
+    parser = build_argparser()
+    args = parser.parse_args()
+
+    if args.early_stop_window is not None and args.early_stop_window < 2:
+        parser.error("--early-stop-window must be >= 2 when early stopping is enabled.")
 
     # Load base config
     with open(args.base_config, "r", encoding="utf-8") as f:
