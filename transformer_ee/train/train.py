@@ -448,16 +448,32 @@ class MVtrainer:
 
     def _write_checkpoint_metadata(self):
         """Persist compact checkpoint/training status metadata for reproducibility."""
+        best_filename = "best_model.zip" if os.path.exists(os.path.join(self.save_path, "best_model.zip")) else None
+        last_filename = "last_model.zip" if os.path.exists(os.path.join(self.save_path, "last_model.zip")) else None
+
+        latest_filename = last_filename or best_filename
+        latest_epoch = self.last_model_epoch if last_filename is not None else self.best_model_epoch
+        latest_val_loss = (
+            self.last_model_val_loss
+            if last_filename is not None
+            else self.best_model_val_loss
+        )
+
         metadata = {
             "best_model": {
                 "epoch": self.best_model_epoch,
                 "validation_loss": self.best_model_val_loss,
-                "filename": "best_model.zip",
+                "filename": best_filename,
             },
             "last_model": {
                 "epoch": self.last_model_epoch,
                 "validation_loss": self.last_model_val_loss,
-                "filename": "last_model.zip",
+                "filename": last_filename,
+            },
+            "latest_checkpoint": {
+                "epoch": latest_epoch,
+                "validation_loss": latest_val_loss,
+                "filename": latest_filename,
             },
             "keep_last_n_epoch_checkpoints": self.keep_last_n_epoch_checkpoints,
             "retained_last_model_epoch_checkpoints": self._epoch_checkpoint_history,
@@ -473,7 +489,7 @@ class MVtrainer:
             json.dump(metadata, f, indent=4)
 
     def _finalize_checkpoint_layout(self):
-        """Remove redundant last_model.zip when best model occurred on final epoch."""
+        """Keep best_model.zip canonical; keep last_model.zip only when it differs."""
         if self.best_model_epoch is not None and self.last_model_epoch == self.best_model_epoch:
             last_model_path = os.path.join(self.save_path, "last_model.zip")
             if os.path.exists(last_model_path):
