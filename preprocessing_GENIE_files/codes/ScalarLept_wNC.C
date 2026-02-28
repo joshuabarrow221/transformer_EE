@@ -735,7 +735,7 @@ void ScalarLept_wNC(const std::string &input_file)
             continue;
 
         int n_prot = 0, n_piplus = 0, n_piminus = 0, n_pizero = 0, n_pi = 0, visible_count = 0;
-        int N_GAMMAS;
+        int N_GAMMAS = 0;
 
         energies.clear();
         masses.clear();
@@ -1369,6 +1369,15 @@ void ScalarLept_wNC(const std::string &input_file)
             }
 
             // ////do_resize(pdgs,masses,energies,pxs,pys,pzs,costheta_arr,theta_arr);
+
+            Fin_Prot_Mult->Fill(n_prot);
+            n_prot = 0;
+            Fin_PiPlus_Mult->Fill(n_piplus);
+            n_piplus = 0;
+            Fin_PiMinus_Mult->Fill(n_piminus);
+            n_piminus = 0;
+            Fin_PiZero_Mult->Fill(n_pizero);
+            n_pizero = 0;
 
             if (pdgs.empty())
             {
@@ -2131,20 +2140,20 @@ void ScalarLept_wNC(const std::string &input_file)
     Fin_NC_Lept_Mom->Draw("hist");
     c1->SetLogy(1);
     c1->BuildLegend(0.5, 0.3, 0.9, 0.7);
-    c1->Print((directory + "/" + last_name + "Fin_CC_Lept_Mom.png").c_str());
-    c1->Print((directory + "/" + last_name + "Fin_CC_Lept_Mom.root").c_str());
+    c1->Print((directory + "/" + last_name + "Fin_NC_Lept_Mom.png").c_str());
+    c1->Print((directory + "/" + last_name + "Fin_NC_Lept_Mom.root").c_str());
     c1->Clear();
 
     Fin_NC_Lept_Theta->Draw("hist");
     c1->SetLogy(0);
-    c1->Print((directory + "/" + last_name + "Fin_CC_Lept_Theta.png").c_str());
-    c1->Print((directory + "/" + last_name + "Fin_CC_Lept_Theta.root").c_str());
+    c1->Print((directory + "/" + last_name + "Fin_NC_Lept_Theta.png").c_str());
+    c1->Print((directory + "/" + last_name + "Fin_NC_Lept_Theta.root").c_str());
     c1->Clear();
 
     Fin_NC_Lept_CosTheta->Draw("hist");
     c1->SetLogy(0);
-    c1->Print((directory + "/" + last_name + "Fin_CC_Lept_CosTheta.png").c_str());
-    c1->Print((directory + "/" + last_name + "Fin_CC_Lept_CosTheta.root").c_str());
+    c1->Print((directory + "/" + last_name + "Fin_NC_Lept_CosTheta.png").c_str());
+    c1->Print((directory + "/" + last_name + "Fin_NC_Lept_CosTheta.root").c_str());
     c1->Clear();
 
     Fin_Prot_Mom->Draw("hist");
