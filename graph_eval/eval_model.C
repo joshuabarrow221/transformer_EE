@@ -1,4 +1,4 @@
-// eval_model.C
+// eval_model.C: It has the code for energy, angle and topology cuts. Just uncomment them and put the ranges as you wish while using this code
 // Updated: integrates 2D contour + ellipse + fractionInsideEllipse (writes ellipse_fraction.txt)
 // Preserves original functionality.
 
@@ -806,6 +806,28 @@ void eval_model(
                 }
             }
         }
+        //Topology Code Here
+        // --- Topology filter: keep only 1 proton and 1 pion ---
+    // if (colIndex.find("true_Topology") != colIndex.end()) {
+    
+    //     double topo_double = row[colIndex["true_Topology"]];
+    //     long long topo_int = static_cast<long long>(topo_double);
+    //     std::string topo_str = std::to_string(topo_int);
+    
+    //     while (topo_str.length() < 15)
+    //         topo_str = "0" + topo_str;
+    
+    //     int n_proton  = std::stoi(topo_str.substr(1, 2));
+    //     int n_piplus  = std::stoi(topo_str.substr(5, 2));
+    //     int n_piminus = std::stoi(topo_str.substr(9, 2));
+    //     int n_pizero  = std::stoi(topo_str.substr(13, 2));
+    
+    //     int total_pions = n_piplus + n_piminus + n_pizero;
+    
+    //     if (!(n_proton == 1 && total_pions == 1)) {
+    //         continue;  // reject event
+    //     }
+    // }
 
         if (row.size() != headers.size()) {
             std::cerr << "Skipping line " << line_num << ": column mismatch ("
@@ -950,19 +972,149 @@ void eval_model(
         std::cout << "[INFO] Derived pred_Nu_Energy from pred_Nu_Mom_X/Y/Z (massless approx).\n";
     }
 
+    // === Align data vectors and compute derived kinematic quantities ===
+    auto hasKey = [&](const std::string& key) {
+        return data.find(key) != data.end();
+    };
+
+    size_t n_rows = 0;
+    for (const auto& kv : data) {
+        n_rows = std::max(n_rows, kv.second.size());
+    }
+
+    auto ensure_size = [&](std::vector<double>& v, size_t n) {
+        if (v.size() < n) v.resize(n, NAN);
+    };
+
+    for (auto& kv : data) {
+        ensure_size(kv.second, n_rows);
+    }
+
+    Cos_Theta_nu_pred.assign(n_rows, NAN);
+    Theta_nu_pred.assign(n_rows, NAN);
+    Cos_Theta_nu_true.assign(n_rows, NAN);
+    Theta_nu_true.assign(n_rows, NAN);
+    pred_baseline.assign(n_rows, NAN);
+    true_baseline.assign(n_rows, NAN);
+    pred_Mass_squared.assign(n_rows, NAN);
+    true_Mass_squared.assign(n_rows, NAN);
+    pred_beam_Mass_squared.assign(n_rows, NAN);
+    true_beam_Mass_squared.assign(n_rows, NAN);
+
+    const bool has_predMom = hasKey("pred_Nu_Mom_X") && hasKey("pred_Nu_Mom_Y") && hasKey("pred_Nu_Mom_Z");
+    const bool has_trueMom = hasKey("true_Nu_Mom_X") && hasKey("true_Nu_Mom_Y") && hasKey("true_Nu_Mom_Z");
+    const bool has_predCos = hasKey("pred_Nu_CosTheta");
+    const bool has_trueCos = hasKey("true_Nu_CosTheta");
+
+    auto pickKey = [&](const std::initializer_list<std::string>& candidates) -> std::string {
+        for (const auto& k : candidates) {
+            if (data.find(k) != data.end()) return k;
+        }
+        return "";
+    };
+
+    const std::string trueThetaKey = pickKey({"true_Nu_Theta", "true_Theta"});
+    const std::string predThetaKey = pickKey({"pred_Nu_Theta", "pred_Theta"});
+    const std::string truePhiKey   = pickKey({"true_Nu_Phi", "true_Phi"});
+    const std::string predPhiKey   = pickKey({"pred_Nu_Phi", "pred_Phi"});
+
+    const bool has_trueTheta = !trueThetaKey.empty();
+    const bool has_predTheta = !predThetaKey.empty();
+    const bool has_truePhi   = !truePhiKey.empty();
+    const bool has_predPhi   = !predPhiKey.empty();
+
+    for (size_t i = 0; i < n_rows; ++i) {
+        if (has_predMom) {
+            double px = data["pred_Nu_Mom_X"][i];
+            double py = data["pred_Nu_Mom_Y"][i];
+            double pz = data["pred_Nu_Mom_Z"][i];
+            Cos_Theta_nu_pred[i] = calcCosTheta(px, py, pz);
+            Theta_nu_pred[i] = calcTheta(px, py, pz);
+            pred_baseline[i] = calc_baseline(px, py, pz);
+        } else if (has_predCos) {
+            double c = data["pred_Nu_CosTheta"][i];
+            if (std::isfinite(c)) {
+                Cos_Theta_nu_pred[i] = c;
+                Theta_nu_pred[i] = thetaFromCos(c);
+            }
+        }
+
+        if (has_trueMom) {
+            double tx = data["true_Nu_Mom_X"][i];
+            double ty = data["true_Nu_Mom_Y"][i];
+            double tz = data["true_Nu_Mom_Z"][i];
+            Cos_Theta_nu_true[i] = calcCosTheta(tx, ty, tz);
+            Theta_nu_true[i] = calcTheta(tx, ty, tz);
+            true_baseline[i] = calc_baseline(tx, ty, tz);
+        } else if (has_trueCos) {
+            double c = data["true_Nu_CosTheta"][i];
+            if (std::isfinite(c)) {
+                Cos_Theta_nu_true[i] = c;
+                Theta_nu_true[i] = thetaFromCos(c);
+            }
+        }
+
+        if (hasKey("true_Nu_Energy") && has_trueMom) {
+            double E = data["true_Nu_Energy"][i];
+            double px = data["true_Nu_Mom_X"][i];
+            double py = data["true_Nu_Mom_Y"][i];
+            double pz = data["true_Nu_Mom_Z"][i];
+            if (std::isfinite(E) && std::isfinite(px) && std::isfinite(py) && std::isfinite(pz)) {
+                true_Mass_squared[i] = E*E - (px*px + py*py + pz*pz);
+            }
+        } else if (hasKey("true_Nu_Energy") && has_trueTheta && has_truePhi) {
+            // Spherical coordinates (massless approximation): p = E, using theta/phi
+            double E = data["true_Nu_Energy"][i];
+            double th_deg = data[trueThetaKey][i];
+            double ph_deg = data[truePhiKey][i];
+            if (std::isfinite(E) && std::isfinite(th_deg) && std::isfinite(ph_deg)) {
+                double th = th_deg * (M_PI / 180.0);
+                double ph = ph_deg * (M_PI / 180.0);
+                double px = E * std::sin(th) * std::cos(ph);
+                double py = E * std::sin(th) * std::sin(ph);
+                double pz = E * std::cos(th);
+                true_Mass_squared[i] = E*E - (px*px + py*py + pz*pz);
+            }
+        }
+
+        if (hasKey("pred_Nu_Energy") && has_predMom) {
+            double E = data["pred_Nu_Energy"][i];
+            double px = data["pred_Nu_Mom_X"][i];
+            double py = data["pred_Nu_Mom_Y"][i];
+            double pz = data["pred_Nu_Mom_Z"][i];
+            if (std::isfinite(E) && std::isfinite(px) && std::isfinite(py) && std::isfinite(pz)) {
+                pred_Mass_squared[i] = E*E - (px*px + py*py + pz*pz);
+            }
+        } else if (hasKey("pred_Nu_Energy") && has_predTheta && has_predPhi) {
+            // Spherical coordinates (massless approximation): p = E, using theta/phi
+            double E = data["pred_Nu_Energy"][i];
+            double th_deg = data[predThetaKey][i];
+            double ph_deg = data[predPhiKey][i];
+            if (std::isfinite(E) && std::isfinite(th_deg) && std::isfinite(ph_deg)) {
+                double th = th_deg * (M_PI / 180.0);
+                double ph = ph_deg * (M_PI / 180.0);
+                double px = E * std::sin(th) * std::cos(ph);
+                double py = E * std::sin(th) * std::sin(ph);
+                double pz = E * std::cos(th);
+                pred_Mass_squared[i] = E*E - (px*px + py*py + pz*pz);
+            }
+        }
+    }
+
+    // Ensure derived cos(theta) columns exist in data when the CSV omits them
+    if (!CSV_HAS_PRED_COS) {
+        data["pred_Nu_CosTheta"] = Cos_Theta_nu_pred;
+    }
+    if (!CSV_HAS_TRUE_COS) {
+        data["true_Nu_CosTheta"] = Cos_Theta_nu_true;
+    }
+
     // === Beam-only Mass^2 from E and (Theta or CosTheta) when no momentum is present ===
     // m^2 = (E)^2 * (1 - Cos^2(90 - Theta))
     //
     // If CosTheta is available, this simplifies numerically to:
     // Cos(90-Theta) = sin(Theta) => 1 - sin^2(Theta) = cos^2(Theta) => m^2 = E^2 * CosTheta^2
     {
-        auto pickKey = [&](const std::initializer_list<std::string>& candidates) -> std::string {
-            for (const auto& k : candidates) {
-                if (data.find(k) != data.end()) return k;
-            }
-            return "";
-        };
-
         // Energy keys (your CSV uses these exact names)
         const bool has_trueE = (data.find("true_Nu_Energy") != data.end());
         const bool has_predE = (data.find("pred_Nu_Energy") != data.end());
@@ -976,14 +1128,9 @@ void eval_model(
                                 data.find("pred_Nu_Mom_Z") != data.end());
 
         // Theta / CosTheta keys (support a couple naming variants)
-        const std::string trueThetaKey = pickKey({"true_Nu_Theta", "true_Theta"});
-        const std::string predThetaKey = pickKey({"pred_Nu_Theta", "pred_Theta"});
-
         const std::string trueCosKey   = pickKey({"true_Nu_CosTheta", "true_CosTheta"});
         const std::string predCosKey   = pickKey({"pred_Nu_CosTheta", "pred_CosTheta"});
 
-        const bool has_trueTheta = !trueThetaKey.empty();
-        const bool has_predTheta = !predThetaKey.empty();
         const bool has_trueCos   = !trueCosKey.empty();
         const bool has_predCos   = !predCosKey.empty();
 
@@ -993,89 +1140,82 @@ void eval_model(
         {
             const auto& Etrue = data["true_Nu_Energy"];
             const auto& Epred = data["pred_Nu_Energy"];
+            const double kDeg = M_PI / 180.0;
 
-            // Compute TRUE beam mass^2
-            {
-                size_t N = Etrue.size();
-                if (has_trueTheta) N = std::min(N, data[trueThetaKey].size());
-                if (has_trueCos)   N = std::min(N, data[trueCosKey].size());
+            for (size_t i = 0; i < n_rows; ++i) {
+                double m2_true = NAN;
+                double m2_pred = NAN;
 
-                true_beam_Mass_squared.clear();
-                true_beam_Mass_squared.reserve(N);
-
-                const double kDeg = M_PI / 180.0;
-
-                for (size_t i = 0; i < N; ++i) {
+                if (i < Etrue.size()) {
                     double E = Etrue[i];
-                    if (!std::isfinite(E)) continue;
-
-                    double m2 = NAN;
-
-                    if (has_trueCos) {
-                        double c = data[trueCosKey][i];   // cos(theta)
-                        if (std::isfinite(c)) {
-                            // m^2 = E^2 * cos^2(theta)  (equivalent to requested formula)
-                            m2 = E*E * (c*c);
+                    if (std::isfinite(E)) {
+                        double sin_th = NAN;
+                        if (has_trueTheta && i < data[trueThetaKey].size()) {
+                            double th = data[trueThetaKey][i];
+                            if (std::isfinite(th)) sin_th = std::sin(th * kDeg);
+                        } else if (has_trueCos && i < data[trueCosKey].size()) {
+                            double c = data[trueCosKey][i];
+                            if (std::isfinite(c)) sin_th = std::sqrt(std::max(0.0, 1.0 - c*c));
                         }
-                    } else if (has_trueTheta) {
-                        double th = data[trueThetaKey][i]; // degrees
-                        if (std::isfinite(th)) {
-                            double ca = std::cos((90.0 - th) * kDeg); // cos(90-theta)
-                            m2 = E*E * (1.0 - ca*ca);
+
+                        double cos_phi = 1.0; // default phi=0 if absent
+                        if (has_truePhi && i < data[truePhiKey].size()) {
+                            double ph = data[truePhiKey][i];
+                            if (std::isfinite(ph)) cos_phi = std::cos(ph * kDeg);
+                        }
+
+                        if (std::isfinite(sin_th)) {
+                            double s = sin_th * cos_phi;
+                            m2_true = E*E * (1.0 - s*s);
                         }
                     }
-
-                    if (std::isfinite(m2)) true_beam_Mass_squared.push_back(m2);
                 }
-            }
 
-            // Compute PRED beam mass^2
-            {
-                size_t N = Epred.size();
-                if (has_predTheta) N = std::min(N, data[predThetaKey].size());
-                if (has_predCos)   N = std::min(N, data[predCosKey].size());
-
-                pred_beam_Mass_squared.clear();
-                pred_beam_Mass_squared.reserve(N);
-
-                const double kDeg = M_PI / 180.0;
-
-                for (size_t i = 0; i < N; ++i) {
+                if (i < Epred.size()) {
                     double E = Epred[i];
-                    if (!std::isfinite(E)) continue;
-
-                    double m2 = NAN;
-
-                    if (has_predCos) {
-                        double c = data[predCosKey][i];   // cos(theta)
-                        if (std::isfinite(c)) {
-                            m2 = E*E * (c*c);
+                    if (std::isfinite(E)) {
+                        double sin_th = NAN;
+                        if (has_predTheta && i < data[predThetaKey].size()) {
+                            double th = data[predThetaKey][i];
+                            if (std::isfinite(th)) sin_th = std::sin(th * kDeg);
+                        } else if (has_predCos && i < data[predCosKey].size()) {
+                            double c = data[predCosKey][i];
+                            if (std::isfinite(c)) sin_th = std::sqrt(std::max(0.0, 1.0 - c*c));
                         }
-                    } else if (has_predTheta) {
-                        double th = data[predThetaKey][i]; // degrees
-                        if (std::isfinite(th)) {
-                            double ca = std::cos((90.0 - th) * kDeg); // cos(90-theta)
-                            m2 = E*E * (1.0 - ca*ca);
+
+                        double cos_phi = 1.0; // default phi=0 if absent
+                        if (has_predPhi && i < data[predPhiKey].size()) {
+                            double ph = data[predPhiKey][i];
+                            if (std::isfinite(ph)) cos_phi = std::cos(ph * kDeg);
+                        }
+
+                        if (std::isfinite(sin_th)) {
+                            double s = sin_th * cos_phi;
+                            m2_pred = E*E * (1.0 - s*s);
                         }
                     }
-
-                    if (std::isfinite(m2)) pred_beam_Mass_squared.push_back(m2);
                 }
+
+                true_beam_Mass_squared[i] = m2_true;
+                pred_beam_Mass_squared[i] = m2_pred;
             }
 
-            std::cout << "[INFO] Computed beam mass^2 from E and Theta/CosTheta (no momentum columns): "
-                    << "true=" << true_beam_Mass_squared.size()
-                    << ", pred=" << pred_beam_Mass_squared.size() << "\n";
+            std::cout << "[INFO] Computed beam mass^2 from E and Theta/CosTheta (no momentum columns).\n";
         }
     }
+
 
     // === Create 1D histograms ===
 auto make_hist = [&](const std::string& name, const std::vector<double>& d, double xmin, double xmax) {
     if (d.empty()) return;
+    // Guard: if the vector has no finite entries, skip to avoid undefined/NaN-only histograms.
+    bool has_finite = std::any_of(d.begin(), d.end(), [](double v) { return std::isfinite(v); });
+    if (!has_finite) return;
     TH1D* h = new TH1D(name.c_str(), name.c_str(), 500, xmin, xmax);
     h->SetDirectory(0);  // prevent ROOT from auto-managing this hist
     for (double val : d) {
-        if (!std::isnan(val)) h->Fill(val);
+        // Range-for copies each element into val; we only fill finite values.
+        if (std::isfinite(val)) h->Fill(val);
     }
     if (plotDir) plotDir->cd();
     h->Write();
@@ -1083,9 +1223,20 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 };
 
     auto find_range = [](const std::vector<double>& d) {
-        auto [minIt, maxIt] = std::minmax_element(d.begin(), d.end());
-        double margin = 0.05 * std::max(std::abs(*minIt), std::abs(*maxIt));
-        return std::make_pair(*minIt - margin, *maxIt + margin);
+        double minVal = std::numeric_limits<double>::infinity();
+        double maxVal = -std::numeric_limits<double>::infinity();
+        for (double v : d) {
+            // Ignore NaN/Inf when computing ranges to avoid propagating invalid bounds.
+            if (!std::isfinite(v)) continue;
+            minVal = std::min(minVal, v);
+            maxVal = std::max(maxVal, v);
+        }
+        // Fallback range for all-non-finite vectors to avoid NaN axis limits.
+        if (!std::isfinite(minVal) || !std::isfinite(maxVal)) {
+            return std::make_pair(0.0, 1.0);
+        }
+        double margin = 0.05 * std::max(std::abs(minVal), std::abs(maxVal));
+        return std::make_pair(minVal - margin, maxVal + margin);
     };
 
     // 1D histograms for all non true_/pred_ variables (auto range)
@@ -1181,27 +1332,18 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
         // 1D histogram of resolution / residual for this variable ---
         if (!res.empty()) {
-            auto r = find_range(res);
-
             std::string hname  = "h1_res_" + base;
             std::string htitle;
+            std::pair<double, double> r;
             if (cosMode) {
                 htitle = base + " residual (pred - true);#Delta cos(#theta);Counts";
-
-                // Clamp residual range for readability
-                double ymin = std::max(r.first, -0.5);
-                double ymax = std::min(r.second,  0.5);
-                if (ymin == ymax) { ymin -= 0.01; ymax += 0.01; }
-                r = {ymin, ymax};
-
+                r = {-1.0, 1.0};
             } else {
                 htitle = base + " percent resolution;Percent resolution (%);Counts";
-
-                // Clamp percent range to ±200% (your existing behavior)
-                r = clamp_res_range(r.first, r.second);
+                r = {-200.0, 200.0};
             }
 
-            TH1D* hres = new TH1D(hname.c_str(), htitle.c_str(), 200, r.first, r.second);
+            TH1D* hres = new TH1D(hname.c_str(), htitle.c_str(), 1000, r.first, r.second);
             hres->SetDirectory(0);
 
             for (double v : res) {
@@ -1257,10 +1399,10 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
     bool has_trueE = data.find("true_Nu_Energy") != data.end();
     bool has_predE = data.find("pred_Nu_Energy") != data.end();
-    bool has_trueMom = (data.find("true_Nu_Mom_X") != data.end()
+    bool has_trueMom_cols = (data.find("true_Nu_Mom_X") != data.end()
                         && data.find("true_Nu_Mom_Y") != data.end()
                         && data.find("true_Nu_Mom_Z") != data.end());
-    bool has_predMom = (data.find("pred_Nu_Mom_X") != data.end()
+    bool has_predMom_cols = (data.find("pred_Nu_Mom_X") != data.end()
                         && data.find("pred_Nu_Mom_Y") != data.end()
                         && data.find("pred_Nu_Mom_Z") != data.end());
 
@@ -1288,14 +1430,14 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
                   && data.find("pred_Nu_Theta") != data.end());
 
 
-    if (has_trueE && has_predE && ((has_trueMom && has_predMom) || has_theta || has_costheta)) {
+    if (has_trueE && has_predE && ((has_trueMom_cols && has_predMom_cols) || has_theta || has_costheta)) {
         // Base sizes from energy columns
         size_t NtrueE  = data["true_Nu_Energy"].size();
         size_t NpredE  = data["pred_Nu_Energy"].size();
         size_t Nmin    = std::min(NtrueE, NpredE);
 
         // Also constrain by momentum sizes if using momentum
-        if (has_trueMom && has_predMom) {
+        if (has_trueMom_cols && has_predMom_cols) {
             size_t NtrueMom = data["true_Nu_Mom_X"].size();
             size_t NpredMom = data["pred_Nu_Mom_X"].size();
             Nmin = std::min({Nmin, NtrueMom, NpredMom});
@@ -1321,6 +1463,8 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
             if (std::isnan(Etrue) || std::isnan(Epred)) continue;
             if (Etrue == 0) continue; // avoid divide by zero
+            //THRESHOLD HERE
+            // if (Etrue < 5 || Etrue > 10) continue;
 
             double thet_true = NAN;
             double thet_pred = NAN;
@@ -1354,6 +1498,8 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
                 // Should not happen given the guards
                 continue;
             }
+            //NEW THRESHOLD HERE
+            // if (thet_true < 225.0 || thet_true > 315.0) continue;
 
             double eres = 100.0 * (Epred - Etrue) / Etrue;
             double tdiff = thet_pred - thet_true;
