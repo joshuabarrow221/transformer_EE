@@ -89,11 +89,8 @@ chmod +x run_eval_all.sh run_full_evals_all_users.sh
 * Stores the ellipse fractions in a cumulative `ellipse_fraction.csv` file (auto-created and auto-expanded), including a `wandb_runtime_hours` column when provided.
 * Appends or updates a directory inside `combined_output.root` named after the model (taken from the final CSV column header).
 * Runs in ROOT **batch mode** so plots are written to file without opening GUI windows.
-* Optional selection controls for robustness studies: filter by `true_Topology` codes (comma-separated list), true-energy range, and true-theta range.
-* When `true_Topology` is present, per-topology overlay outputs are generated (prefixed `topo_<code>_`) for:
-  - 1D resolution histograms
-  - 2D truth-vs-reco plots
-  - Energy-resolution vs Δθ 2D plots
+* Optional selection controls for robustness studies: filter by `true_Topology` codes (comma-separated list), required proton/pion counts, true-energy range, and true-theta range.
+* Per-topology overlay outputs are **not** generated. When topology composition cuts are used, all plots are produced for the filtered subset using the provided `name_prefix`.
 
 ## Requirements
 
@@ -135,7 +132,27 @@ Run the macro from a shell:
 root -l 'eval_model.C("result.csv")'
 ```
 
+Parameter order for `eval_model.C(...)` (full list, in order):
+```text
+filename,
+beam_mode,
+wandb_runtime_hours,
+output_dir,
+png_path,
+png_width,
+png_height,
+root_output_name,
+name_prefix,
+topology_codes_csv,
+required_n_proton,
+required_total_pions,
+true_energy_min,
+true_energy_max,
+true_theta_min_deg,
+true_theta_max_deg
+```
+
 Optional selection controls (examples):
 ```bash
-root -l 'eval_model.C("result.csv", false, -1.0, ".", "", 0, 0, "combined_output.root", "301000000000000,300000100000000", 1.0, 5.0, 80.0, 100.0)'
+root -l 'eval_model.C("result.csv", false, -1.0, ".", "", 0, 0, "combined_output.root", "", "301000000000000,300000100000000", 1, 1, 1.0, 5.0, 80.0, 100.0)'
 ```
