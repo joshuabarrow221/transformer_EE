@@ -80,6 +80,8 @@ chmod +x run_eval_all.sh run_full_evals_all_users.sh
   - Computation of the fraction of events inside the ellipse
 * Stores the ellipse fractions in a cumulative `ellipse_fraction.csv` file (auto-created and auto-expanded).
 * Appends or updates a directory inside `combined_output.root` (or a custom ROOT output name) named after the model (taken from the final CSV column header).
+* Adds optional **robustness-study selectors** for true-energy ranges, true-theta ranges, and topology-code subsets.
+* Generates additional topology-prefixed overlays (e.g. `topo_<code>_...`) for resolution, truth-vs-reco, and energy-vs-angle products when `true_Topology` is present.
 * Runs in ROOT **batch mode** so plots are written to file without opening GUI windows.
 
 ## Requirements
@@ -122,9 +124,21 @@ Run the macro from a shell:
 root -l 'eval_model.C("result.csv")'
 ```
 
-Optional arguments can set the output directory, PNG export path/size, and the ROOT
-output filename:
+Optional arguments can set the output directory, PNG export path/size, ROOT
+output filename, and robustness-study selectors:
 
 ```bash
-root -l 'eval_model.C("result.csv", "false", -1.0, "./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
+root -l 'eval_model.C("result.csv", false, -1.0, "./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
 ```
+
+```bash
+# Topology and kinematic selection example:
+#   - keep only topology codes 100100000000000 and 100200000000000
+#   - apply 1-5 GeV true-energy cut
+#   - apply 20-60 degree true-theta cut
+root -l 'eval_model.C("result.csv", false, -1.0, "./Results", "", 0, 0, "combined_output.root", "100100000000000,100200000000000", 1.0, 5.0, 20.0, 60.0)'
+```
+
+When topology overlays are active (and `true_Topology` exists in the CSV), ROOT objects
+are written with names prefixed as `topo_<code>_...` so multiple final-state channels can
+be compared directly in one output file.
