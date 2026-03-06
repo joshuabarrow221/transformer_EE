@@ -955,6 +955,11 @@ void eval_model(
                 auto itTz = colIndex.find("true_Nu_Mom_Z");
                 if (itTx != colIndex.end() && itTy != colIndex.end() && itTz != colIndex.end()) {
                     theta_for_cut = calcTheta(row[itTx->second], row[itTy->second], row[itTz->second]);
+                } else {
+                    auto itCos = colIndex.find("true_Nu_CosTheta");
+                    if (itCos != colIndex.end()) {
+                        theta_for_cut = thetaFromCos(row[itCos->second]);
+                    }
                 }
             }
             if (std::isfinite(theta_for_cut) &&
