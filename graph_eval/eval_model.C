@@ -1927,13 +1927,17 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
                 // 1D residual/resolution histograms per variable per topology.
                 const bool cosMode = isCosThetaVar(base);
                 std::vector<double> res;
+                std::vector<double> vtrue_for_res;
                 res.reserve(std::min(vtrue.size(), vpred.size()));
+                vtrue_for_res.reserve(std::min(vtrue.size(), vpred.size()));
                 for (size_t i = 0; i < std::min(vtrue.size(), vpred.size()); ++i) {
                     double t = vtrue[i], p = vpred[i];
                     if (!std::isfinite(t) || !std::isfinite(p)) continue;
                     if (cosMode) {
+                        vtrue_for_res.push_back(t);
                         res.push_back(p - t);
                     } else if (t != 0.0) {
+                        vtrue_for_res.push_back(t);
                         res.push_back(100.0 * (p - t) / t);
                     }
                 }
@@ -1957,9 +1961,9 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
                     if (plotDir) plotDir->cd();
                     hres->Write(hname.c_str(), TObject::kOverwrite);
 
-                    graph_resolution_stat(topo_prefix, base, vtrue, res, "rms", NUM_BINS,
+                    graph_resolution_stat(topo_prefix, base, vtrue_for_res, res, "rms", NUM_BINS,
                                           XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
-                    graph_resolution_stat(topo_prefix, base, vtrue, res, "std", NUM_BINS,
+                    graph_resolution_stat(topo_prefix, base, vtrue_for_res, res, "std", NUM_BINS,
                                           XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
                 }
 
