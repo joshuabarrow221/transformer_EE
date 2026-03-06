@@ -1972,13 +1972,42 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
             }
 
             // (B) Energy-resolution vs delta-theta per topology (overlay-compatible objects).
+            // IMPORTANT ROBUSTNESS NOTE (plain language):
+            // For topology overlays we must use the SAME angle-source fallback chain as the
+            // all-event plot (theta column -> momentum xyz -> cos(theta)). If we don't, then
+            // beam-style CSVs that only carry theta/cos(theta) will silently lose per-topology
+            // energy-vs-delta-theta products even though the all-event product exists.
+            //
+            // Edge-case to keep in mind:
+            // A topology slice can have valid energy entries but a mix of NaN/Inf angle entries.
+            // We therefore compute both axes together and only push one aligned (eres, dtheta)
+            // pair at a time after full finite checks. This guarantees overlays compare the
+            // exact same events and avoids topology-by-topology drift from partial filtering.
             auto has_key = [&](const std::string& k) { return data.find(k) != data.end(); };
             bool has_trueE_t = has_key("true_Nu_Energy");
             bool has_predE_t = has_key("pred_Nu_Energy");
             bool has_trueMom_t = has_key("true_Nu_Mom_X") && has_key("true_Nu_Mom_Y") && has_key("true_Nu_Mom_Z");
             bool has_predMom_t = has_key("pred_Nu_Mom_X") && has_key("pred_Nu_Mom_Y") && has_key("pred_Nu_Mom_Z");
+            bool has_theta_t = has_key("true_Nu_Theta") && has_key("pred_Nu_Theta");
 
-            if (has_trueE_t && has_predE_t && (has_trueMom_t && has_predMom_t)) {
+            // Reuse the same key aliases used by the all-event path for consistency.
+            std::string trueCosKey_t = firstExistingKey({
+                "true_Nu_CosTheta",
+                "true_Nu_Cos_Theta",
+                "true_Cos_Theta_nu",
+                "true_Cos_Theta_Nu",
+                "true_CosTheta"
+            });
+            std::string predCosKey_t = firstExistingKey({
+                "pred_Nu_CosTheta",
+                "pred_Nu_Cos_Theta",
+                "pred_Cos_Theta_nu",
+                "pred_Cos_Theta_Nu",
+                "pred_CosTheta"
+            });
+            bool has_costheta_t = (!trueCosKey_t.empty() && !predCosKey_t.empty());
+
+            if (has_trueE_t && has_predE_t && ((has_trueMom_t && has_predMom_t) || has_theta_t || has_costheta_t)) {
                 std::vector<double> eres_t;
                 std::vector<double> dtheta_t;
                 eres_t.reserve(indices.size());
@@ -1986,14 +2015,33 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
                 for (size_t idx : indices) {
                     if (idx >= data["true_Nu_Energy"].size() || idx >= data["pred_Nu_Energy"].size()) continue;
-                    if (idx >= data["true_Nu_Mom_X"].size() || idx >= data["pred_Nu_Mom_X"].size()) continue;
 
                     double Etrue = data["true_Nu_Energy"][idx];
                     double Epred = data["pred_Nu_Energy"][idx];
                     if (!std::isfinite(Etrue) || !std::isfinite(Epred) || Etrue == 0.0) continue;
 
-                    double tt = calcTheta(data["true_Nu_Mom_X"][idx], data["true_Nu_Mom_Y"][idx], data["true_Nu_Mom_Z"][idx]);
-                    double tp = calcTheta(data["pred_Nu_Mom_X"][idx], data["pred_Nu_Mom_Y"][idx], data["pred_Nu_Mom_Z"][idx]);
+                    double tt = NAN;
+                    double tp = NAN;
+
+                    // Keep this fallback order identical to the all-event logic so topology and
+                    // all-event outputs are directly comparable event-by-event.
+                    if (has_theta_t) {
+                        if (idx >= data["true_Nu_Theta"].size() || idx >= data["pred_Nu_Theta"].size()) continue;
+                        tt = data["true_Nu_Theta"][idx];
+                        tp = data["pred_Nu_Theta"][idx];
+                    } else if (has_trueMom_t && has_predMom_t) {
+                        if (idx >= data["true_Nu_Mom_X"].size() || idx >= data["true_Nu_Mom_Y"].size() || idx >= data["true_Nu_Mom_Z"].size()) continue;
+                        if (idx >= data["pred_Nu_Mom_X"].size() || idx >= data["pred_Nu_Mom_Y"].size() || idx >= data["pred_Nu_Mom_Z"].size()) continue;
+                        tt = calcTheta(data["true_Nu_Mom_X"][idx], data["true_Nu_Mom_Y"][idx], data["true_Nu_Mom_Z"][idx]);
+                        tp = calcTheta(data["pred_Nu_Mom_X"][idx], data["pred_Nu_Mom_Y"][idx], data["pred_Nu_Mom_Z"][idx]);
+                    } else if (has_costheta_t) {
+                        if (idx >= data[trueCosKey_t].size() || idx >= data[predCosKey_t].size()) continue;
+                        tt = thetaFromCos(data[trueCosKey_t][idx]);
+                        tp = thetaFromCos(data[predCosKey_t][idx]);
+                    } else {
+                        continue;
+                    }
+
                     if (!std::isfinite(tt) || !std::isfinite(tp)) continue;
 
                     eres_t.push_back(100.0 * (Epred - Etrue) / Etrue);
