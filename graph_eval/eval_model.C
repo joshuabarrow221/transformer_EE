@@ -105,6 +105,29 @@ bool isCosThetaVar(const std::string& base) {
            (base.find("cos_theta")    != std::string::npos);
 }
 
+// Parse comma-separated numeric tokens (e.g. "100200300,110000000").
+std::vector<long long> parseTopologyCodeList(const std::string& csv) {
+    std::vector<long long> codes;
+    std::stringstream ss(csv);
+    std::string token;
+    while (std::getline(ss, token, ',')) {
+        size_t b = token.find_first_not_of(" \t\r\n");
+        size_t e = token.find_last_not_of(" \t\r\n");
+        if (b == std::string::npos) continue;
+        std::string trimmed = token.substr(b, e - b + 1);
+        try {
+            codes.push_back(std::stoll(trimmed));
+        } catch (...) {
+            std::cerr << "[WARNING] Ignoring non-numeric topology code token: '" << trimmed << "'\n";
+        }
+    }
+    return codes;
+}
+
+std::string topologyCodeLabel(long long code) {
+    return std::string("topo_") + std::to_string(code);
+}
+
 /// === Contour / ellipse helpers (adapted from plot_2d_hist_contour.C) ===
 std::vector<double> calcLevels(TH2D* h, const std::vector<double>& probs) {
     std::vector<double> vals;
@@ -309,6 +332,7 @@ void updateEllipseCSV(const std::string& modelName,
 
 /// === 2D resolution graphing helper ===
 void graph_resolution_stat(
+    const std::string& name_prefix,
     const std::string& base_var,
     const std::vector<double>& x_data,
     const std::vector<double>& resolution,
@@ -386,7 +410,7 @@ void graph_resolution_stat(
         ymax += 1.0;
     }
 
-    std::string name = "gr_" + base_var + "_" + stat2;
+    std::string name = name_prefix + "gr_" + base_var + "_" + stat2;
     TCanvas* c = new TCanvas(name.c_str(), name.c_str(), 800, 600);
     gStyle->SetOptStat(0);
     TGraphErrors* gr = new TGraphErrors(bins, &bin_x[0], &bin_yval[0], &bin_xerr[0], &bin_yerr[0]);
@@ -500,7 +524,8 @@ std::pair<double,double> finite_minmax(const std::vector<double>& v) {
     return {vmin, vmax};
 }
 
-void plot_truth_vs_reco_2d(const std::string& base,
+void plot_truth_vs_reco_2d(const std::string& name_prefix,
+                            const std::string& base,
                             const std::vector<double>& vtrue,
                             const std::vector<double>& vreco,
                             TDirectory* outdir,
@@ -566,7 +591,7 @@ void plot_truth_vs_reco_2d(const std::string& base,
 
 
     // Build histogram (x = truth, y = reco)
-    std::string hname = "h2_" + base + "_reco_vs_true";
+    std::string hname = name_prefix + "h2_" + base + "_reco_vs_true";
     std::string htitle = base + ": reconstructed vs true;true " + base + ";reconstructed " + base;
     TH2D* h2 = new TH2D(hname.c_str(), htitle.c_str(), nbins, xmin, xmax, nbins, xmin, xmax);
     h2->SetDirectory(0);
@@ -579,7 +604,7 @@ void plot_truth_vs_reco_2d(const std::string& base,
     }
 
     // Draw
-    std::string cname = "c2_" + base + "_reco_vs_true";
+    std::string cname = name_prefix + "c2_" + base + "_reco_vs_true";
     TCanvas* c = new TCanvas(cname.c_str(), cname.c_str(), 900, 800);
     gStyle->SetOptStat(0);
     h2->Draw("COLZ");
@@ -656,7 +681,12 @@ void eval_model(
     const char* png_path = "",
     int png_width = 0,
     int png_height = 0,
-    const char* root_output_name = "combined_output.root"
+    const char* root_output_name = "combined_output.root",
+    const char* topology_codes_csv = "",
+    double true_energy_min = -1.0,
+    double true_energy_max = -1.0,
+    double true_theta_min_deg = -1.0,
+    double true_theta_max_deg = -1.0
     ) {
 
      // Put ROOT into batch mode so canvases are not shown on screen
@@ -680,6 +710,29 @@ void eval_model(
         gSystem->ChangeDirectory(original_dir.c_str());
         gROOT->SetBatch(oldBatch); // restore batch state before returning
         return;
+    }
+
+    // === Optional selection controls (added for robustness studies) ===
+    // These options are additive: default values preserve legacy behavior.
+    const std::vector<long long> selected_topology_codes =
+        parseTopologyCodeList(topology_codes_csv ? topology_codes_csv : "");
+    const bool apply_topology_filter = !selected_topology_codes.empty();
+    const bool apply_true_energy_cut = (true_energy_min < true_energy_max);
+    const bool apply_true_theta_cut = (true_theta_min_deg < true_theta_max_deg);
+
+    std::set<long long> selected_topology_set(selected_topology_codes.begin(), selected_topology_codes.end());
+
+    if (apply_topology_filter) {
+        std::cout << "[INFO] Topology selection enabled for " << selected_topology_set.size()
+                  << " code(s)." << std::endl;
+    }
+    if (apply_true_energy_cut) {
+        std::cout << "[INFO] True-energy cut enabled: [" << true_energy_min << ", "
+                  << true_energy_max << "] GeV" << std::endl;
+    }
+    if (apply_true_theta_cut) {
+        std::cout << "[INFO] True-theta cut enabled: [" << true_theta_min_deg << ", "
+                  << true_theta_max_deg << "] deg" << std::endl;
     }
 
     // === Parse header ===
@@ -836,6 +889,47 @@ void eval_model(
             continue;
         }
         ++line_num;
+
+        // --- Optional event filtering for robustness studies ---
+        // Topology-code selection (from true_Topology), if requested.
+        if (apply_topology_filter) {
+            auto itTopo = colIndex.find("true_Topology");
+            if (itTopo != colIndex.end()) {
+                double topo_val = row[itTopo->second];
+                if (!std::isfinite(topo_val)) continue;
+                long long topo_code = static_cast<long long>(topo_val);
+                if (selected_topology_set.find(topo_code) == selected_topology_set.end()) continue;
+            }
+        }
+
+        // True-energy cut in GeV, if requested.
+        if (apply_true_energy_cut) {
+            auto itE = colIndex.find("true_Nu_Energy");
+            if (itE != colIndex.end()) {
+                double Etrue = row[itE->second];
+                if (!std::isfinite(Etrue) || Etrue < true_energy_min || Etrue > true_energy_max) continue;
+            }
+        }
+
+        // True-theta cut in degrees, if requested.
+        if (apply_true_theta_cut) {
+            double theta_for_cut = NAN;
+            auto itTheta = colIndex.find("true_Nu_Theta");
+            if (itTheta != colIndex.end()) {
+                theta_for_cut = row[itTheta->second];
+            } else {
+                auto itTx = colIndex.find("true_Nu_Mom_X");
+                auto itTy = colIndex.find("true_Nu_Mom_Y");
+                auto itTz = colIndex.find("true_Nu_Mom_Z");
+                if (itTx != colIndex.end() && itTy != colIndex.end() && itTz != colIndex.end()) {
+                    theta_for_cut = calcTheta(row[itTx->second], row[itTy->second], row[itTz->second]);
+                }
+            }
+            if (std::isfinite(theta_for_cut) &&
+                (theta_for_cut < true_theta_min_deg || theta_for_cut > true_theta_max_deg)) {
+                continue;
+            }
+        }
 
         for (size_t i = 0; i < headers.size(); ++i)
             data[headers[i]].push_back(row[i]);
@@ -1108,6 +1202,13 @@ void eval_model(
     if (!CSV_HAS_TRUE_COS) {
         data["true_Nu_CosTheta"] = Cos_Theta_nu_true;
     }
+    // Ensure derived theta columns exist in data when the CSV omits them
+    if (data.find("pred_Nu_Theta") == data.end()) {
+        data["pred_Nu_Theta"] = Theta_nu_pred;
+    }
+    if (data.find("true_Nu_Theta") == data.end()) {
+        data["true_Nu_Theta"] = Theta_nu_true;
+    }
 
     // === Beam-only Mass^2 from E and (Theta or CosTheta) when no momentum is present ===
     // m^2 = (E)^2 * (1 - Cos^2(90 - Theta))
@@ -1310,6 +1411,7 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         std::vector<double> res;
 
         const bool cosMode = isCosThetaVar(base);
+        const bool thetaMode = (!cosMode && base == "Nu_Theta");
 
         for (size_t i = 0; i < true_vals.size(); ++i) {
             double t = true_vals[i];
@@ -1318,6 +1420,9 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
             if (cosMode) {
                 // For cos(theta), use absolute residual: Δcosθ = pred - true
+                res.push_back(p - t);
+            } else if (thetaMode) {
+                // For theta, use absolute residual in degrees: Δθ = pred - true
                 res.push_back(p - t);
             } else {
                 // Default behavior: percent resolution
@@ -1338,6 +1443,9 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
             if (cosMode) {
                 htitle = base + " residual (pred - true);#Delta cos(#theta);Counts";
                 r = {-1.0, 1.0};
+            } else if (thetaMode) {
+                htitle = base + " residual (pred - true);#Delta#theta (deg);Counts";
+                r = {-180.0, 180.0};
             } else {
                 htitle = base + " percent resolution;Percent resolution (%);Counts";
                 r = {-200.0, 200.0};
@@ -1357,8 +1465,8 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         }
 
         // 2D resolution plots with rms or std error bars
-        graph_resolution_stat(base, true_vals, res, "rms", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
-        graph_resolution_stat(base, true_vals, res, "std", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
+        graph_resolution_stat("", base, true_vals, res, "rms", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
+        graph_resolution_stat("", base, true_vals, res, "std", NUM_BINS, XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
 
 
         std::cout << "Writing graph to: " << gDirectory->GetPath() << std::endl;
@@ -1382,7 +1490,7 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
             const auto& vreco = itp->second;
 
             // If lengths differ, we safely use min size inside the helper
-            plot_truth_vs_reco_2d(base, vtrue, vreco, plotDir, /*nbins=*/200);
+            plot_truth_vs_reco_2d("", base, vtrue, vreco, plotDir, /*nbins=*/200);
             ++made2D;
         }
         std::cout << "Created " << made2D << " truth-vs-reco 2D histograms." << std::endl;
@@ -1794,6 +1902,213 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
 
     } else {
         std::cout << "No 2D entries available; energy/theta 2D histogram not created." << std::endl;
+    }
+
+    // === Topology overlays (Richi feature integration) ===
+    // Build per-topology overlays for robustness studies while preserving the
+    // baseline (all-event) plots above.
+    auto itTopoAll = data.find("true_Topology");
+    if (itTopoAll != data.end()) {
+        // Gather topology-index groups.
+        std::map<long long, std::vector<size_t>> topo_to_indices;
+        const auto& topo_values = itTopoAll->second;
+        for (size_t i = 0; i < topo_values.size(); ++i) {
+            if (!std::isfinite(topo_values[i])) continue;
+            long long code = static_cast<long long>(topo_values[i]);
+            topo_to_indices[code].push_back(i);
+        }
+
+        // If user requested specific topology codes, keep only those.
+        if (apply_topology_filter) {
+            for (auto it = topo_to_indices.begin(); it != topo_to_indices.end(); ) {
+                if (selected_topology_set.find(it->first) == selected_topology_set.end()) it = topo_to_indices.erase(it);
+                else ++it;
+            }
+        }
+
+        std::cout << "[INFO] Building topology overlays for " << topo_to_indices.size()
+                  << " topology group(s)." << std::endl;
+
+        // For each topology, recreate key resolution and truth-vs-reco products
+        // with a topology-specific prefix in object names.
+        for (const auto& topo_kv : topo_to_indices) {
+            long long topo_code = topo_kv.first;
+            const auto& indices = topo_kv.second;
+            std::string topo_prefix = topologyCodeLabel(topo_code) + "_";
+
+            // (A) true/pred pair based products for this topology.
+            for (const auto& kv : data) {
+                const std::string& true_key = kv.first;
+                if (true_key.rfind("true_", 0) != 0) continue;
+                std::string base = true_key.substr(5);
+                std::string pred_key = "pred_" + base;
+                auto itPred = data.find(pred_key);
+                if (itPred == data.end()) continue;
+
+                const auto& vtrue_all = kv.second;
+                const auto& vpred_all = itPred->second;
+                std::vector<double> vtrue, vpred;
+                vtrue.reserve(indices.size());
+                vpred.reserve(indices.size());
+
+                for (size_t idx : indices) {
+                    if (idx < vtrue_all.size() && idx < vpred_all.size()) {
+                        vtrue.push_back(vtrue_all[idx]);
+                        vpred.push_back(vpred_all[idx]);
+                    }
+                }
+                if (vtrue.empty() || vpred.empty()) continue;
+
+                // 1D residual/resolution histograms per variable per topology.
+                const bool cosMode = isCosThetaVar(base);
+                const bool thetaMode = (!cosMode && base == "Nu_Theta");
+                std::vector<double> res;
+                std::vector<double> vtrue_for_res;
+                res.reserve(std::min(vtrue.size(), vpred.size()));
+                vtrue_for_res.reserve(std::min(vtrue.size(), vpred.size()));
+                for (size_t i = 0; i < std::min(vtrue.size(), vpred.size()); ++i) {
+                    double t = vtrue[i], p = vpred[i];
+                    if (!std::isfinite(t) || !std::isfinite(p)) continue;
+                    if (cosMode) {
+                        vtrue_for_res.push_back(t);
+                        res.push_back(p - t);
+                    } else if (thetaMode) {
+                        vtrue_for_res.push_back(t);
+                        res.push_back(p - t);
+                    } else if (t != 0.0) {
+                        vtrue_for_res.push_back(t);
+                        res.push_back(100.0 * (p - t) / t);
+                    }
+                }
+
+                if (!res.empty()) {
+                    std::string hname = topo_prefix + "h1_res_" + base;
+                    std::pair<double, double> r;
+                    if (cosMode) {
+                        r = {-1.0, 1.0};
+                    } else if (thetaMode) {
+                        r = {-180.0, 180.0};
+                    } else {
+                        r = {-200.0, 200.0};
+                    }
+
+                    TH1D* hres = new TH1D(hname.c_str(), hname.c_str(), 1000, r.first, r.second);
+                    hres->SetDirectory(0);
+                    for (double rv : res) if (std::isfinite(rv)) hres->Fill(rv);
+                    if (plotDir) plotDir->cd();
+                    hres->Write(hname.c_str(), TObject::kOverwrite);
+
+                    graph_resolution_stat(topo_prefix, base, vtrue_for_res, res, "rms", NUM_BINS,
+                                          XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
+                    graph_resolution_stat(topo_prefix, base, vtrue_for_res, res, "std", NUM_BINS,
+                                          XMIN_DEFAULT, XMAX_DEFAULT, plotDir, !cosMode);
+                }
+
+                // Truth-vs-reco 2D with topology prefix.
+                plot_truth_vs_reco_2d(topo_prefix, base, vtrue, vpred, plotDir, /*nbins=*/200);
+            }
+
+            // (B) Energy-resolution vs delta-theta per topology (overlay-compatible objects).
+            // Keep the same angle-source fallback chain as the all-event plot.
+            auto has_key = [&](const std::string& k) { return data.find(k) != data.end(); };
+            bool has_trueE_t = has_key("true_Nu_Energy");
+            bool has_predE_t = has_key("pred_Nu_Energy");
+            bool has_trueMom_t = has_key("true_Nu_Mom_X") && has_key("true_Nu_Mom_Y") && has_key("true_Nu_Mom_Z");
+            bool has_predMom_t = has_key("pred_Nu_Mom_X") && has_key("pred_Nu_Mom_Y") && has_key("pred_Nu_Mom_Z");
+            bool has_theta_t = has_key("true_Nu_Theta") && has_key("pred_Nu_Theta");
+
+            // Reuse the same key aliases used by the all-event path for consistency.
+            std::string trueCosKey_t = firstExistingKey({
+                "true_Nu_CosTheta",
+                "true_Nu_Cos_Theta",
+                "true_Cos_Theta_nu",
+                "true_Cos_Theta_Nu",
+                "true_CosTheta"
+            });
+            std::string predCosKey_t = firstExistingKey({
+                "pred_Nu_CosTheta",
+                "pred_Nu_Cos_Theta",
+                "pred_Cos_Theta_nu",
+                "pred_Cos_Theta_Nu",
+                "pred_CosTheta"
+            });
+            bool has_costheta_t = (!trueCosKey_t.empty() && !predCosKey_t.empty());
+
+            if (has_trueE_t && has_predE_t && ((has_trueMom_t && has_predMom_t) || has_theta_t || has_costheta_t)) {
+                std::vector<double> eres_t;
+                std::vector<double> dtheta_t;
+                eres_t.reserve(indices.size());
+                dtheta_t.reserve(indices.size());
+
+                for (size_t idx : indices) {
+                    if (idx >= data["true_Nu_Energy"].size() || idx >= data["pred_Nu_Energy"].size()) continue;
+
+                    double Etrue = data["true_Nu_Energy"][idx];
+                    double Epred = data["pred_Nu_Energy"][idx];
+                    if (!std::isfinite(Etrue) || !std::isfinite(Epred) || Etrue == 0.0) continue;
+
+                    double tt = NAN;
+                    double tp = NAN;
+
+                    if (has_theta_t) {
+                        if (idx >= data["true_Nu_Theta"].size() || idx >= data["pred_Nu_Theta"].size()) continue;
+                        tt = data["true_Nu_Theta"][idx];
+                        tp = data["pred_Nu_Theta"][idx];
+                    } else if (has_trueMom_t && has_predMom_t) {
+                        if (idx >= data["true_Nu_Mom_X"].size() || idx >= data["true_Nu_Mom_Y"].size() || idx >= data["true_Nu_Mom_Z"].size()) continue;
+                        if (idx >= data["pred_Nu_Mom_X"].size() || idx >= data["pred_Nu_Mom_Y"].size() || idx >= data["pred_Nu_Mom_Z"].size()) continue;
+                        tt = calcTheta(data["true_Nu_Mom_X"][idx], data["true_Nu_Mom_Y"][idx], data["true_Nu_Mom_Z"][idx]);
+                        tp = calcTheta(data["pred_Nu_Mom_X"][idx], data["pred_Nu_Mom_Y"][idx], data["pred_Nu_Mom_Z"][idx]);
+                    } else if (has_costheta_t) {
+                        if (idx >= data[trueCosKey_t].size() || idx >= data[predCosKey_t].size()) continue;
+                        tt = thetaFromCos(data[trueCosKey_t][idx]);
+                        tp = thetaFromCos(data[predCosKey_t][idx]);
+                    } else {
+                        continue;
+                    }
+
+                    if (!std::isfinite(tt) || !std::isfinite(tp)) continue;
+
+                    eres_t.push_back(100.0 * (Epred - Etrue) / Etrue);
+                    dtheta_t.push_back(tp - tt);
+                }
+
+                if (!eres_t.empty() && !dtheta_t.empty()) {
+                    // Keep fixed axes consistent with the all-event plots.
+                    double xmin_t = -200.0;
+                    double xmax_t = 200.0;
+                    double ymin_t = beam_mode ? -0.5 : -180.0;
+                    double ymax_t = beam_mode ?  0.5 :  180.0;
+
+                    std::string hname_t = topo_prefix + "h2_energy_theta";
+                    TH2D* h2t = new TH2D(hname_t.c_str(),
+                        (topo_prefix + "Energy Resolution (%) vs #Delta#theta;Energy Resolution (%);#Delta#theta (deg)").c_str(),
+                        200, xmin_t, xmax_t, 200, ymin_t, ymax_t);
+                    h2t->SetDirectory(0);
+                    for (size_t i = 0; i < eres_t.size(); ++i) h2t->Fill(eres_t[i], dtheta_t[i]);
+
+                    TCanvas* ct = new TCanvas((topo_prefix + "energy_theta_2d").c_str(),
+                                              (topo_prefix + "energy_theta_2d").c_str(), 900, 800);
+                    ct->cd();
+                    h2t->Draw("COLZ");
+
+                    TH2D* hct = (TH2D*)h2t->Clone((topo_prefix + "hcont_energy_theta").c_str());
+                    hct->SetDirectory(0);
+                    hct->Rebin2D(2, 2);
+                    hct->Smooth(1);
+                    std::vector<double> lv = calcLevels(hct, {0.95, 0.90, 0.68});
+                    if (lv.size() == 3) {
+                        drawLargestContourAtLevel(hct, lv[0], kRed+1,    3);
+                        drawLargestContourAtLevel(hct, lv[1], kOrange+7, 3);
+                        drawLargestContourAtLevel(hct, lv[2], kGreen+2,  3);
+                    }
+
+                    if (plotDir) plotDir->cd();
+                    ct->Write((topo_prefix + "energy_theta_2d_canvas").c_str(), TObject::kOverwrite);
+                    h2t->Write(hname_t.c_str(), TObject::kOverwrite);
+                }
+            }
+        }
     }
 
     // Finish writing output file (preserve existing behavior)

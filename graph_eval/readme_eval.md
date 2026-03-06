@@ -9,6 +9,7 @@ This repository includes two convenience scripts for evaluating many trainings b
 ### What it expects
 
 You call it with a single argument: the base directory to scan.
+It also supports an optional `--beam` / `-b` flag to enable beam-mode behavior inside `eval_model.C`.
 
 It supports **two input layouts**:
 
@@ -16,7 +17,7 @@ It supports **two input layouts**:
    - If multiple `model_*/` exist, the script evaluates the **most recently modified** one that contains `result.csv`.
 
 2. **Combined-CSV directories:** `BASE_DIR` directly contains one or more files named:
-  - `combined_result__*.csv`
+   - `combined_result__*.csv`  
    In this case, the script evaluates each combined CSV directly.
 
 ### How to run run_eval_all.sh
@@ -28,13 +29,17 @@ For example:
 ```bash
 ./run_eval_all.sh /exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAND/
 ```
+Beam-mode example:
+```bash
+./run_eval_all.sh --beam /exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/
+```
 
 ### Outputs for run_eval_all.sh
-All outputs are written to the current working directory by default and consist of a .root file and a ellipse_fraction.csv file including evaluation tools for all of the trainings found in the given base directory.
+All outputs are written to the current working directory by default and consist of a `.root` file and an `ellipse_fraction.csv` file including evaluation tools for all of the trainings found in the given base directory.
 
 ## run_full_evals_all_users.sh
 
-`run_full_evals_all_users.sh` is a driver that runs `run_eval_all.sh` repeatedly across a predefined set of training types and users, and aggregates outputs into per-type directories.
+`run_full_evals_all_users.sh` is a driver that runs `run_eval_all.sh` repeatedly across a predefined set of training types and users, and aggregates outputs into per-type directories. It also evaluates combined single-variable CSV directories (named `combined_result__*.csv`) when configured.
 
 ### What it does
 
@@ -71,16 +76,24 @@ chmod +x run_eval_all.sh run_full_evals_all_users.sh
   - Neutrino θ and cos θ (true and predicted)
   - Baseline estimates (true and predicted)
   - Mass-squared (true and predicted)
-* Generates percent-resolution histograms for every matched variable pair.
+* Generates 1D resolution histograms for every matched variable pair.
+* Resolution histograms for `cos(theta)` variables use absolute residuals with fixed axes `(-1, 1)` and 1000 bins.
+* Resolution histograms for `Nu_Theta` use absolute residuals with fixed axes `(-180, 180)` and 1000 bins (works even if theta is derived from momentum).
+* Resolution histograms for all other variables use percent resolution with fixed axes `(-200, 200)` and 1000 bins.
 * Creates 2D “resolution vs truth” graphs using mean ± RMS or mean ± std (with resolution clamped to ±200%).
 * Creates 2D truth-vs-reco histograms for every variable pair.
 * Builds a special 2D histogram of **energy resolution (%) vs Δθ**, including:
   - 95%, 90%, and 68% highest-density contours
   - A fixed ellipse (±10% × ±30°)
   - Computation of the fraction of events inside the ellipse
-* Stores the ellipse fractions in a cumulative `ellipse_fraction.csv` file (auto-created and auto-expanded).
-* Appends or updates a directory inside `combined_output.root` (or a custom ROOT output name) named after the model (taken from the final CSV column header).
+* Stores the ellipse fractions in a cumulative `ellipse_fraction.csv` file (auto-created and auto-expanded), including a `wandb_runtime_hours` column when provided.
+* Appends or updates a directory inside `combined_output.root` named after the model (taken from the final CSV column header).
 * Runs in ROOT **batch mode** so plots are written to file without opening GUI windows.
+* Optional selection controls for robustness studies: filter by `true_Topology` codes (comma-separated list), true-energy range, and true-theta range.
+* When `true_Topology` is present, per-topology overlay outputs are generated (prefixed `topo_<code>_`) for:
+  - 1D resolution histograms
+  - 2D truth-vs-reco plots
+  - Energy-resolution vs Δθ 2D plots
 
 ## Requirements
 
@@ -104,7 +117,7 @@ A structured ROOT file containing:
 * Contour plots and energy-vs-angle canvases
 * All outputs organized under a directory named after the model
 
-If the ROOT file already exists and is non-empty, new outputs are appended.
+If the ROOT file already exists, new outputs are appended.
 
 ### ellipse_fraction.csv
 A cumulative CSV summary containing:
@@ -122,9 +135,7 @@ Run the macro from a shell:
 root -l 'eval_model.C("result.csv")'
 ```
 
-Optional arguments can set the output directory, PNG export path/size, and the ROOT
-output filename:
-
+Optional selection controls (examples):
 ```bash
-root -l 'eval_model.C("result.csv", "false", -1.0, "./Results", "energy_theta.png", 3000, 2000, "combined_output.root")'
+root -l 'eval_model.C("result.csv", false, -1.0, ".", "", 0, 0, "combined_output.root", "301000000000000,300000100000000", 1.0, 5.0, 80.0, 100.0)'
 ```
