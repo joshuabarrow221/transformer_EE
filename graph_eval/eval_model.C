@@ -1416,18 +1416,42 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
         make_hist(trueName, true_vals, r.first, r.second);
     }
 
-    // Calculated neutrino mass squared for trainings with 4-momentum 
-     if (!true_Mass_squared.empty() || !pred_Mass_squared.empty()) {
-    auto r = find_range(pred_Mass_squared);
-    make_hist("true_Mass_squared", true_Mass_squared, r.first, r.second);
-    make_hist("pred_Mass_squared", pred_Mass_squared, r.first, r.second);
-     }
+    // Calculated neutrino mass squared for trainings with 4-momentum
+    if (!true_Mass_squared.empty() || !pred_Mass_squared.empty()) {
+        TH1D* h_true_m2 = new TH1D((global_prefix + "true_Mass_squared").c_str(),
+                                  "true_Mass_squared;m^{2} (GeV^{2});Counts",
+                                  1000, -15.0, 15.0);
+        h_true_m2->SetDirectory(0);
+        for (double v : true_Mass_squared) if (std::isfinite(v)) h_true_m2->Fill(v);
+
+        TH1D* h_pred_m2 = new TH1D((global_prefix + "pred_Mass_squared").c_str(),
+                                  "pred_Mass_squared;m^{2} (GeV^{2});Counts",
+                                  1000, -15.0, 15.0);
+        h_pred_m2->SetDirectory(0);
+        for (double v : pred_Mass_squared) if (std::isfinite(v)) h_pred_m2->Fill(v);
+
+        if (plotDir) plotDir->cd();
+        h_true_m2->Write();
+        h_pred_m2->Write();
+    }
 
     // Beam-only E+Theta/CosTheta neutrino mass squared (no momentum)
     if (!true_beam_Mass_squared.empty() || !pred_beam_Mass_squared.empty()) {
-        auto r = find_range(pred_beam_Mass_squared);
-        make_hist("true_beam_Mass_squared", true_beam_Mass_squared, r.first, r.second);
-        make_hist("pred_beam_Mass_squared", pred_beam_Mass_squared, r.first, r.second);
+        TH1D* h_true_bm2 = new TH1D((global_prefix + "true_beam_Mass_squared").c_str(),
+                                   "true_beam_Mass_squared;m^{2} (GeV^{2});Counts",
+                                   1000, -15.0, 15.0);
+        h_true_bm2->SetDirectory(0);
+        for (double v : true_beam_Mass_squared) if (std::isfinite(v)) h_true_bm2->Fill(v);
+
+        TH1D* h_pred_bm2 = new TH1D((global_prefix + "pred_beam_Mass_squared").c_str(),
+                                   "pred_beam_Mass_squared;m^{2} (GeV^{2});Counts",
+                                   1000, -15.0, 15.0);
+        h_pred_bm2->SetDirectory(0);
+        for (double v : pred_beam_Mass_squared) if (std::isfinite(v)) h_pred_bm2->Fill(v);
+
+        if (plotDir) plotDir->cd();
+        h_true_bm2->Write();
+        h_pred_bm2->Write();
     }
 
     make_hist("Cos_Theta_nu_pred", Cos_Theta_nu_pred, -1, 1);
