@@ -1350,7 +1350,19 @@ auto make_hist = [&](const std::string& name, const std::vector<double>& d, doub
     bool has_finite = std::any_of(d.begin(), d.end(), [](double v) { return std::isfinite(v); });
     if (!has_finite) return;
     std::string hname = global_prefix + name;
-    TH1D* h = new TH1D(hname.c_str(), name.c_str(), 500, xmin, xmax);
+    std::string htitle = name;
+    int nbins = 500;
+    double xlo = xmin;
+    double xhi = xmax;
+
+    if (name.find("Nu_Energy") != std::string::npos) {
+        htitle = name + ";E (GeV);Counts";
+        nbins = 1000;
+        xlo = 0.0;
+        xhi = 12.0;
+    }
+
+    TH1D* h = new TH1D(hname.c_str(), htitle.c_str(), nbins, xlo, xhi);
     h->SetDirectory(0);  // prevent ROOT from auto-managing this hist
     for (double val : d) {
         // Range-for copies each element into val; we only fill finite values.
