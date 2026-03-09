@@ -37,19 +37,21 @@ BEAM_FILES=(
 OUTDIR="."
 
 # Override model search roots with either:
-#  1) MODEL_SEARCH_ROOTS as a bash array in this script, or
+#  1) MODEL_SEARCH_ROOTS_DEFAULT as a bash array in this script, or
 #  2) MODEL_SEARCH_ROOTS env var as a colon-separated list.
 #
 # Example:
 #   MODEL_SEARCH_ROOTS="/path/to/a:/path/to/b" ./make_batch_inference_configs.sh
-MODEL_SEARCH_ROOTS=(
+MODEL_SEARCH_ROOTS_DEFAULT=(
   "/exp/dune/data/users/cborden/MLProject/Training_Samples"
   "/exp/dune/data/users/rrichi/MLProject/Training_Samples"
   "/exp/dune/data/users/jbarrow/MLProject/Training_Samples"
 )
 
-if [[ -n "${MODEL_SEARCH_ROOTS:-}" && "${MODEL_SEARCH_ROOTS}" == *":"* ]]; then
+if [[ -n "${MODEL_SEARCH_ROOTS:-}" ]]; then
   IFS=':' read -r -a MODEL_SEARCH_ROOTS <<< "${MODEL_SEARCH_ROOTS}"
+else
+  MODEL_SEARCH_ROOTS=("${MODEL_SEARCH_ROOTS_DEFAULT[@]}")
 fi
 
 python3 generate_batch_inference_configs.py \
