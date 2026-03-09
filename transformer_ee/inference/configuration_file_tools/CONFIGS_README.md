@@ -167,6 +167,28 @@ If they are not in the current working directory, either:
 
 This writes the (currently seven) JSON files into the current directory (or the configured output dir).
 
+### Step 3b — override model search roots when your exports live elsewhere
+
+The wrapper now forwards `--model-search-roots` to the Python generator. You can override roots in two ways:
+
+1) Edit the `MODEL_SEARCH_ROOTS=(...)` array directly in `make_batch_inference_configs.sh`
+2) Pass `MODEL_SEARCH_ROOTS` at runtime as a colon-separated list:
+
+```bash
+MODEL_SEARCH_ROOTS="/my/models/userA:/my/models/userB:/my/models/shared" \
+  ./make_batch_inference_configs.sh
+```
+
+If you prefer to bypass the wrapper, call the generator directly:
+
+```bash
+python3 generate_batch_inference_configs.py \
+  --outdir . \
+  --atm-files Train_Atmospheric_Flat_Models_userA.txt Train_Atmospheric_Flat_Models_userB.txt \
+  --beam-files Train_DUNEBeam_Flat_Models_userA.txt Train_DUNEBeam_Nat_Models_userA.txt Train_NOvABeam_Nat_Models_userA.txt \
+  --model-search-roots /my/models/userA /my/models/userB /my/models/shared
+```
+
 ### Re-running behavior (backups)
 
 By default the generator creates timestamped backups if an output JSON already exists:
