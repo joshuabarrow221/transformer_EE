@@ -104,10 +104,22 @@ For 3-variable outputs, `Phi` is required and the script builds whichever of `Th
 
 If a momentum component is missing for a loss (for example `Mom_X` missing for `MACE`), the script logs an explicit `[ERROR]` line and skips only combinations that require that missing momentum loss. Other valid momentum combinations continue to build.
 
-Optional 4th argument: a common eval output directory. If provided, the script runs
+Optional 4th positional argument: a common eval output directory. If provided, the script runs
 `graph_eval/run_eval_all.sh` on each output group directory while `cd`'d into that
 common directory so existing `ellipse_fraction.csv` is **appended/expanded** rather
 than replaced.
+
+Optional flag: `--include-pattern PATTERN`. This filters candidate inference result
+directories by basename before any grouping/merging is done.
+
+Convenience shortcuts:
+
+- `--include-pattern vector` means `*VectorLeptwNC*`
+- `--include-pattern scalar` means `*ScalarLeptwNC*`
+
+You can also pass a custom shell glob, for example:
+
+- `--include-pattern '*VectorLeptwNC*'`
 
 ### Usage
 
@@ -118,6 +130,26 @@ chmod +x build_combined_singlevar_inference_results.sh
   /exp/dune/data/users/USERNAME/MLProject/Inference_Samples/Combined_SingleVar \
   /path/to/transformer_EE/graph_eval/single_var \
   /exp/dune/data/users/USERNAME/MLProject/Inference_Samples/CommonEval
+```
+
+Vector-only example:
+
+```bash
+./build_combined_singlevar_inference_results.sh \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples/Combined_SingleVar_Vector \
+  /path/to/transformer_EE/graph_eval/single_var \
+  --include-pattern vector
+```
+
+Scalar-only example:
+
+```bash
+./build_combined_singlevar_inference_results.sh \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples \
+  /exp/dune/data/users/USERNAME/MLProject/Inference_Samples/Combined_SingleVar_Scalar \
+  /path/to/transformer_EE/graph_eval/single_var \
+  --include-pattern scalar
 ```
 
 If the 4th argument is omitted, the script only builds the combined CSVs.
@@ -146,4 +178,3 @@ Output subdirectories are now named with a human-readable tag (shown as `GROUP_T
 - `DUNEAtmoFlat_Infer_Vector_NpNpi_SV`
 
 If multiple distinct groups map to the same tag, the script appends `__dupN` to keep output paths unique.
-

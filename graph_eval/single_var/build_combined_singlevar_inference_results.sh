@@ -16,15 +16,74 @@ set -euo pipefail
 # combined_output.root and ellipse_fraction.csv are updated/appended in a common
 # eval output directory.
 
-INFER_BASE="${1:-}"
-OUT_ROOT="${2:-}"
-MACRO_DIR="${3:-}"
-EVAL_DIR="${4:-}"
+usage() {
+  cat <<EOF
+Usage: $0 INFER_BASE OUT_ROOT MACRO_DIR [COMMON_EVAL_OUTPUT_DIR] [--include-pattern PATTERN]
+
+Examples:
+  $0 /path/to/infer /path/to/out /path/to/graph_eval/single_var
+  $0 /path/to/infer /path/to/out /path/to/graph_eval/single_var /path/to/eval --include-pattern vector
+  $0 /path/to/infer /path/to/out /path/to/graph_eval/single_var --include-pattern scalar
+
+Include pattern shortcuts:
+  vector  -> *VectorLeptwNC*
+  scalar  -> *ScalarLeptwNC*
+
+Custom glob patterns are also accepted, for example:
+  --include-pattern '*VectorLeptwNC*'
+EOF
+}
+
+POSITIONAL_ARGS=()
+INCLUDE_PATTERN=""
+
+while (( "$#" )); do
+  case "$1" in
+    --include-pattern)
+      if [[ $# -lt 2 ]]; then
+        echo "ERROR: --include-pattern requires a value" >&2
+        usage
+        exit 1
+      fi
+      INCLUDE_PATTERN="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    --*)
+      echo "ERROR: unknown option: $1" >&2
+      usage
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+INFER_BASE="${POSITIONAL_ARGS[0]:-}"
+OUT_ROOT="${POSITIONAL_ARGS[1]:-}"
+MACRO_DIR="${POSITIONAL_ARGS[2]:-}"
+EVAL_DIR="${POSITIONAL_ARGS[3]:-}"
 
 if [[ -z "$INFER_BASE" || -z "$OUT_ROOT" || -z "$MACRO_DIR" ]]; then
-  echo "Usage: $0 INFER_BASE OUT_ROOT MACRO_DIR [COMMON_EVAL_OUTPUT_DIR]"
+  usage
   exit 1
 fi
+
+case "${INCLUDE_PATTERN,,}" in
+  "")
+    ;;
+  vector)
+    INCLUDE_PATTERN="*VectorLeptwNC*"
+    ;;
+  scalar)
+    INCLUDE_PATTERN="*ScalarLeptwNC*"
+    ;;
+esac
 
 if [[ ! -d "$INFER_BASE" ]]; then
   echo "ERROR: INFER_BASE not a directory: $INFER_BASE" >&2
@@ -130,13 +189,22 @@ newest_csv_in_dir() {
 }
 
 echo "[$(ts)] Scanning inference directories under: $INFER_BASE"
+if [[ -n "$INCLUDE_PATTERN" ]]; then
+  echo "[$(ts)] Applying include-pattern filter: $INCLUDE_PATTERN"
+fi
 
 scan_count=0
 match_count=0
+filtered_count=0
 
 while IFS= read -r d; do
   ((scan_count+=1))
   bn="$(basename "$d")"
+
+  if [[ -n "$INCLUDE_PATTERN" && "$bn" != $INCLUDE_PATTERN ]]; then
+    ((filtered_count+=1))
+    continue
+  fi
 
   # Expect names like:
   #   <group>_NpNpi_<VAR>_<LOSS>_Topology[_...]
@@ -182,7 +250,7 @@ while IFS= read -r d; do
   fi
 done < <(find "$INFER_BASE" -type d -name "*_NpNpi_*_Topology*" -print 2>/dev/null || true)
 
-echo "[$(ts)] Scan complete: candidate_dirs=${scan_count}, matched_dirs_with_csv=${match_count}, unique_keys=${#CSV_BY_KEY[@]}"
+echo "[$(ts)] Scan complete: candidate_dirs=${scan_count}, filtered_out=${filtered_count}, matched_dirs_with_csv=${match_count}, unique_keys=${#CSV_BY_KEY[@]}"
 
 if (( ${#CSV_BY_KEY[@]} == 0 )); then
   echo "[$(ts)] ERROR: No matching single-variable inference directories found."
