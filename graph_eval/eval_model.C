@@ -199,6 +199,8 @@ void updateEllipseCSV(const std::string& modelName,
                       double runtime_hours = -1.0)
 {
     const std::string filename = "ellipse_fraction.csv";
+    const std::string working_dir = gSystem->WorkingDirectory();
+    const std::string filename_abs = working_dir + "/" + filename;
 
     // Build column name for this ellipse (no commas to keep CSV simple)
     std::ostringstream ellNameOSS;
@@ -326,8 +328,10 @@ void updateEllipseCSV(const std::string& modelName,
     }
 
     fout.close();
-    std::cout << "Updated " << filename << " with model_name=" << modelName
-              << " and " << ellColName << " = " << frac << std::endl;
+    std::cout << "[INFO] Ellipse fraction for model '" << modelName << "': "
+              << frac << " (" << ellColName << ")" << std::endl;
+    std::cout << "[INFO] Wrote/updated ellipse summary CSV: "
+              << filename_abs << std::endl;
 }
 
 /// === 2D resolution graphing helper ===
@@ -715,6 +719,7 @@ void eval_model(
         gROOT->SetBatch(oldBatch); // restore batch state before returning
         return;
     }
+    std::cout << "[INFO] Evaluating CSV input: " << filename_abs << std::endl;
 
     // === Optional selection controls (added for robustness studies) ===
     // These options are additive: default values preserve legacy behavior.
@@ -792,6 +797,8 @@ void eval_model(
     if (root_output_path.empty()) {
         root_output_path = "combined_output.root";
     }
+    std::cout << "[INFO] ROOT output target: "
+              << gSystem->WorkingDirectory() << "/" << root_output_path << std::endl;
 
     Long_t id = 0;
     Long_t size = 0;
