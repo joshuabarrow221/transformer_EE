@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <limits>
@@ -26,11 +27,32 @@ namespace {
 
 std::vector<std::string> splitCSVLine(const std::string& line) {
     std::vector<std::string> out;
-    std::stringstream ss(line);
     std::string token;
-    while (std::getline(ss, token, ',')) {
-        out.push_back(token);
+    bool inQuotes = false;
+
+    for (size_t i = 0; i < line.size(); ++i) {
+        const char ch = line[i];
+
+        if (ch == '"') {
+            if (inQuotes && i + 1 < line.size() && line[i + 1] == '"') {
+                token.push_back('"');
+                ++i;  // consume escaped quote
+            } else {
+                inQuotes = !inQuotes;
+            }
+            continue;
+        }
+
+        if (ch == ',' && !inQuotes) {
+            out.push_back(token);
+            token.clear();
+            continue;
+        }
+
+        token.push_back(ch);
     }
+    out.push_back(token);
+
     return out;
 }
 
