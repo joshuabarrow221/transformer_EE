@@ -82,6 +82,8 @@ def get_train_valid_test_dataloader(config: dict):  # pylint: disable=R0914
     """
 
     dataframe_type = config.get("dataframe_type", "pandas")
+    noise_export_enabled = bool(config.get("noise_export", {}).get("enabled", False))
+
     if dataframe_type == "pandas":
         import pandas as pd  # pylint: disable=C0415
 
@@ -92,7 +94,9 @@ def get_train_valid_test_dataloader(config: dict):  # pylint: disable=R0914
         df = pd.read_csv(config["data_path"])
         train_idx, valid_idx, test_idx = get_sample_indices(len(df), config)
         train_set = Normalized_pandas_Dataset_with_cache(
-            config, df.iloc[train_idx].reset_index(drop=True, inplace=False)
+            config,
+            df.iloc[train_idx].reset_index(drop=True, inplace=False),
+            return_index=noise_export_enabled,
         )
         valid_set = Normalized_pandas_Dataset_with_cache(
             config,
@@ -115,7 +119,9 @@ def get_train_valid_test_dataloader(config: dict):  # pylint: disable=R0914
         del df
         sizes = get_sample_sizes(randomdf.height, config)
         train_set = Normalized_Polars_Dataset_with_cache(
-            config, randomdf.slice(offset=0, length=sizes[0])
+            config,
+            randomdf.slice(offset=0, length=sizes[0]),
+            return_index=noise_export_enabled,
         )
         valid_set = Normalized_Polars_Dataset_with_cache(
             config,

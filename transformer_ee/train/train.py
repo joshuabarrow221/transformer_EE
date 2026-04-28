@@ -142,6 +142,10 @@ class MVtrainer:
         print("epochs: ", self.epochs)
         self.save_path = os.path.join(input_d.get("save_path", "."), "model_" + hash_dict(self.input_d))
         os.makedirs(self.save_path, exist_ok=True)
+        if hasattr(self.trainloader, "collate_fn") and hasattr(
+            self.trainloader.collate_fn, "configure_output_dir"
+        ):
+            self.trainloader.collate_fn.configure_output_dir(self.save_path)
         self._dump_static_json()
 
     # ------------------------------------------------------------------
@@ -198,6 +202,10 @@ class MVtrainer:
         n_vars = len(base_loss_names)
 
         for epoch in range(self.epochs):
+            if hasattr(self.trainloader, "collate_fn") and hasattr(
+                self.trainloader.collate_fn, "set_epoch"
+            ):
+                self.trainloader.collate_fn.set_epoch(epoch)
             # ------------------- training -------------------
             self.net.train()
             epoch_total_loss = []
@@ -346,6 +354,10 @@ class MVtrainer:
         n_vars = len(base_loss_names)
 
         for epoch in range(self.epochs):
+            if hasattr(self.trainloader, "collate_fn") and hasattr(
+                self.trainloader.collate_fn, "set_epoch"
+            ):
+                self.trainloader.collate_fn.set_epoch(epoch)
             a_val = alpha(epoch)
             b_val = beta(epoch)
             self.alpha_list.append(a_val)

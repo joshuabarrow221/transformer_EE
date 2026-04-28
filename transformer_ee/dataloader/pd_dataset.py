@@ -37,10 +37,16 @@ class pandas_Dataset(Dataset):  # pylint: disable=C0103, W0223
     """
 
     def __init__(
-        self, config: dict, dtframe: pd.DataFrame, weighter=None, eval=False
+        self,
+        config: dict,
+        dtframe: pd.DataFrame,
+        weighter=None,
+        eval=False,
+        return_index=False,
     ):  # pylint: disable=W0622
         self.eval = eval
         self.config = config.copy()
+        self.return_index = return_index
 
         self.df = dtframe
 
@@ -82,8 +88,15 @@ class Normalized_pandas_Dataset_with_cache(pandas_Dataset):
         weighter=None,
         eval=False,  # pylint: disable=W0622
         use_cache=True,
+        return_index=False,
     ):
-        super().__init__(config, dtframe, weighter=weighter, eval=eval)
+        super().__init__(
+            config,
+            dtframe,
+            weighter=weighter,
+            eval=eval,
+            return_index=return_index,
+        )
         self.use_cache = use_cache
         self.cached = {}
         self.normalized_df = (
@@ -185,6 +198,8 @@ class Normalized_pandas_Dataset_with_cache(pandas_Dataset):
             _target,  # shape: (target_dim)
             _weight,  # shape: (1)
         )
+        if self.return_index:
+            return_tuple = return_tuple + (torch.tensor(index, dtype=torch.long),)
         if self.use_cache:
             self.cached[index] = return_tuple
         return return_tuple

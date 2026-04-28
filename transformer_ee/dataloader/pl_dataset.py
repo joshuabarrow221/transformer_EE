@@ -94,9 +94,17 @@ class Polars_Dataset(Dataset): # pylint: disable=C0103, W0223
     A base PyTorch dataset for polars dataframe
     """
 
-    def __init__(self, config: dict, dtframe: pl.DataFrame, weighter=None, eval=False): # pylint: disable=W0622
+    def __init__(
+        self,
+        config: dict,
+        dtframe: pl.DataFrame,
+        weighter=None,
+        eval=False,
+        return_index=False,
+    ): # pylint: disable=W0622
         self.eval = eval
         self.config = config.copy()
+        self.return_index = return_index
 
         # Drop NaN rows automatically before processing
         dtframe = drop_nan_rows(dtframe)
@@ -148,8 +156,15 @@ class Normalized_Polars_Dataset_with_cache(Polars_Dataset): # pylint: disable=C0
         weighter=None,
         eval=False,
         use_cache=True,
+        return_index=False,
     ):
-        super().__init__(config, dtframe, weighter=weighter, eval=eval)
+        super().__init__(
+            config,
+            dtframe,
+            weighter=weighter,
+            eval=eval,
+            return_index=return_index,
+        )
         self.use_cache = use_cache
         self.cached = {}
         self.stat = {}
@@ -252,6 +267,8 @@ class Normalized_Polars_Dataset_with_cache(Polars_Dataset): # pylint: disable=C0
             _target,  # shape: (target_dim)
             _weight,  # shape: (1)
         )
+        if self.return_index:
+            return_tuple = return_tuple + (torch.tensor(index, dtype=torch.long),)
         if self.use_cache:
             self.cached[index] = return_tuple
         return return_tuple

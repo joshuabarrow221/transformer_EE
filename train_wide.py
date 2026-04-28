@@ -181,6 +181,33 @@ def build_argparser():
         default=None,
         help="Scalar variable names for noise; if omitted, use train_script defaults."
     )
+    p.add_argument(
+        "--export-noised-inputs",
+        action="store_true",
+        help=(
+            "Export event-by-event noised training inputs to CSV. "
+            "Defaults to noised_training_inputs.csv inside the model output directory."
+        ),
+    )
+    p.add_argument(
+        "--noise-export-path",
+        default=None,
+        help=(
+            "Optional CSV path for exporting event-by-event noised training inputs. "
+            "If omitted, defaults to noised_training_inputs.csv inside the model output directory."
+        ),
+    )
+    p.add_argument(
+        "--noise-export-epochs",
+        type=int,
+        default=1,
+        help="Number of training epochs to export when noise export is enabled (default: 1).",
+    )
+    p.add_argument(
+        "--noise-export-include-normalized",
+        action="store_true",
+        help="Also export normalized noised features alongside denormalized values.",
+    )
 
     # Training / Optim
     p.add_argument("--epochs", type=int, default=20)
@@ -308,6 +335,27 @@ def main():
             "scalar": scalar_vars,
         }
         print("[INFO] Noise configuration enabled:", cfg["noise"])
+        if args.noise_export_epochs < 1:
+            parser.error("--noise-export-epochs must be >= 1.")
+        if (
+            args.export_noised_inputs
+            or args.noise_export_path is not None
+            or args.noise_export_include_normalized
+        ):
+            cfg["noise_export"] = {
+                "enabled": True,
+                "path": args.noise_export_path,
+                "epochs": args.noise_export_epochs,
+                "include_normalized": args.noise_export_include_normalized,
+            }
+            print("[INFO] Noise export enabled:", cfg["noise_export"])
+    elif (
+        args.export_noised_inputs
+        or args.noise_export_path is not None
+        or args.noise_export_include_normalized
+        or args.noise_export_epochs != 1
+    ):
+        parser.error("Noise export requires --enable-noise.")
 
 
     # Optimizer
