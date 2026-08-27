@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+MACRO="${SCRIPT_DIR}/plot_csv_overlays.C"
+
+if [[ ! -f "$MACRO" ]]; then
+  echo "ERROR: plot_csv_overlays.C not found at: $MACRO" >&2
+  exit 1
+fi
+
 usage() {
   cat <<'USAGE'
 Usage:
@@ -16,7 +24,7 @@ Usage:
 Notes:
 - Up to 8 plot specs are supported.
 - color can be ROOT color token (kRed, kBlue, ...) or integer code.
-- Use --normalize false to keep raw event counts.
+- Use --normalize false to keep raw event counts.\n- If --ytitle is omitted, the label is selected from --normalize.
 USAGE
 }
 
@@ -30,7 +38,7 @@ YMAX=-1
 DRAW_V0=true
 SYM_VLINE=-1
 XTITLE="Energy Resolution (%)"
-YTITLE="Normalized Events"
+YTITLE=""
 TITLE=""
 LEGEND_HEADER=""
 OUTPUT_ROOT="combined_output.root"
@@ -68,4 +76,4 @@ if [[ -z "$PLOTS" ]]; then
   exit 1
 fi
 
-root -l -b -q "graph_eval/plot_csv_overlays.C(\"${PLOTS}\",${BINS},${XMIN},${XMAX},${NORMALIZE},${YMIN},${YMAX},${DRAW_V0},${SYM_VLINE},\"${XTITLE}\",\"${YTITLE}\",\"${TITLE}\",\"${LEGEND_HEADER}\",\"${OUTPUT_ROOT}\",\"${TDIR}\",\"${CANVAS_NAME}\",\"${PNG}\")"
+root -l -b -q "${MACRO}(\"${PLOTS}\",${BINS},${XMIN},${XMAX},${NORMALIZE},${YMIN},${YMAX},${DRAW_V0},${SYM_VLINE},\"${XTITLE}\",\"${YTITLE}\",\"${TITLE}\",\"${LEGEND_HEADER}\",\"${OUTPUT_ROOT}\",\"${TDIR}\",\"${CANVAS_NAME}\",\"${PNG}\")"
