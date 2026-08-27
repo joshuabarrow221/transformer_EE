@@ -2,7 +2,9 @@
 # Flexible launch script for Transformer_EE_MV with widened d_model & extras.
 
 import json
+import sys
 import os
+from datetime import datetime
 import argparse
 from copy import deepcopy
 
@@ -22,7 +24,8 @@ def kset(d, dotted_key, value):
         if p not in cur or not isinstance(cur[p], dict):
             cur[p] = {}
         cur = cur[p]
-    cur[parts[-1]] = value
+    if parts[-1] not in cur:
+        cur[parts[-1]] = value
 
 
 def ensure_model_kwargs(cfg):
@@ -264,6 +267,13 @@ def main():
 
     kset(cfg, "model.epochs", args.epochs)
 
+    # Save stdout as log file to save_path
+    orig_stdout = sys.stdout
+    if os.path.isdir(cfg["save_path"])==False:
+        os.makedirs(cfg["save_path"])
+    f = open(cfg["save_path"]+"/train.log", 'a')
+    sys.stdout = f
+
     # Optional early-stopping/checkpoint policy (CLI-driven).
     if args.early_stop_window is not None or args.early_stop_min_delta_pct is not None:
         early_cfg = cfg.get("early_stopping", {})
@@ -280,7 +290,10 @@ def main():
         cfg["checkpointing"] = ckpt_cfg
 
     # --- Optional noise configuration (mirrors train_script.py example) ---
-    if args.enable_noise:
+    if "noise" in cfg:
+        print("[INFO] Noise configuration enabled:", cfg["noise"])
+    
+    elif args.enable_noise:
         # Defaults from your train_script.py example:
         default_vector = [
             "Final_State_Particles_Energy",
@@ -313,19 +326,17 @@ def main():
     # Optimizer
     kset(cfg, "optimizer.name", args.optimizer)
     kset(cfg, "optimizer.kwargs.lr", args.lr)
-    if args.optimizer == "sgd":
+    if cfg["optimizer"]["name"] == "sgd":
         kset(cfg, "optimizer.kwargs.momentum", args.momentum)
     if args.weight_decay is not None:
         kset(cfg, "optimizer.kwargs.weight_decay", args.weight_decay)
 
     # Transformer basics
     mkw = ensure_model_kwargs(cfg)
-    mkw["nhead"] = int(args.nhead) if args.nhead is not None else mkw.get("nhead", 4)
-    mkw["num_layers"] = int(args.num_layers) if args.num_layers is not None else mkw.get("num_layers", 6)
-    if args.dropout is not None:
-        mkw["dropout"] = float(args.dropout)
-    if args.dim_ff is not None:
-        mkw["dim_feedforward"] = int(args.dim_ff)
+    kset(mkw, "nhead", args.nhead)
+    kset(mkw, "num_layers", args.nhead)
+    kset(mkw, "dropout", args.dropout)
+    kset(mkw, "dim_feedforward", args.dim_ff)
 
     # Profiles (apply late, they override the above if needed)
     if args.profile:
@@ -360,6 +371,9 @@ def main():
         id=args.wandb_id,
     )
 
+    starttime = datetime.now()
+    print("Start Time: " + str(starttime))
+
     my_trainer = MVtrainer(cfg, logger=my_logger)
     my_trainer.train_LCL()
 
@@ -367,6 +381,12 @@ def main():
     torch.cuda.ipc_collect() # collect any stray IPC handles
     
     my_trainer.eval()
+
+    endtime = datetime.now()
+    print("End Time: " + str(endtime))
+    print("Time Elapsed: " + str(endtime - starttime))
+
+    sys.stdout = orig_stdout
 
 
 if __name__ == "__main__":
