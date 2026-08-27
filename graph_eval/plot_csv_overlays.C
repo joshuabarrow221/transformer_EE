@@ -236,7 +236,7 @@ void plot_csv_overlays(
     bool draw_vertical_zero = true,
     double symmetric_vertical = -1.0,
     const char* x_title_c = "Energy Resolution (%)",
-    const char* y_title_c = "Normalized Events",
+    const char* y_title_c = "",
     const char* canvas_title_c = "",
     const char* legend_header_c = "",
     const char* output_root_c = "combined_output.root",
@@ -251,7 +251,10 @@ void plot_csv_overlays(
     if (xmax <= xmin) throw std::runtime_error("xmax must be > xmin");
 
     const std::string x_title = x_title_c ? x_title_c : "X";
-    const std::string y_title = y_title_c ? y_title_c : (normalize ? "Normalized Events" : "Events");
+    const std::string requested_y_title = y_title_c ? y_title_c : "";
+    const std::string y_title =
+        requested_y_title.empty() ? (normalize ? "Normalized Events" : "Events")
+                                  : requested_y_title;
     const std::string canvas_title = canvas_title_c ? canvas_title_c : "";
     const std::string legend_header = legend_header_c ? legend_header_c : "";
     const std::string output_root = output_root_c ? output_root_c : "combined_output.root";
