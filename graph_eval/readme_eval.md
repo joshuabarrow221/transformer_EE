@@ -168,3 +168,57 @@ Optional selection controls (examples):
 ```bash
 root -l 'eval_model.C("result.csv", false, -1.0, ".", "", 0, 0, "combined_output.root", "", "301000000000000,300000100000000", 1, 1, 1.0, 5.0, 80.0, 100.0)'
 ```
+
+## plot_csv_overlays.C (new generalized CSV overlay tool)
+
+`plot_csv_overlays.C` is a generic ROOT macro to rapidly compare up to **8** distributions from arbitrary CSV files, with on-the-fly controls tuned for energy/angle/mass-resolution style plots.
+
+### Supported capabilities
+
+1. Normalize each histogram independently (`normalize=true/false`)
+2. Overlay up to 8 curves at once
+3. Per-curve color, line style, and line width
+4. User-defined binning (`nbins`)
+5. User-defined x/y display ranges (`xmin/xmax`, optional `ymin/ymax`)
+6. Vertical guides at `x=0` and optional symmetric guides at `±value`
+7. Output to a single ROOT file with `TDirectory` placement
+
+### Plot-spec format
+
+The first argument is a semicolon-separated list, where each item is:
+
+```text
+file.csv|column_name|legend label|color|line_style|line_width
+```
+
+- `color`: ROOT token (`kRed`, `kBlue`, etc.) or integer color code
+- You may omit trailing style fields; defaults are used.
+
+### Direct ROOT CLI example
+
+```bash
+root -l -b -q 'plot_csv_overlays.C(
+"Noised_FlatvsNat_MVSV_CMCs/E-MAPE__P-MAE/DBNat_on_DBNat_Vector_SV_E_MAPE_P_MAE_AR23.csv|E_MAPE|SV AR23 w/Noise|kRed|1|2;
+Noised_FlatvsNat_MVSV_CMCs/E-MAPE__P-MAE/DBNat_on_DBNat_Vector_SV_E_MAPE_P_MAE_G2111a.csv|E_MAPE|SV G2111a w/Noise|kBlue|1|2",
+220,-4,4,true,-1,-1,true,0.5,
+"Energy Resolution (%)","Normalized Events",
+"DUNE ND-like beam: SV comparison","",
+"combined_output.root","csv_overlay/SV","sv_energy_overlay","sv_energy_overlay.png")'
+```
+
+### Bash wrapper
+
+For faster repeated use, run:
+
+```bash
+./run_csv_overlay.sh \
+  --plots "file1.csv|E_MAPE|SV AR23 Natural|kRed|1|2;file2.csv|E_MAPE|SV G2111a Natural|kBlue|1|2" \
+  --bins 220 --xmin -4 --xmax 4 --normalize true \
+  --draw-v0 true --sym-vline 0.5 \
+  --xtitle "Energy Resolution (%)" --ytitle "Normalized Events" \
+  --title "DUNE Beam Flat vs Natural" \
+  --output-root combined_output.root --tdir csv_overlay/SV \
+  --canvas-name sv_comp --png sv_comp.png
+```
+
+The wrapper forwards all options to `plot_csv_overlays.C` in ROOT batch mode.
