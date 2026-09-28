@@ -8,8 +8,12 @@ This repository includes two convenience scripts for evaluating many trainings b
 
 ### What it expects
 
-You call it with a single argument: the base directory to scan.
-It also supports an optional `--beam` / `-b` flag to enable beam-mode behavior inside `eval_model.C`.
+You call it with a base directory to scan.
+It also supports:
+
+- `--beam` / `-b` to enable beam-mode behavior inside `eval_model.C`
+- `--output-dir DIR` to choose where `ellipse_fraction.csv` and the ROOT file are written
+- `--root-output-name NAME` to choose the ROOT filename, for example `combined_inference_output.root`
 
 It supports **two input layouts**:
 
@@ -34,8 +38,16 @@ Beam-mode example:
 ./run_eval_all.sh --beam /exp/dune/data/users/cborden/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/
 ```
 
+Evaluate a folder of combined inference CSVs and write outputs into a dedicated directory:
+```bash
+./run_eval_all.sh \
+  --output-dir /path/to/eval_outputs \
+  --root-output-name combined_inference_output.root \
+  /path/to/folder/containing/combined_result__*.csv
+```
+
 ### Outputs for run_eval_all.sh
-All outputs are written to the current working directory by default and consist of a `.root` file and an `ellipse_fraction.csv` file including evaluation tools for all of the trainings found in the given base directory.
+All outputs are written to the current working directory by default, unless `--output-dir` is provided. Outputs consist of a ROOT file and an `ellipse_fraction.csv` file including evaluation tools for all of the trainings found in the given base directory.
 
 ## run_full_evals_all_users.sh
 

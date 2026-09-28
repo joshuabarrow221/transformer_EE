@@ -13,9 +13,20 @@ fi
 # Usage: ./run_eval_all.sh /path/to/base_dir
 BEAM_MODE=false
 BASE_DIR=""
+OUTPUT_DIR=""
+ROOT_OUTPUT_NAME="combined_output.root"
 
 usage() {
-    echo "Usage: $0 [--beam|-b] BASE_DIR"
+    cat <<EOF
+Usage: $0 [--beam|-b] [--output-dir DIR] [--root-output-name NAME] BASE_DIR
+
+Options:
+  --beam, -b              Enable beam-mode inside eval_model.C
+  --output-dir DIR        Directory where outputs are written
+                          Default: current working directory
+  --root-output-name NAME ROOT file name to update/create
+                          Default: combined_output.root
+EOF
 }
 
 # Parse optional flag(s)
@@ -24,6 +35,14 @@ while (( $# > 0 )); do
         --beam|-b)
             BEAM_MODE=true
             shift
+            ;;
+        --output-dir)
+            OUTPUT_DIR="$2"
+            shift 2
+            ;;
+        --root-output-name)
+            ROOT_OUTPUT_NAME="$2"
+            shift 2
             ;;
         -h|--help)
             usage
@@ -54,6 +73,10 @@ fi
 if [[ ! -d "$BASE_DIR" ]]; then
     echo "Error: BASE_DIR '$BASE_DIR' is not a directory."
     exit 1
+fi
+
+if [[ -n "$OUTPUT_DIR" ]]; then
+    mkdir -p "$OUTPUT_DIR"
 fi
 
 # ROOT macro call (second argument is beam_mode bool)
@@ -257,6 +280,12 @@ token_to_training_dirs() {
 }
 
 echo "Scanning base directory: $BASE_DIR"
+if [[ -n "$OUTPUT_DIR" ]]; then
+    echo "Writing eval outputs to: $OUTPUT_DIR"
+else
+    echo "Writing eval outputs to current working directory: $(pwd)"
+fi
+echo "ROOT output file name: $ROOT_OUTPUT_NAME"
 echo
 
 # Make globs that don't match expand to nothing instead of themselves
@@ -273,9 +302,11 @@ if (( ${#combined_csvs[@]} > 0 )); then
     echo "Inferred training type for runtime summing: $TYPE_NAME"
     echo
 
+    csv_index=0
     for csv in "${combined_csvs[@]}"; do
+        ((csv_index+=1))
         echo "---------------------------------------------"
-        echo "Processing combined CSV: $csv"
+        echo "[START ${csv_index}/${#combined_csvs[@]}] Processing combined CSV: $csv"
 
         total_runtime_hours="0.0"
         any_found=false
@@ -319,10 +350,18 @@ PY
             echo "  Total combined runtime_hours = not found (leaving blank)"
         fi
 
-        if ! root -l -b -q "${MACRO}(\"$csv\", ${ROOT_CALL_BOOL}, ${runtime_hours})"; then
+        eval_seconds_start=$SECONDS
+        if ! root -l -b -q "${MACRO}(\"$csv\", ${ROOT_CALL_BOOL}, ${runtime_hours}, \"${OUTPUT_DIR:-.}\", \"\", 0, 0, \"${ROOT_OUTPUT_NAME}\")"; then
             echo "  ERROR: ROOT failed for $csv (continuing)"
             continue
         fi
+        eval_seconds_elapsed=$((SECONDS - eval_seconds_start))
+        ellipse_csv_path="${OUTPUT_DIR:-$(pwd)}/ellipse_fraction.csv"
+        root_file_path="${OUTPUT_DIR:-$(pwd)}/${ROOT_OUTPUT_NAME}"
+        echo "[DONE  ${csv_index}/${#combined_csvs[@]}] Finished: $csv"
+        echo "  Updated ellipse summary: $ellipse_csv_path"
+        echo "  Updated ROOT output:     $root_file_path"
+        echo "  Elapsed seconds:         $eval_seconds_elapsed"
     done
 
     echo
@@ -393,10 +432,18 @@ for train_dir in "$BASE_DIR"/*/; do
     fi
 
     # Run ROOT in batch mode, calling eval_model.C("full/path/to/result.csv")
-    if ! root -l -b -q "${MACRO}(\"$result_file\", ${ROOT_CALL_BOOL}, ${runtime_hours})"; then
+    eval_seconds_start=$SECONDS
+    if ! root -l -b -q "${MACRO}(\"$result_file\", ${ROOT_CALL_BOOL}, ${runtime_hours}, \"${OUTPUT_DIR:-.}\", \"\", 0, 0, \"${ROOT_OUTPUT_NAME}\")"; then
         echo "  ERROR: ROOT failed for $result_file (continuing to next training directory)"
         continue
     fi
+    eval_seconds_elapsed=$((SECONDS - eval_seconds_start))
+    ellipse_csv_path="${OUTPUT_DIR:-$(pwd)}/ellipse_fraction.csv"
+    root_file_path="${OUTPUT_DIR:-$(pwd)}/${ROOT_OUTPUT_NAME}"
+    echo "  Finished result.csv: $result_file"
+    echo "  Updated ellipse summary: $ellipse_csv_path"
+    echo "  Updated ROOT output:     $root_file_path"
+    echo "  Elapsed seconds:         $eval_seconds_elapsed"
 done
 
 echo

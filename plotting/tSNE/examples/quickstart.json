@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "description": "Verified AR23-trained study selections, including completed corrected SV noise bundles.",
+  "sources": {
+    "DB_AR23": {
+      "path": "Beam_Like/Natural_Spectra/DUNEOnAxisND/AR23_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "AR23"
+    }
+  },
+  "models": {
+    "model_b32cf1b5985279e45e3e77a61a651bdb": {
+      "directory": "model_b32cf1b5985279e45e3e77a61a651bdb",
+      "sha256": {
+        "best_model.zip": "8a4dfdd0f7943d4b606f711cacc7529c25489c9d31858022378564c8024e5d35",
+        "input.json": "311e1ef1b6473af3906db40111f400d2fd099e23cd0b29e3e563a20e7bb57d7b",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "DB_MV_E_MAPE_P_MAE_latent_25epochs",
+      "training_generator": "AR23",
+      "title": "DB: LMV(E MAPE, P MAE)",
+      "missing": {},
+      "rows": {
+        "Flat_NoNoise": {
+          "models": [
+            "model_b32cf1b5985279e45e3e77a61a651bdb"
+          ],
+          "sources": [
+            "DB_AR23"
+          ]
+        }
+      }
+    }
+  ]
+}
