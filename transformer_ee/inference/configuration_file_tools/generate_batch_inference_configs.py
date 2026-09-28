@@ -25,60 +25,202 @@ DEFAULT_MODEL_SEARCH_ROOTS = [
 
 # --- Sample paths from Josh's prompt (edit here if your paths change) ---
 SAMPLES = {
-    # 1) DUNEAtmFlat-to-DUNEAtmNat
-    "batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json": [
-        ("Vector", "DUNEAtmo_Nat_p1to10_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "DUNEAtmo_Nat_p1to10_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
-    ],
+    # # 1) DUNEAtmFlat-to-DUNEAtmNat
+    # "batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json": [
+    #     ("Vector", "DUNEAtmo_Nat_p1to10_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEAtmo_Nat_p1to10_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
 
-    # 2) DUNEBeamFlat-to-DUNEFDBeamOsc
-    "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": [
-        ("Vector", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
-    ],
+    # # 2) DUNEBeamFlat-to-DUNEFDBeamOsc
+    # "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
 
-    # 3) DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat
-    "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": [
-        ("Vector", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
-    ],
+    # # 3) DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat
+    # "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": [
+    #     ("Vector", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
 
-    # 4) DUNEBeamFlat-to-DUNENDBeamNat
-    "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": [
-        ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
-    ],
+    # # 4) DUNEBeamFlat-to-DUNENDBeamNat
+    # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
 
-    # 5) DUNEBeamNat-to-DUNEFDBeamOsc
-    "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": [
-        ("Vector", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
-    ],
+    # # 5) DUNEBeamNat-to-DUNEFDBeamOsc
+    # "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisFD_p1to6_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisFDOsc/Numu_CC_Train_DUNEBeam_Natural_OnAxisFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
 
-    # 6) DUNEBeamNat-to-DUNEND39mOffAxisBeamNat
-    "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": [
-        ("Vector", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
-    ],
+    # # 6) DUNEBeamNat-to-DUNEND39mOffAxisBeamNat
+    # "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": [
+    #     ("Vector", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OffAxisND39m_p1to2_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNE39mOffAxis/Numu_CC_Train_DUNEBeam_Natural_OffAxisND_p1to2_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
 
-    # 7) NOvABeamNat-to-NOvAFDBeamOsc
-    "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": [
-        ("Vector", "NOvABeam_Nat_OnAxisFDOsc_p1to6_NpNpi_Vector",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/Numu_CC_Train_DUNEBeam_Natural_NOvAFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
-        ("Scalar", "NOvABeam_Nat_OnAxisFDOsc_p1to6_NpNpi_Scalar",
-         "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/Numu_CC_Train_DUNEBeam_Natural_NOvAFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # # 7) NOvABeamNat-to-NOvAFDBeamOsc
+    # "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": [
+    #     ("Vector", "NOvABeam_Nat_OnAxisFDOsc_p1to6_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/Numu_CC_Train_DUNEBeam_Natural_NOvAFD_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "NOvABeam_Nat_OnAxisFDOsc_p1to6_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/NOvAFDOsc/Numu_CC_Train_DUNEBeam_Natural_NOvAFD_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 8a) DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a
+    # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 8b) DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b
+    # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 9) DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G21_11a
+    # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 10a) DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a
+    # "batch_inference_config.DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 10b) DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b
+    # "batch_inference_config.DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 11) DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G21_11a
+    # "batch_inference_config.DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 12) DUNEBeamNat-to-DUNENDBeamNat
+    # "batch_inference_config.DUNEBeamNat-to-DUNEBeamNat.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Beam_Like/Natural_Spectra/DUNEOnAxisND/Numu_CC_Train_DUNEBeam_Natural_OnAxisND_p1to6_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+    
+    # # 13a) DUNEBeamFlat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a
+    # "batch_inference_config.DUNEBeamFlat_SV_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to5_NpNpi_Vector_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to5_NpNpi_Scalar_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 13b) DUNEBeamFlat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b
+    # "batch_inference_config.DUNEBeamFlat_SV_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to5_NpNpi_Vector_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to5_NpNpi_Scalar_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 14) DUNEBeamFlat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G21_11a
+    # "batch_inference_config.DUNEBeamFlat_SV_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to5_NpNpi_Vector_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to5_NpNpi_Scalar_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 15a) DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a
+    # "batch_inference_config.DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 15b) DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b
+    # "batch_inference_config.DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 16) DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G21_11a
+    # "batch_inference_config.DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 17) DUNEAtmFlat_NoNoise-to-DUNEAtmNat
+    # "batch_inference_config.DUNEAtmFlat_NoNoise-to-DUNEAtmNat.json": [
+    #     ("Vector", "DUNEAtmo_Nat_p1to10_NpNpi_Vector",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEAtmo_Nat_p1to10_NpNpi_Scalar",
+    #      "/exp/dune/data/users/rrichi/MLProject/Training_Samples/Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Train_DUNEAtmo_Natural_p1to10_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 17a) DUNEAtmoFlat_NoNoise-to-DUNEAtmoNat_GENIE_G1810a0211a
+    # "batch_inference_config.DUNEAtmoFlat_NoNoise-to-DUNEAtmoNat_GENIE_G1810a0211a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 17b) DUNEAtmoFlat_NoNoise-to-DUNEAtmoNat_GENIE_G1810a0211b
+    # "batch_inference_config.DUNEBeamFlat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G1810a0211b",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # # 18) DUNEAtmoFlat_NoNoise-to-DUNEAtmoNat_GENIE_G21_11a
+    # "batch_inference_config.DUNEBeamFlat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": [
+    #     ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
+    #     ("Scalar", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Scalar_G2111a",
+    #      "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_ScalarLeptwNC_eventnum_All_NpNpi.csv"),
+    # ],
+
+    # 19) DUNEMAPE_GENIE_G21_11a
+    "batch_inference_config.DUNEBeamFlat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": [
+        ("Vector", "DUNEBeam_Nat_OnAxisND_p1to6_NpNpi_Vector_G2111a",
+         "/exp/dune/data/users/jbarrow/MLProject/Inference_Samples/DUNEOnAxisND/GENIE_CMCs/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv"),
     ],
 }
 
@@ -227,20 +369,12 @@ def main(argv: List[str]) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--outdir", default=".", help="Where to write batch_inference_config.*.json")
     ap.add_argument("--atm-files", nargs="+", default=[
-        "Train_Atmospheric_Flat_Models_rrichi.txt",
-        "Train_Atmospheric_Flat_Models_jbarrow.txt",
-        "Train_Atmospheric_Flat_Models_cborden.txt",
+        "Train_Atmospheric_Flat_Models_woNoise.txt",
     ], help="Atmospheric flat model list text files")
     ap.add_argument("--beam-files", nargs="+", default=[
-        "Train_DUNEBeam_Flat_Models_rrichi.txt",
-        "Train_DUNEBeam_Flat_Models_jbarrow.txt",
-        "Train_DUNEBeam_Flat_Models_cborden.txt",
-        "Train_DUNEBeam_Nat_Models_rrichi.txt",
-        "Train_DUNEBeam_Nat_Models_jbarrow.txt",
-        "Train_DUNEBeam_Nat_Models_cborden.txt",
-        "Train_NOvABeam_Nat_Models_rrichi.txt",
-        "Train_NOvABeam_Nat_Models_jbarrow.txt",
-        "Train_NOvABeam_Nat_Models_cborden.txt",
+        "Train_DUNEBeamND_Nat_Models_woNoise.txt",
+        "Train_DUNEBeamND_Flat_Models_woNoise.txt",
+        "Train_DUNEBeamND_Flat_Models_woNoise.txt",
     ], help="Beam model list text files (flat + natural, DUNE/NOvA)")
     ap.add_argument("--atm-require-substrs", nargs="*", default=[],
                     help="Optional substrings required in atmospheric training names")
@@ -280,13 +414,27 @@ def main(argv: List[str]) -> int:
 
     # Build + write all configs
     specs = {
-        "batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json": atm_models,
-        "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": beam_flat_models,
-        "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": beam_flat_models,
-        "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": beam_flat_models,
-        "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": beam_nat_dune_models,
-        "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": beam_nat_dune_models,
-        "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": beam_nat_nova_models,
+        # "batch_inference_config.DUNEAtmFlat-to-DUNEAtmNat.json": atm_models,
+        # "batch_inference_config.DUNEBeamFlat-to-DUNEFDBeamOsc.json": beam_flat_models,
+        # "batch_inference_config.DUNEBeamFlat-to-DUNEND39mOffAxisBeamNat.json": beam_flat_models,
+        # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNat.json": beam_flat_models,
+        # "batch_inference_config.DUNEBeamNat-to-DUNEFDBeamOsc.json": beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat-to-DUNEND39mOffAxisBeamNat.json": beam_nat_dune_models,
+        # "batch_inference_config.NOvABeamNat-to-NOvAFDBeamOsc.json": beam_nat_nova_models,
+        # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json":beam_flat_models,
+        # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json":beam_flat_models,
+        # "batch_inference_config.DUNEBeamFlat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json":beam_flat_models,
+        # "batch_inference_config.DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json":beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json":beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json":beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat-to-DUNEBeamNat.json": beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json": beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": beam_nat_dune_models,
+        # "batch_inference_config.DUNEBeamNat_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": beam_nat_dune_models,
+        "batch_inference_config.DUNEBeamFlat_SV_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211a.json": beam_flat_models,
+        "batch_inference_config.DUNEBeamFlat_SV_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G1810a0211b.json": beam_flat_models,
+        "batch_inference_config.DUNEBeamFlat_SV_NoNoise-to-DUNENDBeamNatNDOnAxis_GENIE_G2111a.json": beam_flat_models,
+        # "batch_inference_config.DUNEAtmFlat_NoNoise-to-DUNEAtmNat.json": atm_models,
     }
 
     for outname, models in specs.items():
