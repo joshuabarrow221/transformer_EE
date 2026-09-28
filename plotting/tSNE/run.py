@@ -2,7 +2,7 @@
 """Portable, resumable TransformerEE latent extraction and topology t-SNE.
 
 The manifest chooses model bundles and event sources explicitly. Extraction can
-run on CUDA; PCA, neighbors, optimization, and rendering remain CPU workloads.
+run on CUDA; optional cuML runs t-SNE on CUDA. PCA and rendering stay on CPU.
 No training, normalization fitting, or label-based sampling takes place here.
 """
 from __future__ import annotations
@@ -338,7 +338,8 @@ def plot(args, plan):
     subprocess.run([sys.executable, str(HERE/'plot_tsne.py'), '--manifest', str(manifest),
         '--output', str(args.output/'plots'), '--representation', 'latent', '--events', str(args.events),
         '--seed', str(args.seed), '--perplexity', str(args.perplexity), '--iterations', str(args.iterations),
-        '--backend', args.backend, '--sampling', 'first', '--strict', '--lazy-latent-load'], env=env, check=True)
+        '--backend', args.backend, '--tsne-device',str(args.tsne_device),
+        '--gpu-learning-rate',str(args.gpu_learning_rate), '--sampling', 'first', '--strict', '--lazy-latent-load'], env=env, check=True)
     lines = ['# TransformerEE latent t-SNE', '', f'{args.events:,} events per populated panel.', '',
              '| Grid | PNG | PDF |', '|---|---|---|']
     for group in groups:
@@ -349,12 +350,12 @@ def plot(args, plan):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--manifest', type=Path, help='Required except for --stage plot, which uses plan.json')
+    p.add_argument('--manifest', type=Path, help='Required for extraction/check; plot uses plan.json and render uses coordinates')
     p.add_argument('--repo', type=Path, default=HERE.parents[1])
     p.add_argument('--models-root', type=Path)
     p.add_argument('--samples-root', type=Path)
     p.add_argument('--output', type=Path, required=True)
-    p.add_argument('--stage', choices=['check','extract','plot','all'], default='all')
+    p.add_argument('--stage', choices=['check','extract','plot','render','all'], default='all')
     p.add_argument('--device', default='cpu', help='cpu or cuda[:index]; never silently falls back')
     p.add_argument('--events', type=int, default=199990)
     p.add_argument('--batch-size', type=int, default=256)
@@ -368,8 +369,23 @@ def main():
     p.add_argument('--seed', type=int, default=42)
     p.add_argument('--perplexity', type=float, default=30)
     p.add_argument('--iterations', type=int, default=1000)
-    p.add_argument('--backend', choices=['fft','sklearn'], default='fft')
+    p.add_argument('--backend', choices=['fft','sklearn','cuml'], default='fft')
+    p.add_argument('--tsne-device',type=int,default=0,help='CUDA index for cuML, independent of inference --device')
+    p.add_argument('--gpu-learning-rate',type=float,default=200.0)
+    p.add_argument('--render-output',type=Path,help='Redrawn figures directory; defaults to OUTPUT/redraw')
+    p.add_argument('--style',type=Path,help='Render-only JSON colors, title, alpha, point_size, dpi')
     args = p.parse_args()
+    if args.stage == 'render':
+        # This route must not resolve models or read activations/plan.json.
+        from render import render_all
+        render_all(args.output/'plots', args.render_output or args.output/'redraw', args.only, args.style)
+        return
+    if args.style or args.render_output:
+        p.error('--style and --render-output are only valid with --stage render')
+    if args.backend == 'cuml' and args.stage in ('check','plot','all'):
+        from gpu_tsne import runtime, parameters
+        runtime(args.tsne_device)
+        parameters(args.events, args.seed, args.perplexity, args.iterations, args.gpu_learning_rate)
     os.environ.setdefault('POLARS_MAX_THREADS',str(args.threads))
     # Repository imports can initialize Matplotlib even during extraction.
     # Give that initialization the same persistent writable cache as plotting.
@@ -381,7 +397,7 @@ def main():
             setattr(args, name, getattr(args, name).resolve())
     if min(args.events,args.batch_size,args.chunk_size,args.threads,args.workers) < 1 or args.events < 40:
         p.error('Positive sizes and at least 40 events are required')
-    if not 0 <= args.worker_index < args.workers or args.iterations <= 250 or not 0 < args.perplexity < args.events:
+    if not 0 <= args.worker_index < args.workers or args.iterations < 300 or not 0 < args.perplexity < args.events:
         p.error('Invalid worker index, iterations, or perplexity')
     if args.workers > 1 and args.stage != 'extract':
         p.error('Sharding is supported only for extraction; plot once after all workers finish')
@@ -444,6 +460,8 @@ def main():
     if args.stage in ('plot','all'):
         # A distinct settings directory prevents mixing coordinate systems.
         settings = dict(seed=args.seed, perplexity=args.perplexity, iterations=args.iterations, backend=args.backend)
+        if args.backend == 'cuml':
+            settings.update(tsne_device=args.tsne_device,gpu_learning_rate=args.gpu_learning_rate)
         with lock(args.output/'.plot.lock'):
             path = args.output/'plot_settings.json'
             if path.exists() and json.loads(path.read_text()) != settings:

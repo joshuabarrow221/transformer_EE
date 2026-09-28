@@ -130,6 +130,14 @@ class PortableTests(unittest.TestCase):
             '--iterations','300'],capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stdout+result.stderr)
         self.assertTrue((self.root/'moved/plots/tiny/grid.pdf').exists())
+        # Keep only plots: render must not depend on plan, models or latent NPZs.
+        shutil.rmtree(self.root/'moved/features')
+        (self.root/'moved/plan.json').unlink()
+        result = subprocess.run([sys.executable,str(HERE/'run.py'),'--stage','render',
+            '--output',str(self.root/'moved')],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+        self.assertTrue((self.root/'moved/redraw/tiny/grid.pdf').exists())
+
 
     def test_checkpoint_mutation_rejected(self):
         path = self.root/'models/tiny/input.json'

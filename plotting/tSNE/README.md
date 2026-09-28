@@ -1,7 +1,7 @@
 # TransformerEE topology t-SNE
 
 Portable event-level inference and latent visualization for the `wide_model_test`
-branch. Model/sample pairings are configuration, not Python source edits. Use
+branch and its GPU development branch. Model/sample pairings are configuration, not Python source edits. Use
 existing AR23-trained models on GENIE or NuWro inputs; no retraining is needed.
 
 Each point is one interaction, colored by its truth proton/pion topology. The
@@ -182,9 +182,10 @@ required to exist there. `--stage plot` obtains the event count from `plan.json`
 written under `plots/`. The default `--stage all` performs extraction and plotting
 in sequence on one host.
 
-The GPU accelerates model forward passes. It does **not** accelerate this
-package's PCA, Annoy neighbor search, openTSNE FFT fitting, or Matplotlib drawing.
-These stages benefit from CPU cores and RAM. See openTSNE's
+`--device cuda` accelerates model forward passes. Optional `--backend cuml`
+adds GPU neighbor search and FFT t-SNE; see [GPU.md](GPU.md) for A100 setup,
+validation and examples. PCA, SV scaling and Matplotlib drawing remain on CPU.
+The default `fft` backend continues to use CPU openTSNE. See openTSNE's
 [parallelism documentation](https://opentsne.readthedocs.io/en/stable/api/index.html).
 A full beam row jointly fits 999,950 events. Its SV feature matrix alone is about
 4.35 GB in float32; PCA, neighbor structures, and plotting need additional RAM.
@@ -209,6 +210,18 @@ python plotting/tSNE/plot_tsne.py \
   --seed 7 --perplexity 50 --iterations 1000 --strict --lazy-latent-load \
   --only DB_MV_E_MAPE_P_MAE_latent_25epochs
 ```
+
+## Redraw saved coordinates
+
+```bash
+python plotting/tSNE/run.py --stage render --output "$TSNE_RUN" \
+  --style plotting/tSNE/examples/render-style.json
+```
+
+This uses only completed plot metadata and coordinate CSV.gz files, with no
+models, activations, CUDA or refitting. Figures go to `redraw/`; original fits
+stay intact. `--render-output` and `--only` control the destination and groups.
+See [GPU.md](GPU.md) for transfer, integrity checks, and style options.
 
 ## Tests and provenance
 

@@ -58,6 +58,12 @@ Alternate seed 7/perplexity 50 is a separate sensitivity fit. openTSNE and
 scikit-learn have different optimization conventions and are not interchangeable
 for exact reproduction. Hardware/library changes can also change coordinates.
 
+Optional `--backend cuml` uses the same selected events, SV scaling and CPU PCA,
+then CUDA neighbor search and FFT optimization. It has separately recorded
+optimizer settings and a configurable learning rate; it is not a numerically
+identical substitute for openTSNE. See [GPU.md](GPU.md) for validation limits.
+`--stage render` changes presentation of saved coordinates only, with no new fit.
+
 Colors never enter PCA/t-SNE. The selected models have zero topology-loss weight;
 the portable runner rejects a nonzero topology weight or topology input field.
 Particle identities and multiplicities already enter the network, so topology

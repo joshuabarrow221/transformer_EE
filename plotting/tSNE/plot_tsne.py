@@ -142,15 +142,20 @@ def _sample_csv(entry, count, seed, stack, policy='random'):
         alignment='legacy row order + shared truth checks' if len(paths)>1 else 'single file')
 
 
-def fit_embedding(features, seed, perplexity, iterations, pca_dimensions=50, backend='sklearn', threads=None):
+def fit_embedding(features, seed, perplexity, iterations, pca_dimensions=50, backend='sklearn', threads=None, tsne_device=0, gpu_learning_rate=200.0):
     """Preserve Euclidean representation geometry; never standardize beam px/py.
 
     Per-component z-scoring would inflate tiny beam transverse predictions and
     can make numerical noise dominate. PCA is unwhitened and only reduces high
     dimensional latent vectors. Units of prediction components use c=1.
     """
+    if backend not in ('fft', 'sklearn', 'cuml'):
+        raise ValueError(f'Unknown t-SNE backend: {backend}')
+    if backend == 'cuml':
+        from gpu_tsne import runtime
+        runtime(tsne_device)  # Fail before expensive CPU PCA if CUDA is unavailable.
     # Float32 input/PCA avoids several simultaneous multi-GB SV matrices.
-    features = np.asarray(features, dtype=np.float32 if backend=='fft' else np.float64)
+    features = np.asarray(features, dtype=np.float32 if backend in ('fft','cuml') else np.float64)
     if not np.isfinite(features).all():
         raise ValueError('Nonfinite features')
     if len(features) <= perplexity:
@@ -159,7 +164,7 @@ def fit_embedding(features, seed, perplexity, iterations, pca_dimensions=50, bac
     info = dict(input_dimensions=features.shape[1], seed=seed, perplexity=perplexity,
                 iterations=iterations, metric='euclidean', scaling='none', pca_whiten=False)
     if threads is None:
-        threads=int(os.environ.get('TOPOLOGY_TSNE_THREADS','8')) if backend=='fft' else 4
+        threads=int(os.environ.get('TOPOLOGY_TSNE_THREADS','8')) if backend in ('fft','cuml') else 4
     if features.shape[1] > pca_dimensions:
         pca_start=time.perf_counter()
         print(f'PCA: {len(features):,} events × {features.shape[1]} features',flush=True)
@@ -171,7 +176,12 @@ def fit_embedding(features, seed, perplexity, iterations, pca_dimensions=50, bac
         print(f"PCA complete in {info['pca_seconds']:.1f}s; variance {info['pca_explained_variance']:.6f}",flush=True)
     start = time.perf_counter()
     with threadpool_limits(limits=threads):
-        if backend == 'fft':
+        if backend == 'cuml':
+            from gpu_tsne import fit as fit_gpu
+            coordinates, divergence, gpu_info = fit_gpu(work, seed, perplexity, iterations,
+                device=tsne_device, learning_rate=gpu_learning_rate)
+            info.update(gpu_info)
+        elif backend == 'fft':
             import openTSNE
             # Construct the chosen index explicitly. The generic dispatcher
             # imports optional pynndescent even for exact/Annoy searches; that
@@ -215,8 +225,10 @@ def fit_embedding(features, seed, perplexity, iterations, pca_dimensions=50, bac
     return coordinates, info
 
 
-def draw_grid(group, frames, output, representation, coordinate_note, settings_note=None):
+def draw_grid(group, frames, output, representation, coordinate_note, settings_note=None, style=None):
     """A shared legend and 4x5 layout keep the user's comparisons in fixed cells."""
+    style = style or {}
+    colors = {**COLORS, **style.get('colors', {})}
     fig, axes = plt.subplots(4, 5, figsize=(19, 14))
     fig.subplots_adjust(left=.09, right=.985, bottom=.10, top=.85, hspace=.19, wspace=.10)
     for i, row in enumerate(ROWS):
@@ -249,16 +261,16 @@ def draw_grid(group, frames, output, representation, coordinate_note, settings_n
             for category in CATEGORIES:
                 marker=MarkerStyle(MARKERS[category])
                 marker_paths[category]=marker.get_path().transformed(marker.get_transform())
-            collection=ax.scatter(f.TSNE1,f.TSNE2,c=f.category.map(COLORS).tolist(),
-                                  s=.35 if len(f)>10000 else 4,
-                                  alpha=.45 if len(f)>10000 else .7,
+            collection=ax.scatter(f.TSNE1,f.TSNE2,c=f.category.map(colors).tolist(),
+                                  s=style.get('point_size', .35 if len(f)>10000 else 4),
+                                  alpha=style.get('alpha', .45 if len(f)>10000 else .7),
                                   linewidths=0,rasterized=True)
             collection.set_paths([marker_paths[c] for c in f.category])
             ax.set_xlim(lo[0]-pad[0],hi[0]+pad[0]); ax.set_ylim(lo[1]-pad[1],hi[1]+pad[1])
             ax.set_aspect('equal',adjustable='box')
             ax.text(.02,.98,f'n = {len(frame):,}',transform=ax.transAxes,va='top',fontsize=8,
                     bbox=dict(facecolor='white',edgecolor='none',alpha=.8,pad=1.5))
-    handles=[Line2D([],[],linestyle='',marker=MARKERS[c],color=COLORS[c],markersize=6,
+    handles=[Line2D([],[],linestyle='',marker=MARKERS[c],color=colors[c],markersize=6,
                     label=c.replace('pi',r'$\pi$')) for c in CATEGORIES]
     fig.suptitle(group['title']+' — '+representation,fontsize=18,y=.975)
     training_note=(group['training_generator']+'-trained networks • ') if group.get('training_generator') else ''
@@ -276,13 +288,14 @@ def draw_grid(group, frames, output, representation, coordinate_note, settings_n
         # Write a complete sibling before replacement, preserving a valid old
         # artifact if a mounted-filesystem viewer has locked the destination.
         temporary=output.with_name(output.name+'.writing').with_suffix('.writing.'+ext)
-        fig.savefig(temporary,dpi=180,facecolor='white')
+        fig.savefig(temporary,dpi=style.get('dpi',180),facecolor='white')
         temporary.replace(output.with_suffix('.'+ext))
     plt.close(fig)
 
 
 def run_group(group, args):
     out = args.output/group['id']; out.mkdir(parents=True,exist_ok=True)
+    from render import file_hash
     frames, audits, feature_blocks = {}, {}, {}
     for entry in group['entries']:
         key=(entry['row'],entry['generator']); label='/'.join(key)
@@ -330,12 +343,18 @@ def run_group(group, args):
         signature.update(renderer_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                          software={name:version(name) for name in packages},
                          sv_blocks=group.get('sv_block_sizes_by_row',{}).get(fit_name,group.get('sv_block_sizes')))
+        if getattr(args,'backend','sklearn')=='cuml':
+            from gpu_tsne import runtime
+            signature['gpu_environment']=runtime(args.tsne_device)[2]
+            signature['gpu_learning_rate']=args.gpu_learning_rate
+            signature['gpu_adapter_sha256']=hashlib.sha256(Path(__file__).with_name('gpu_tsne.py').read_bytes()).hexdigest()
         # A completed row remains useful if a later row/render is interrupted.
         # Match source provenance and settings before accepting saved coordinates.
-        if getattr(args,'backend','sklearn')=='fft' and cache_path.exists():
+        if cache_path.exists():
             cached=json.loads(cache_path.read_text())
             files=[out/('_'.join(k)+'.csv.gz') for k in keys]
-            if cached.get('signature')==signature and all(p.exists() for p in files):
+            if (cached.get('signature')==signature and all(p.exists() for p in files)
+                    and all(cached.get('coordinate_sha256',{}).get(p.name)==file_hash(p) for p in files)):
                 saved=[pd.read_csv(p,dtype={'topology_code':str,'true_Topology':str}) for p in files]
                 if all(len(f)==args.events and np.array_equal(f.source_row,frames[k].source_row)
                        and np.isfinite(f[['TSNE1','TSNE2']]).all().all() for k,f in zip(keys,saved)):
@@ -391,7 +410,9 @@ def run_group(group, args):
             if threads is not None and not 1<=int(threads)<=os.cpu_count():
                 raise ValueError('Thread budget exceeds the available CPU count')
         coordinates,info=fit_embedding(features,args.seed,args.perplexity,args.iterations,
-                                      backend=getattr(args,'backend','sklearn'),threads=threads)
+                                      backend=getattr(args,'backend','sklearn'),threads=threads,
+                                      tsne_device=getattr(args,'tsne_device',0),
+                                      gpu_learning_rate=getattr(args,'gpu_learning_rate',200.0))
         if block_scaling:
             info['scaling']='each SV network block centered and divided by its RMS norm'
             info['block_scaling']=block_scaling
@@ -404,10 +425,11 @@ def run_group(group, args):
             frame.to_csv(out/('_'.join(key)+'.csv.gz'),index=False,
                          compression={'method':'gzip','compresslevel':1})
             offset+=n
-        if getattr(args,'backend','sklearn')=='fft':
-            pending=cache_path.with_suffix('.json.writing')
-            pending.write_text(json.dumps(dict(signature=signature,fit=info),indent=2))
-            pending.replace(cache_path)
+        # All backends publish a completed, provenance-checked fit.
+        pending=cache_path.with_suffix('.json.writing')
+        pending.write_text(json.dumps(dict(signature=signature,fit=info,
+            coordinate_sha256={('_'.join(k)+'.csv.gz'):file_hash(out/('_'.join(k)+'.csv.gz')) for k in keys}),indent=2))
+        pending.replace(cache_path)
         # A completed row needs only its coordinates for rendering. Releasing
         # its high-dimensional blocks keeps subsequent SV fits within RAM.
         for key in keys:feature_blocks.pop(key,None)
@@ -419,7 +441,12 @@ def run_group(group, args):
                   'one joint fit across all cells' if args.representation=='prediction' else 'joint generators per row; rows have independent fits',
                   f'Sensitivity: seed {args.seed}; perplexity {args.perplexity:g}'
                   if args.seed!=42 or args.perplexity!=30 else None)
-    metadata={'group':group,'representation':args.representation,'audits':audits,'fits':fits,
+    # Coordinate hashes allow CPU-only redraws to verify transferred files
+    # without reopening weights, raw CSVs or multi-GB latent arrays.
+    from render import file_hash
+    coordinate_files={('_'.join(key)+'.csv.gz'):dict(sha256=file_hash(out/('_'.join(key)+'.csv.gz')),
+        rows=len(frame), row=key[0], generator=key[1]) for key,frame in frames.items()}
+    metadata={'coordinate_files':coordinate_files,'group':group,'representation':args.representation,'audits':audits,'fits':fits,
               'arguments':{k:str(v) if isinstance(v,Path) else v for k,v in vars(args).items()}}
     counts=[]
     for (row,gen),frame in frames.items():
@@ -451,7 +478,9 @@ def main():
     parser.add_argument('--iterations',type=int,default=1000)
     parser.add_argument('--only',nargs='*')
     parser.add_argument('--sampling',choices=['random','first'],default='random')
-    parser.add_argument('--backend',choices=['sklearn','fft'],default='sklearn')
+    parser.add_argument('--backend',choices=['sklearn','fft','cuml'],default='sklearn')
+    parser.add_argument('--tsne-device',type=int,default=0,help='CUDA device index for cuML only')
+    parser.add_argument('--gpu-learning-rate',type=float,default=200.0,help='Explicit cuML learning rate')
     parser.add_argument('--strict',action='store_true',help='Fail instead of silently omitting an available panel')
     parser.add_argument('--lazy-latent-load',action='store_true',
                         help='Load activation matrices one fit row at a time to bound RAM')

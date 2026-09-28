@@ -1,8 +1,10 @@
 # Where Polars and GPUs help
 
 Polars is useful for particle-vector string parsing and columnar normalization;
-GPU execution is useful for the frozen network's forward passes. Neither changes
-the CPU-based openTSNE implementation or the dimensionality of the latent vectors.
+GPU execution supports the frozen network's forward passes and the optional cuML
+t-SNE backend. The default openTSNE backend remains CPU-based. Neither backend
+changes the latent dimensionality. [GPU.md](GPU.md) describes the A100 workflow
+and coordinate-only redraws; GPU timings remain to be measured on that host.
 
 ## Measured preparation comparison
 
@@ -75,3 +77,15 @@ require additional host memory. Polars cannot make openTSNE GPU-based.
 GPU inference, optional Polars batch preparation, reusable event cohorts, and
 separate CPU plotting are complementary optimizations. Measure the full run on
 the destination machine before deciding which stage deserves further work.
+
+## Measured coordinate-only redraw
+
+On the local Linux/ARM CPU host, `render.py` redrew the completed beam MV
+E_MAPE/P_MAE grid: four training conditions by five generators, 199,990 events
+per panel, **3,999,800 points total**. It wrote both PNG and rasterized PDF at
+180 DPI in **33.80 seconds wall time**, with **1,857,048 KiB peak RSS (1.77 GiB)**,
+as measured by `/usr/bin/time -v`. No inference, PCA or t-SNE ran. Existing
+historical coordinate CSVs were read from the mounted drive; OS caches were not
+flushed. This is one measured redraw, not a repeated benchmark or GPU timing.
+All panels retained their original coordinates and counts; the layout was
+visually inspected. New exports also have coordinate checksum verification.
