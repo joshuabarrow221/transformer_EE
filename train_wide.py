@@ -7,7 +7,6 @@ import os
 from datetime import datetime
 import argparse
 from copy import deepcopy
-from datetime import datetime
 import hashlib
 
 from transformer_ee.train import MVtrainer
@@ -17,7 +16,7 @@ import torch
 
 # ---------- Helpers ----------
 def kset(d, dotted_key, value):
-    """Set a nested config key using dotted path, creating parents as needed."""
+    """Fill a missing nested config key without replacing configured values."""
     if value is None:
         return
     parts = dotted_key.split(".")
@@ -320,14 +319,13 @@ def main():
 
     # Optional save-path uniquification. This is intentionally opt-in so legacy behavior
     # remains unchanged unless a caller explicitly wants local run folders to never collide.
-    save_path = args.save_path
+    kset(cfg, "save_path", args.save_path)
     if args.auto_unique_save_path:
-        save_path = ensure_unique_dir(save_path)
-        print(f"[INFO] Auto-unique save path enabled. Using: {save_path}")
+        cfg["save_path"] = ensure_unique_dir(cfg["save_path"])
+        print(f"[INFO] Auto-unique save path enabled. Using: {cfg['save_path']}")
 
     # --- Apply common overrides (I/O, dataloader, training) ---
     kset(cfg, "data_path", args.data_path)
-    kset(cfg, "save_path", save_path)
     kset(cfg, "dataframe_type", args.dataframe_type)
     kset(cfg, "num_workers", args.num_workers)
 
@@ -358,7 +356,7 @@ def main():
     # --- Optional noise configuration (mirrors train_script.py example) ---
     if "noise" in cfg:
         print("[INFO] Noise configuration enabled:", cfg["noise"])
-    
+
     elif args.enable_noise:
         # Defaults from your train_script.py example:
         default_vector = [
@@ -400,7 +398,7 @@ def main():
     # Transformer basics
     mkw = ensure_model_kwargs(cfg)
     kset(mkw, "nhead", args.nhead)
-    kset(mkw, "num_layers", args.nhead)
+    kset(mkw, "num_layers", args.num_layers)
     kset(mkw, "dropout", args.dropout)
     kset(mkw, "dim_feedforward", args.dim_ff)
 
@@ -451,7 +449,7 @@ def main():
     else:
         # Let W&B allocate a fresh backend id for this launch.
         print("[INFO] No explicit W&B run id provided; allowing W&B to create a fresh unique id.")
-    
+
     if wandb_name is not None:
         wandb_kwargs["name"] = wandb_name
     if wandb_group is not None:
@@ -473,7 +471,7 @@ def main():
 
     torch.cuda.empty_cache() # free cached blocks from training
     torch.cuda.ipc_collect() # collect any stray IPC handles
-    
+
     my_trainer.eval()
 
     endtime = datetime.now()
@@ -481,6 +479,7 @@ def main():
     print("Time Elapsed: " + str(endtime - starttime))
 
     sys.stdout = orig_stdout
+    f.close()
 
 
 if __name__ == "__main__":
