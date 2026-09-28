@@ -1,0 +1,2 @@
+# Optional vector preparation backend and CSV preparation benchmark.
+polars==1.44.2

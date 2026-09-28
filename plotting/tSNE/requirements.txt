@@ -1,0 +1,10 @@
+# Install the CPU/CUDA build of torch separately for the target host.
+numpy>=1.24,<3
+pandas>=2,<3
+scipy>=1.10,<2
+matplotlib>=3.5,<4
+scikit-learn>=1.5,<2
+threadpoolctl>=3.5,<4
+openTSNE==1.0.4
+annoy>=1.17.3,<2
+pillow>=9

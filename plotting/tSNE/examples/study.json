@@ -1,0 +1,656 @@
+{
+  "version": 1,
+  "description": "Verified AR23-trained study selections, including completed corrected SV noise bundles.",
+  "sources": {
+    "DB_AR23": {
+      "path": "Beam_Like/Natural_Spectra/DUNEOnAxisND/AR23_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "AR23"
+    },
+    "DB_G2111a": {
+      "path": "Beam_Like/Natural_Spectra/DUNEOnAxisND/G21_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "G2111a"
+    },
+    "DB_G1810a0211a": {
+      "path": "Beam_Like/Natural_Spectra/DUNEOnAxisND/G18_10a_02_11a_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "G1810a0211a"
+    },
+    "DB_G1810a0211b": {
+      "path": "Beam_Like/Natural_Spectra/DUNEOnAxisND/G18_10a_02_11b_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "G1810a0211b"
+    },
+    "DB_NuWro": {
+      "path": "Beam_Like/Natural_Spectra/DUNEOnAxisND/NuWro_DUNENDNat_Numu_CC_Thresh_p1to5_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "NuWro"
+    },
+    "DA_AR23": {
+      "path": "Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Thresh_p1to10_AR23_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "AR23"
+    },
+    "DA_G2111a": {
+      "path": "Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Thresh_p1to10_G2111a_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "G2111a"
+    },
+    "DA_G1810a0211a": {
+      "path": "Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Thresh_p1to10_G1810a0211a_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "G1810a0211a"
+    },
+    "DA_G1810a0211b": {
+      "path": "Atmospherics_DUNE_Like/Natural_Spectra/Numu_CC_Thresh_p1to10_G1810a0211b_eventnum_VectorLeptwNC_eventnum_All_NpNpi.csv",
+      "generator": "G1810a0211b"
+    }
+  },
+  "models": {
+    "model_e86f286e5258c3d8257ed1eb2c1c3099": {
+      "directory": "model_e86f286e5258c3d8257ed1eb2c1c3099",
+      "sha256": {
+        "best_model.zip": "a016445df1806cb09811eca4ad162e325592d9f3a8624a680a2908cf60bfb797",
+        "input.json": "a371a06f989d84a1d0661f3c4d9c6354af10c027439330e50d3c6f6a5c5812da",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_b32cf1b5985279e45e3e77a61a651bdb": {
+      "directory": "model_b32cf1b5985279e45e3e77a61a651bdb",
+      "sha256": {
+        "best_model.zip": "8a4dfdd0f7943d4b606f711cacc7529c25489c9d31858022378564c8024e5d35",
+        "input.json": "311e1ef1b6473af3906db40111f400d2fd099e23cd0b29e3e563a20e7bb57d7b",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_abeb28b63a548539e09038f3323439d4": {
+      "directory": "model_abeb28b63a548539e09038f3323439d4",
+      "sha256": {
+        "best_model.zip": "facefd1d1b51cf747ceeb56b5e2ff9c8a7b1bf6fe8f56ebfbcf2ef2d93e70bb9",
+        "input.json": "26a3e11b9dcd4636b845dd5505101ec4dd8b87da3f748f42d72ef893f93fb388",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_9f8a55965d1e71149463eb7179cfd8a1": {
+      "directory": "model_9f8a55965d1e71149463eb7179cfd8a1",
+      "sha256": {
+        "best_model.zip": "25328b26c990c064b0d8f8ac8c81776fcbb49827aa20de59dc2543c614e631cb",
+        "input.json": "7cba726bc18dc639d881ceb829ea924dc58dc82ae4aac588684f3edee2fb1e66",
+        "trainset_stat.json": "d8f0d56b897fd40cb60587398360866fb36dd48ac7fc2b568c702ee610acbc5f"
+      }
+    },
+    "model_f42c34cb0dbb8dfdfd6d8a308a60803d": {
+      "directory": "model_f42c34cb0dbb8dfdfd6d8a308a60803d",
+      "sha256": {
+        "best_model.zip": "826a24caa3103c2cd783644769cf4068cc96d12aa0d87094691fa6db3a0f1739",
+        "input.json": "f70a19250ae28fecf950adcaf71db16bcd1b7bec11525af432efd42a0fe06eec",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_a1a22e655f99fd18248953b92530fc0a": {
+      "directory": "model_a1a22e655f99fd18248953b92530fc0a",
+      "sha256": {
+        "best_model.zip": "26d9563e75a683dbdf429fd141504064bf759b95ae75e7c793e05bcd21ee401f",
+        "input.json": "3646583c0ec1b58b0872719b912bf7fc329d40b0f716e2b6371a4d7e1fd964cc",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_d2bd190eb7f61f6acf0dbc4b4ef11ae9": {
+      "directory": "model_d2bd190eb7f61f6acf0dbc4b4ef11ae9",
+      "sha256": {
+        "best_model.zip": "e6ce46d26b5c9d0d4fe74723e46e9ee70f46e9268421a9c132483d795942dba0",
+        "input.json": "77ea77fff68b3e7bc44ea66db4964eaa5c332a11caecefbb27c3d08456f1cca4",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_796fe4341e59d3e7452a1d75718e14f4": {
+      "directory": "model_796fe4341e59d3e7452a1d75718e14f4",
+      "sha256": {
+        "best_model.zip": "91981f448110ad0dc05ecc3858a89b094e58caf036d0310fdc2a1f780fd6a2a4",
+        "input.json": "e8f69707361240d9bcffce23181e81ee40bf3f2607b589525baa374a577605d5",
+        "trainset_stat.json": "1120091aa86bf64acd597f10154d877f0a9366c659f005e8da079d09c4283a5f"
+      }
+    },
+    "model_42031414e505dc72f9c416bc5a73bd96": {
+      "directory": "model_42031414e505dc72f9c416bc5a73bd96",
+      "sha256": {
+        "best_model.zip": "44cb80a33b0547f253851928ad4673cfa6165e5d0480925e470a9822db0d0c51",
+        "input.json": "4467f73e2a710acee6ec7e5334e65f6ad37ec686df1537b15aa7689a313f9601",
+        "trainset_stat.json": "8978bab7d3a9cfcfd4affb04281882a0a172e7db1ec6bc2d8627f3288cf16b63"
+      }
+    },
+    "model_606bdb7d6205f13250a1595b0a4fa97b": {
+      "directory": "model_606bdb7d6205f13250a1595b0a4fa97b",
+      "sha256": {
+        "best_model.zip": "759793687a9fae64dc2ef5b8e6ee18ec15cccaa5ba0c5b1bbd0ca60a3b888499",
+        "input.json": "94deb0eeb68c4c87347a257ff9bf93d8a289cf83c2423f1250525f94d8d651e6",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_ffb70ed2016a796f801f7f5d5b243f7b": {
+      "directory": "model_ffb70ed2016a796f801f7f5d5b243f7b",
+      "sha256": {
+        "best_model.zip": "9065e44e085fbbdfdfcaabb6bf7da6f19f2b13d07639dad2a8d2941b59e2b91f",
+        "input.json": "7eb61f22d1cff2355f54a6239fef4b093eb59cf9585562b2821e00bad2ac50a4",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_b05b635113f8761fd3552b2a532e8541": {
+      "directory": "model_b05b635113f8761fd3552b2a532e8541",
+      "sha256": {
+        "best_model.zip": "b8300512982e818a6ea6b9ed01ad638d262ad923f40e684d2a16d29c0018e3da",
+        "input.json": "36212bf12d7b2daee21d74e889cb7f2e787459e9550d1147bd3ea23ff05c2cbf",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_ade32aa478fe86db35ea20d08ab3f14e": {
+      "directory": "model_ade32aa478fe86db35ea20d08ab3f14e",
+      "sha256": {
+        "best_model.zip": "84595eb5418270f55f014de1133b16521de725b03331b89c9c2832556a1e5745",
+        "input.json": "7b2a4db66895230c4d2e225c6257fd69c437c4347ac4ada97574fe2b449f3060",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_ccbede1d3e3ca78fab25570900639697": {
+      "directory": "model_ccbede1d3e3ca78fab25570900639697",
+      "sha256": {
+        "best_model.zip": "f6971f71523fa715a370160d6877b257ae60d99abbb4e90483d143c8bd86940c",
+        "input.json": "53835295f34b8fd567d07067eff3f1710040629e0f156fac1d3a5e1915365524",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_41f5bf299733d2446c4398cfd487e5f9": {
+      "directory": "model_41f5bf299733d2446c4398cfd487e5f9",
+      "sha256": {
+        "best_model.zip": "79e63db2df278f59134594db01858524a05695ae31dd5e3852698a0b20087075",
+        "input.json": "316f3998081bb5b26390fc5396dfc4e32cb873a263554e60af8da94139a150a2",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_5305c14debc164d94fabffb5d85f1be9": {
+      "directory": "model_5305c14debc164d94fabffb5d85f1be9",
+      "sha256": {
+        "best_model.zip": "513690162182662f73591df7c78340ac589dc6d4ca0e114b8fdffa77cf244fba",
+        "input.json": "ec35a33c474784d41583889f633af5f0021b3353944a311125d181429ab723a5",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_5692175e6fd7a6143cf9d3104162f384": {
+      "directory": "model_5692175e6fd7a6143cf9d3104162f384",
+      "sha256": {
+        "best_model.zip": "1c6e01b2c4910f74afdf2455ce35c7cb0668aa20656b292bd727c63a54396105",
+        "input.json": "f6ca68d874996baec550764c7c8d4a8c1a9db04552fef30566bf0fdc6bfd542d",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_145043a2605fa189e620a1f94d4c612c": {
+      "directory": "model_145043a2605fa189e620a1f94d4c612c",
+      "sha256": {
+        "best_model.zip": "4f1de62db6767e3150eaad90d6ca31f93f5bbeff465c7cadaa6e1222009b53ff",
+        "input.json": "5323d5eaede27e93b65ea8eeb6332a6131ce9b23de310d6f25c8e70fbcec15cf",
+        "trainset_stat.json": "d8f0d56b897fd40cb60587398360866fb36dd48ac7fc2b568c702ee610acbc5f"
+      }
+    },
+    "model_a5c2bd80a5d59f4945b9e48cc34a9be6": {
+      "directory": "model_a5c2bd80a5d59f4945b9e48cc34a9be6",
+      "sha256": {
+        "best_model.zip": "77a0277536dfffda244d59159d80f9a82fa197b657e44157b035607490709107",
+        "input.json": "edefb70e441cfaebea870d928fb02db7fa71beda6d16873eccc065c09b453208",
+        "trainset_stat.json": "d8f0d56b897fd40cb60587398360866fb36dd48ac7fc2b568c702ee610acbc5f"
+      }
+    },
+    "model_315d058584ae1b5889e5be1e5c0f8bd3": {
+      "directory": "model_315d058584ae1b5889e5be1e5c0f8bd3",
+      "sha256": {
+        "best_model.zip": "fecb85bcf0e28845fbe89daef2044d7d6a86057c0f165ac75a2a87029fcb645f",
+        "input.json": "bc02df4459f7d570c025fe7dbe6f584867ee9572913a4ff88d7aadb5051b700c",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_50ffd61a358d65ecd64f58550bcf7cab": {
+      "directory": "model_50ffd61a358d65ecd64f58550bcf7cab",
+      "sha256": {
+        "best_model.zip": "daedb01822a8e345b79535eae80b58ec27ce49674dc1d7b3efbd423a68173c33",
+        "input.json": "28880c57fb0570bf004d37600a6a5ad0d88047e37b0216c881958c828d868950",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_deba28e03e314587ddf6d35967de909b": {
+      "directory": "model_deba28e03e314587ddf6d35967de909b",
+      "sha256": {
+        "best_model.zip": "9a454515fd4a8b7b6e75dce200021f06f199a63f73b8a75d44df6032ef89c3f6",
+        "input.json": "6c7bcdc64c915dec7417830e0e62c88a69871a287151b5b961d3a2ef35d968a6",
+        "trainset_stat.json": "d8f0d56b897fd40cb60587398360866fb36dd48ac7fc2b568c702ee610acbc5f"
+      }
+    },
+    "model_76324192f2e285271cb43747e9189708": {
+      "directory": "model_76324192f2e285271cb43747e9189708",
+      "sha256": {
+        "best_model.zip": "95281c4ae0696caf70e8354e4f5e6b5b7a46e87f065c0a1886bdff9c87394a67",
+        "input.json": "febbcc4338185c7050b68cb1451cebcaed1ae7cb1d304010e0aa3447fe6a706e",
+        "trainset_stat.json": "d8f0d56b897fd40cb60587398360866fb36dd48ac7fc2b568c702ee610acbc5f"
+      }
+    },
+    "model_12e185783f3bf9b4691c4648494733a4": {
+      "directory": "model_12e185783f3bf9b4691c4648494733a4",
+      "sha256": {
+        "best_model.zip": "1f4115115024962890cd4bc4142a7ce92733c61705f0a437de742f36294ac10c",
+        "input.json": "344daeeba2bdb860e101d360aeaf8f113a1bdd8633647245dbb8079b860e05bb",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_683735dd11cad6da8917a8dc802110c4": {
+      "directory": "model_683735dd11cad6da8917a8dc802110c4",
+      "sha256": {
+        "best_model.zip": "9f0e6df626d9e51c57ce42bf56142ba9f4e9ab15f8441d6cb5e474e70e57bbb4",
+        "input.json": "33104f2f83f8a0b558c1d27fe9ea59d8010b0990fbf409f146ccfccf07655d23",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_166b0be55d064666d907a33fff6e67fe": {
+      "directory": "model_166b0be55d064666d907a33fff6e67fe",
+      "sha256": {
+        "best_model.zip": "e9d4a82d102244488f0c4b4ee41d38bc2b06d316e0ac20088d9ac0dd98a56381",
+        "input.json": "58b518866812ca81c5866a8fd68d7b57a64bff5710619cb35d880d6198afb31b",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_182393e578d5e9df86aaefb5780816a1": {
+      "directory": "model_182393e578d5e9df86aaefb5780816a1",
+      "sha256": {
+        "best_model.zip": "e22734bd0c25a7e7230adf2431b9178246b5f2baaca4e52ba1f9a408cbe9be47",
+        "input.json": "29f70d0ff3c770e006be9566da074180a22a013d5eec51e2514ee3e1ae007ae5",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_7f5b271f9c75ef75ddb8ad0a47781c6f": {
+      "directory": "model_7f5b271f9c75ef75ddb8ad0a47781c6f",
+      "sha256": {
+        "best_model.zip": "990fe003548e23faf3c906241f6ff8dc89909c12fe272df699ad3d813c9e6a42",
+        "input.json": "d0e44e3c15364a3f520cb2d52a3fe5818941fb72c4e6760dfa44858e15554506",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_00fcb1edc3058cc174f5855fb316988d": {
+      "directory": "model_00fcb1edc3058cc174f5855fb316988d",
+      "sha256": {
+        "best_model.zip": "2336bb24770797a00dcb7a250ad47494bb139095d71788091df3f60f5eb7bde9",
+        "input.json": "44d299bfb8e277292a829d22f69ac2874454c08051f8e9f7e8e785256df32959",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_76c400c15e9f3abe9b1051b3f123918f": {
+      "directory": "model_76c400c15e9f3abe9b1051b3f123918f",
+      "sha256": {
+        "best_model.zip": "c3cd6efd28f429e25bc9510b7b90e21c21fa267a3880f04419f2b15f485f53fa",
+        "input.json": "eaf9a99f5f971d0ebc2ff7229ff4c20b8e1fc6536aeb3ca8a42a3d32fa924632",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_4f75a66a5defb899937c46921a95fd32": {
+      "directory": "model_4f75a66a5defb899937c46921a95fd32",
+      "sha256": {
+        "best_model.zip": "5160e8362115bdeb3b9916368224e3a7eeac0854b2658ed75c420494b88869ec",
+        "input.json": "fbe51704d95cc548dc87ccf2a0c2f2ea46a34a128038730934b9e5da15ae8420",
+        "trainset_stat.json": "eb60ccc2071ddcae145398e01f0aa25eea2ce8331e78b84676548b416e7b8ac5"
+      }
+    },
+    "model_4c3284b2f8e067f9121f5196cd6f2b41": {
+      "directory": "model_4c3284b2f8e067f9121f5196cd6f2b41",
+      "sha256": {
+        "best_model.zip": "0804faab1a53e2fc4e53e9e4d2c150e718e13e152228915962d2ab819c449c1a",
+        "input.json": "1284a683ae48e746027084c2baa7f7f3f1b0d5d1849e8af60e91999fb45b68e6",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_5c02a8fedeb8a20169f5c8787b9fedd1": {
+      "directory": "model_5c02a8fedeb8a20169f5c8787b9fedd1",
+      "sha256": {
+        "best_model.zip": "32d16cb99848341669d6f23dbe4559aa60fa511ca0509d14a219a8faf6836d17",
+        "input.json": "508ad9ed76f83eb1aa2b22366804367a60f1f169b2520cf614b826e5a3bf2389",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_dbf91b63ee5ea74ee9f8f40e2651a28c": {
+      "directory": "model_dbf91b63ee5ea74ee9f8f40e2651a28c",
+      "sha256": {
+        "best_model.zip": "ba4f60c9a032ec2d621495e43f3ffb8e636c96835df31a5924b344451c5e411c",
+        "input.json": "dfc20ba75ea8e4eecfab380058be5b0f7c0df7e6d7b80a7180c3ccb0170ed414",
+        "trainset_stat.json": "d8f0d56b897fd40cb60587398360866fb36dd48ac7fc2b568c702ee610acbc5f"
+      }
+    },
+    "model_e1e7b0839b3b18986216446d5ba1a6eb": {
+      "directory": "model_e1e7b0839b3b18986216446d5ba1a6eb",
+      "sha256": {
+        "best_model.zip": "1ac55c52b7675cc09afb10822a49b712294df9914498bf556f2fc71da23a1441",
+        "input.json": "1198e857019f1d3608ff9dd95f223b33ef3b7104c4bfa8825b9cf0c194647120",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_0254dc42d66afec00bbbc6fc2f0e2297": {
+      "directory": "model_0254dc42d66afec00bbbc6fc2f0e2297",
+      "sha256": {
+        "best_model.zip": "76bcf86b4421495ddfabf8a1d44e774dcd51999a2257badf799a4e37eccc19a3",
+        "input.json": "718f3cd663d3cf5ccd7c6d0efa451c6cf475972f252437d22847f8e1bc04c98b",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    },
+    "model_8808d2a0258fa5e824523ebbc7a83653": {
+      "directory": "model_8808d2a0258fa5e824523ebbc7a83653",
+      "sha256": {
+        "best_model.zip": "61457bd8eef366ce6124d5920d7a7235272526eaa2a533bdd2072e220ef8b909",
+        "input.json": "71a6968b7d57bafd7300dc062c167e28657183f14b328d8de83660d33b2194c4",
+        "trainset_stat.json": "0a369e8ea1ceab23d89fb2b42af3b14f4a99c51af6f66ef3d5cd61bc0883a447"
+      }
+    }
+  },
+  "groups": [
+    {
+      "id": "DB_MV_E_MAPE_P_MAE_latent_25epochs",
+      "training_generator": "AR23",
+      "title": "DB: LMV(E MAPE, P MAE)",
+      "missing": {},
+      "rows": {
+        "Flat_Noise": {
+          "models": [
+            "model_e86f286e5258c3d8257ed1eb2c1c3099"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Flat_NoNoise": {
+          "models": [
+            "model_b32cf1b5985279e45e3e77a61a651bdb"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_Noise": {
+          "models": [
+            "model_abeb28b63a548539e09038f3323439d4"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_NoNoise": {
+          "models": [
+            "model_9f8a55965d1e71149463eb7179cfd8a1"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        }
+      }
+    },
+    {
+      "id": "DB_MV_E_MAPE_P_MAPE_latent_25epochs",
+      "training_generator": "AR23",
+      "title": "DB: LMV(E MAPE, P MAPE)",
+      "missing": {
+        "Natural_NoNoise/AR23": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/G2111a": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/G1810a0211a": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/G1810a0211b": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/NuWro": "Matching checkpoint\nbundle unavailable"
+      },
+      "rows": {
+        "Flat_Noise": {
+          "models": [
+            "model_f42c34cb0dbb8dfdfd6d8a308a60803d"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Flat_NoNoise": {
+          "models": [
+            "model_a1a22e655f99fd18248953b92530fc0a"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_Noise": {
+          "models": [
+            "model_d2bd190eb7f61f6acf0dbc4b4ef11ae9"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        }
+      }
+    },
+    {
+      "id": "DA_MV_E_MAPE_P_MAE_latent_25epochs",
+      "training_generator": "AR23",
+      "title": "DA: LMV(E MAPE, P MAE)",
+      "missing": {
+        "Flat_Noise/AR23": "Matching checkpoint\nbundle unavailable",
+        "Flat_Noise/G2111a": "Matching checkpoint\nbundle unavailable",
+        "Flat_Noise/G1810a0211a": "Matching checkpoint\nbundle unavailable",
+        "Flat_Noise/G1810a0211b": "Matching checkpoint\nbundle unavailable",
+        "Flat_Noise/NuWro": "Matching checkpoint\nbundle unavailable",
+        "Flat_NoNoise/NuWro": "Matching raw atmospheric\ninput unavailable",
+        "Natural_Noise/AR23": "Matching checkpoint\nbundle unavailable",
+        "Natural_Noise/G2111a": "Matching checkpoint\nbundle unavailable",
+        "Natural_Noise/G1810a0211a": "Matching checkpoint\nbundle unavailable",
+        "Natural_Noise/G1810a0211b": "Matching checkpoint\nbundle unavailable",
+        "Natural_Noise/NuWro": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/AR23": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/G2111a": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/G1810a0211a": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/G1810a0211b": "Matching checkpoint\nbundle unavailable",
+        "Natural_NoNoise/NuWro": "Matching checkpoint\nbundle unavailable"
+      },
+      "rows": {
+        "Flat_NoNoise": {
+          "models": [
+            "model_796fe4341e59d3e7452a1d75718e14f4"
+          ],
+          "sources": [
+            "DA_AR23",
+            "DA_G2111a",
+            "DA_G1810a0211a",
+            "DA_G1810a0211b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "DA_MV_E_MAPE_P_MAE_available_replica",
+      "training_generator": "AR23",
+      "title": "DA: LMV(E MAPE, P MAE), available natural/noise replica",
+      "missing": {
+        "Flat_Noise/AR23": "Not part of this\nsupplemental replica check",
+        "Flat_Noise/G2111a": "Not part of this\nsupplemental replica check",
+        "Flat_Noise/G1810a0211a": "Not part of this\nsupplemental replica check",
+        "Flat_Noise/G1810a0211b": "Not part of this\nsupplemental replica check",
+        "Flat_Noise/NuWro": "Not part of this\nsupplemental replica check",
+        "Flat_NoNoise/AR23": "Not part of this\nsupplemental replica check",
+        "Flat_NoNoise/G2111a": "Not part of this\nsupplemental replica check",
+        "Flat_NoNoise/G1810a0211a": "Not part of this\nsupplemental replica check",
+        "Flat_NoNoise/G1810a0211b": "Not part of this\nsupplemental replica check",
+        "Flat_NoNoise/NuWro": "Not part of this\nsupplemental replica check",
+        "Natural_Noise/NuWro": "Matching raw atmospheric\ninput unavailable",
+        "Natural_NoNoise/AR23": "Not part of this\nsupplemental replica check",
+        "Natural_NoNoise/G2111a": "Not part of this\nsupplemental replica check",
+        "Natural_NoNoise/G1810a0211a": "Not part of this\nsupplemental replica check",
+        "Natural_NoNoise/G1810a0211b": "Not part of this\nsupplemental replica check",
+        "Natural_NoNoise/NuWro": "Not part of this\nsupplemental replica check"
+      },
+      "rows": {
+        "Natural_Noise": {
+          "models": [
+            "model_42031414e505dc72f9c416bc5a73bd96"
+          ],
+          "sources": [
+            "DA_AR23",
+            "DA_G2111a",
+            "DA_G1810a0211a",
+            "DA_G1810a0211b"
+          ]
+        }
+      }
+    },
+    {
+      "id": "DB_SV_E_MAPE_P_MAE_latent_25epochs",
+      "training_generator": "AR23",
+      "title": "DB: LSV(E MAPE, P MAE)",
+      "missing": {},
+      "rows": {
+        "Flat_Noise": {
+          "models": [
+            "model_606bdb7d6205f13250a1595b0a4fa97b",
+            "model_ffb70ed2016a796f801f7f5d5b243f7b",
+            "model_b05b635113f8761fd3552b2a532e8541",
+            "model_ade32aa478fe86db35ea20d08ab3f14e"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Flat_NoNoise": {
+          "models": [
+            "model_ccbede1d3e3ca78fab25570900639697",
+            "model_41f5bf299733d2446c4398cfd487e5f9",
+            "model_5305c14debc164d94fabffb5d85f1be9",
+            "model_5692175e6fd7a6143cf9d3104162f384"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_Noise": {
+          "models": [
+            "model_145043a2605fa189e620a1f94d4c612c",
+            "model_a5c2bd80a5d59f4945b9e48cc34a9be6",
+            "model_315d058584ae1b5889e5be1e5c0f8bd3",
+            "model_50ffd61a358d65ecd64f58550bcf7cab"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_NoNoise": {
+          "models": [
+            "model_deba28e03e314587ddf6d35967de909b",
+            "model_76324192f2e285271cb43747e9189708",
+            "model_12e185783f3bf9b4691c4648494733a4",
+            "model_683735dd11cad6da8917a8dc802110c4"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        }
+      }
+    },
+    {
+      "id": "DB_SV_E_MAPE_P_MAPE_available_flat_noise_25epochs",
+      "training_generator": "AR23",
+      "title": "DB: LSV(E MAPE, P MAPE) [flat+noise Px: J1 checkpoint]",
+      "missing": {},
+      "rows": {
+        "Flat_Noise": {
+          "models": [
+            "model_606bdb7d6205f13250a1595b0a4fa97b",
+            "model_166b0be55d064666d907a33fff6e67fe",
+            "model_182393e578d5e9df86aaefb5780816a1",
+            "model_7f5b271f9c75ef75ddb8ad0a47781c6f"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Flat_NoNoise": {
+          "models": [
+            "model_ccbede1d3e3ca78fab25570900639697",
+            "model_00fcb1edc3058cc174f5855fb316988d",
+            "model_76c400c15e9f3abe9b1051b3f123918f",
+            "model_4f75a66a5defb899937c46921a95fd32"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_Noise": {
+          "models": [
+            "model_145043a2605fa189e620a1f94d4c612c",
+            "model_4c3284b2f8e067f9121f5196cd6f2b41",
+            "model_5c02a8fedeb8a20169f5c8787b9fedd1",
+            "model_dbf91b63ee5ea74ee9f8f40e2651a28c"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        },
+        "Natural_NoNoise": {
+          "models": [
+            "model_deba28e03e314587ddf6d35967de909b",
+            "model_e1e7b0839b3b18986216446d5ba1a6eb",
+            "model_0254dc42d66afec00bbbc6fc2f0e2297",
+            "model_8808d2a0258fa5e824523ebbc7a83653"
+          ],
+          "sources": [
+            "DB_AR23",
+            "DB_G2111a",
+            "DB_G1810a0211a",
+            "DB_G1810a0211b",
+            "DB_NuWro"
+          ]
+        }
+      }
+    }
+  ]
+}
