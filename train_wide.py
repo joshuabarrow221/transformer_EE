@@ -7,6 +7,7 @@ import os
 from datetime import datetime
 import argparse
 from copy import deepcopy
+import hashlib
 
 from transformer_ee.train import MVtrainer
 from transformer_ee.logger.wandb_train_logger import WandBLogger
@@ -15,7 +16,7 @@ import torch
 
 # ---------- Helpers ----------
 def kset(d, dotted_key, value):
-    """Set a nested config key using dotted path, creating parents as needed."""
+    """Fill a missing nested config key without replacing configured values."""
     if value is None:
         return
     parts = dotted_key.split(".")
@@ -40,6 +41,42 @@ def ensure_model_kwargs(cfg):
 def fail_if(cond, msg):
     if cond:
         raise ValueError(msg)
+
+
+def shorten_with_hash(text, max_len=120):
+    """
+    Keep strings under service limits while preserving recognizability.
+    This is mainly for W&B name/group/id values, which can otherwise exceed
+    backend length limits when we pass through long JSON-derived basenames.
+    """
+    if text is None:
+        return None
+    text = str(text).strip()
+    if not text:
+        return None
+    if len(text) <= max_len:
+        return text
+    digest = hashlib.sha1(text.encode("utf-8")).hexdigest()[:8]
+    keep = max_len - len(digest) - 1
+    keep = max(keep, 16)
+    return f"{text[:keep]}_{digest}"
+
+
+def ensure_unique_dir(base_path):
+    """
+    Return a non-existing run directory under base_path.
+    This gives us a local uniqueness guard for repeated stochasticity studies,
+    even when the caller intentionally reuses the same base config name.
+    """
+    base_path = os.path.abspath(base_path)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    digest = hashlib.sha1(f"{base_path}_{timestamp}_{os.getpid()}".encode("utf-8")).hexdigest()[:6]
+    candidate = os.path.join(base_path, f"run_{timestamp}_{digest}")
+    counter = 0
+    while os.path.exists(candidate):
+        counter += 1
+        candidate = os.path.join(base_path, f"run_{timestamp}_{digest}_{counter:02d}")
+    return candidate
 
 
 def validate_and_autofill(cfg):
@@ -144,6 +181,10 @@ def build_argparser():
                    default="/exp/dune/app/users/rrichi/FinalCodes/Numu_CC_Thresh_p1to1_VectorLeptWithoutNC_eventnum_All_NpNpi.csv")
     p.add_argument("--save-path",
                    default="/exp/dune/data/users/cborden/save_genie-dmodel_TEST/model/test/GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MAE_E_Px_Py_Pz_EID")
+    # Optional uniqueness guard for repeated stochasticity studies. When enabled,
+    # the final cfg['save_path'] becomes <save-path>/run_YYYYmmdd_HHMMSS_hash.
+    p.add_argument("--auto-unique-save-path", action="store_true",
+                   help="Append a unique run_* subdirectory beneath --save-path to avoid overwrites.")
     p.add_argument("--dataframe-type", default="polars")
     p.add_argument("--num-workers", type=int, default=10)
 
@@ -239,11 +280,28 @@ def build_argparser():
                    help="Quick preset: legacy|wide|auto|token|newhead")
 
     # WandB
+    # Note: keep --wandb-id optional. For these stochasticity sweeps, the raw JSON-derived
+    # basename can exceed backend limits, so --wandb-name/--wandb-group are the safer places
+    # for human-readable labels while the backend id can be omitted or shortened.
     p.add_argument("--wandb-project", default="GENIE_Atmo")
     p.add_argument("--wandb-entity", default="neutrinoenenergyestimators")
     p.add_argument("--wandb-dir", default="/exp/dune/data/users/cborden/save_genie-dmodel_TEST/wandb")
+    # Critical detail: W&B "id" is a persistent backend run identifier, not a display label.
+    # Reusing a constant default id across multiple launches will collide with older runs and,
+    # when paired with resume="never", immediately fail on rerun. So the safe default here is None.
     p.add_argument("--wandb-id",
-                   default="GENIEv3-0-6-Honda-Truth-hA-LFG_Numu_CC_Thresh_p1to1_eventnum_All_NpNpi_MAE_E_Px_Py_Pz_EID")
+                   default=None,
+                   help="Optional explicit W&B run id. Leave unset to let W&B auto-generate a unique id.")
+    p.add_argument("--wandb-name",
+                   default=None,
+                   help="Optional short human-readable W&B run name.")
+    p.add_argument("--wandb-group",
+                   default=None,
+                   help="Optional W&B group name for bundling replicas of the same config.")
+    p.add_argument("--wandb-tags",
+                   nargs="*",
+                   default=None,
+                   help="Optional W&B tags.")
 
     return p
 
@@ -259,9 +317,15 @@ def main():
     with open(args.base_config, "r", encoding="utf-8") as f:
         cfg = json.load(f)
 
+    # Optional save-path uniquification. This is intentionally opt-in so legacy behavior
+    # remains unchanged unless a caller explicitly wants local run folders to never collide.
+    kset(cfg, "save_path", args.save_path)
+    if args.auto_unique_save_path:
+        cfg["save_path"] = ensure_unique_dir(cfg["save_path"])
+        print(f"[INFO] Auto-unique save path enabled. Using: {cfg['save_path']}")
+
     # --- Apply common overrides (I/O, dataloader, training) ---
     kset(cfg, "data_path", args.data_path)
-    kset(cfg, "save_path", args.save_path)
     kset(cfg, "dataframe_type", args.dataframe_type)
     kset(cfg, "num_workers", args.num_workers)
 
@@ -292,7 +356,7 @@ def main():
     # --- Optional noise configuration (mirrors train_script.py example) ---
     if "noise" in cfg:
         print("[INFO] Noise configuration enabled:", cfg["noise"])
-    
+
     elif args.enable_noise:
         # Defaults from your train_script.py example:
         default_vector = [
@@ -334,7 +398,7 @@ def main():
     # Transformer basics
     mkw = ensure_model_kwargs(cfg)
     kset(mkw, "nhead", args.nhead)
-    kset(mkw, "num_layers", args.nhead)
+    kset(mkw, "num_layers", args.num_layers)
     kset(mkw, "dropout", args.dropout)
     kset(mkw, "dim_feedforward", args.dim_ff)
 
@@ -363,13 +427,41 @@ def main():
     validate_and_autofill(cfg)
 
     # --- WandB logger ---
-    my_logger = WandBLogger(
-        project=args.wandb_project,
-        entity=args.wandb_entity,
-        config=cfg,
-        dir=args.wandb_dir,
-        id=args.wandb_id,
-    )
+    # Separate the backend id from the user-facing name/group so that long configuration
+    # names can still be tracked cleanly without violating W&B length limits.
+    wandb_kwargs = {
+        "project": args.wandb_project,
+        "entity": args.wandb_entity,
+        "config": cfg,
+        "dir": args.wandb_dir,
+    }
+
+    wandb_id = shorten_with_hash(args.wandb_id, max_len=120)
+    wandb_name = shorten_with_hash(args.wandb_name, max_len=120)
+    wandb_group = shorten_with_hash(args.wandb_group, max_len=120)
+
+    if wandb_id is not None:
+        # Only pass an explicit backend run id when the caller really asked for one.
+        # For stochasticity studies, the usual intent is "new run every time", so omitting
+        # id entirely is safer than silently reusing a previous persistent run identity.
+        wandb_kwargs["id"] = wandb_id
+        wandb_kwargs["resume"] = "never"
+    else:
+        # Let W&B allocate a fresh backend id for this launch.
+        print("[INFO] No explicit W&B run id provided; allowing W&B to create a fresh unique id.")
+
+    if wandb_name is not None:
+        wandb_kwargs["name"] = wandb_name
+    if wandb_group is not None:
+        wandb_kwargs["group"] = wandb_group
+    if args.wandb_tags:
+        wandb_kwargs["tags"] = args.wandb_tags
+
+    print("[INFO] W&B launch parameters:", {
+        k: v for k, v in wandb_kwargs.items() if k != "config"
+    })
+
+    my_logger = WandBLogger(**wandb_kwargs)
 
     starttime = datetime.now()
     print("Start Time: " + str(starttime))
@@ -379,7 +471,7 @@ def main():
 
     torch.cuda.empty_cache() # free cached blocks from training
     torch.cuda.ipc_collect() # collect any stray IPC handles
-    
+
     my_trainer.eval()
 
     endtime = datetime.now()
@@ -387,6 +479,7 @@ def main():
     print("Time Elapsed: " + str(endtime - starttime))
 
     sys.stdout = orig_stdout
+    f.close()
 
 
 if __name__ == "__main__":
