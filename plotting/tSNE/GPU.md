@@ -108,8 +108,9 @@ because it produces more visually separated topology colors. Optimization may
 need a larger learning rate or more iterations at full scale. Report those
 settings alongside the figures. Hardware/library changes can change results.
 
-No GPU execution or GPU speedup has been measured on the CPU-only development
-host. The opt-in test and real-data commands above are the remaining A100 checks.
+The original development host was CPU-only. Synthetic A100 MIG 40 GB execution
+has now passed; see [host validation and setup](HOST_VALIDATION.md). Real-data
+and full-size performance checks remain pending.
 
 ## Redraw without models, activations or CUDA
 
